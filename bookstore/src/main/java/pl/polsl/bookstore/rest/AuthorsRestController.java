@@ -17,7 +17,7 @@ public class AuthorsRestController {
     private AuthorsRepository authorsRepository;
 
     @Autowired
-    public AuthorsRestController(AuthorsRepository theAuthorRepository ){    authorsRepository =  theAuthorRepository;  }
+    public AuthorsRestController(AuthorsRepository theAuthorsRepository ){    authorsRepository =  theAuthorsRepository;  }
 
 
     // expose "/authors" and return list of authors
