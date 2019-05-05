@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.Books;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -36,4 +37,5 @@ public class BooksRepository {
         // return the results
         return books;
     }
+
 }
