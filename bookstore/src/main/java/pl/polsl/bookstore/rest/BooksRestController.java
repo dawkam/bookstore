@@ -2,9 +2,9 @@ package pl.polsl.bookstore.rest;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import pl.polsl.bookstore.HibernateSearchService;
 import pl.polsl.bookstore.entity.Books;
 import pl.polsl.bookstore.repository.BooksRepository;
 
@@ -15,6 +15,7 @@ import java.util.List;
 public class BooksRestController {
 
     private BooksRepository booksRepository;
+
 
     @Autowired
     public BooksRestController(BooksRepository theBooksRepository ){    booksRepository =  theBooksRepository;  }

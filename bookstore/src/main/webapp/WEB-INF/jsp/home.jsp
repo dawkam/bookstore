@@ -35,7 +35,7 @@
 <div class="main_panel">
     <div class="main_panel_contents">
         <c:forEach items="${bookList}" var="book">
-                ${book.title}
+                ${book.title}<br>
         </c:forEach>
     </div>
 </div>
