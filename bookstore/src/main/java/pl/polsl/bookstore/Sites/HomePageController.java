@@ -32,10 +32,18 @@ public class HomePageController {
         return "home";
     }
 
-    @RequestMapping("/profile")
-    public String goToProfile(){
-        return "profile";
+    @GetMapping("/login")
+    public String getLogin() {
+
+        return "login";
     }
+
+    @PostMapping("/login")
+    public String postLogin() {
+
+        return "login";
+    }
+
 
 
 //    @GetMapping(value="/searchFor")

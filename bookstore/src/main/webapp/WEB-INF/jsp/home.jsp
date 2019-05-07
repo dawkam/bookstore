@@ -28,7 +28,7 @@
         <button type="submit">Cart</button>
     </div>
     <div class="cart_button">
-        <button type="submit">Login</button>
+        <button onclick="location.href='/login'" type="submit">Login</button>
     </div>
 </div>
 <div class="left_panel">
