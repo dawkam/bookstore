@@ -13,11 +13,11 @@ public class Warehouse {
   private long idBookWarehouse;
 
   @ManyToOne
-  @JoinColumn(name="books", nullable=false)
+  @JoinColumn(name="id_book" , referencedColumnName = "id_book")
   Books booksW;
 
   @ManyToOne
-  @JoinColumn(name="book_format", nullable=false)
+  @JoinColumn(name="id_format" , referencedColumnName = "id_format")
   BookFormat bookFormatW;
 
   @Column(name="price")

@@ -9,12 +9,12 @@ public class ShoppingCart implements Serializable {
 
   @Id
   @ManyToOne
-  @JoinColumn(name="warehouse", nullable=false)
+  @JoinColumn(name="id_book_warehouse" , referencedColumnName = "id_book_warehouse")
   Warehouse warehouseSh;
 
   @Id
   @ManyToOne
-  @JoinColumn(name="users", nullable=false)
+  @JoinColumn(name="id_user" , referencedColumnName = "id_user")
   Users usersSh;
 
   @Column(name="quantity")
