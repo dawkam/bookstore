@@ -36,4 +36,11 @@ public class UsersRepository {
         // return the results
         return users;
     }
+
+    @Transactional
+    public Users registerUser(){
+        Users user= new Users();
+
+        return user;
+    }
 }

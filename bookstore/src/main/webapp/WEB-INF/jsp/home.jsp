@@ -49,7 +49,27 @@
                     if (i == 2) {
                 %>
                 <td>
-                        ${book.title} ${book.getFullName()}
+                    <table id="cell">
+                        <tr>
+                            <td>
+                                <img src=${book.image} alt="cover" height="180" width="100">
+                            </td>
+                            <td>
+                                <table id="text">
+                                    <tr>
+                                        <td>
+                                                ${book.title}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                                ${book.getFullName()}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <%
@@ -57,7 +77,27 @@
             } else {
             %>
             <td>
-                    ${book.title} ${book.getFullName()}
+                <table id="call2">
+                    <tr>
+                        <td>
+                            <img src=${book.image} alt="cover" height="180" width="100">
+                        </td>
+                        <td>
+                            <table id="text2">
+                                <tr>
+                                    <td>
+                                            ${book.title}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                            ${book.getFullName()}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </td>
             <%
                     i += 1;
