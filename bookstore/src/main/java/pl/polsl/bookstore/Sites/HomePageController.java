@@ -4,22 +4,28 @@ package pl.polsl.bookstore.Sites;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.*;
+import pl.polsl.bookstore.repository.BooksRepository;
 
 @Controller
-//@RequestMapping("/home")
 public class HomePageController {
 
-    @Autowired
-    private HttpServletRequest request;
+    private BooksRepository bookRepo;
 
-    @GetMapping("/home")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+    @Autowired
+    public HomePageController(BooksRepository theBookRepo){
+        bookRepo = theBookRepo;
+    }
+
+    @GetMapping("/")
+    public String getGreeting(Model model) {
+        model.addAttribute("bookList", bookRepo.findAll());
+        return "home";
+    }
+
+    @PostMapping("/")
+    public String postGreeting(@RequestParam String bookName) {
+
         return "home";
     }
 
@@ -27,6 +33,19 @@ public class HomePageController {
     public String goToProfile(){
         return "profile";
     }
+
+
+//    @GetMapping(value="/searchFor")
+//    public String getSearchForBooks(@ModelAttribute("book") Books book, Model model){
+//
+//        return "home";
+//    }
+//
+//    @PostMapping(value="/searchFor")
+//    public String postSearchForBooks(@ModelAttribute("book") Books book, Model model){
+//
+//        return "home";
+//    }
 
 
 }
