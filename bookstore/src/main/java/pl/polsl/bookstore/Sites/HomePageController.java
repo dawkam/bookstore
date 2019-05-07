@@ -43,5 +43,17 @@ public class HomePageController {
         return "login";
     }
 
+    @GetMapping("/register")
+    public String getRegister() {
+
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String postRegister() {
+
+        return "register";
+    }
+
 
 }
