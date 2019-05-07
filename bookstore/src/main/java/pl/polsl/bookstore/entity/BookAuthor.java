@@ -9,12 +9,12 @@ public class BookAuthor implements Serializable {
 
   @Id
   @ManyToOne
-  @JoinColumn(name="authors", nullable=false)
+  @JoinColumn(name="id_author", referencedColumnName = "id_author")
   Authors authorsB;
 
   @Id
   @ManyToOne
-  @JoinColumn(name="books" , nullable=false)
+  @JoinColumn(name="id_book" , referencedColumnName = "id_book")
   Books booksB;
 
   public Authors getAuthorsB() {

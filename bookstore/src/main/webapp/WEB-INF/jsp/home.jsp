@@ -43,12 +43,12 @@
                 int i = 0;
             %>
             <tr>
-                <c:forEach items="${bookList}" var="book">
+                <c:forEach items="${bookAuthorList}" var="bookAuthor">
                 <%
                     if (i == 2) {
                 %>
                 <td>
-                        ${book.title}
+                        ${bookAuthor.booksB.title}
                 </td>
             </tr>
             <%
@@ -56,7 +56,7 @@
             } else {
             %>
             <td>
-                    ${book.title}
+                    ${bookAuthors.booksB.title}
             </td>
             <%
                     i += 1;

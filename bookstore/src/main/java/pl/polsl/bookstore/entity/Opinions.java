@@ -11,12 +11,12 @@ public class Opinions implements Serializable {
 
   @Id
   @ManyToOne
-  @JoinColumn(name="books", nullable=false)
+  @JoinColumn(name="id_book" , referencedColumnName = "id_book")
   Books booksO;
 
   @Id
   @ManyToOne
-  @JoinColumn(name="users", nullable=false)
+  @JoinColumn(name="id_user" , referencedColumnName = "id_user")
   Users usersO;
 
   @Column(name="opinion")

@@ -12,12 +12,12 @@ public class OrderHistory implements Serializable {
 
   @Id
   @ManyToOne
-  @JoinColumn(name="warehouse", nullable=false)
+  @JoinColumn(name="id_book_warehouse" , referencedColumnName = "id_book_warehouse")
   Warehouse warehouseOr;
 
   @Id
   @ManyToOne
-  @JoinColumn(name="users", nullable=false)
+  @JoinColumn(name="id_user" , referencedColumnName = "id_user")
   Users usersOr;
 
   @Column(name="date")
