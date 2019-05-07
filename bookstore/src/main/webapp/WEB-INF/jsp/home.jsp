@@ -34,8 +34,8 @@
 </div>
 <div class="main_panel">
     <div class="main_panel_contents">
-        <c:forEach items="${bookList}" var="book">
-                ${book.title}<br>
+        <c:forEach items="${bookAuthorList}" var="bookAuthor">
+                ${bookAuthor.booksB.title} by ${bookAuthor.authorsB.firstName} ${bookAuthor.authorsB.surname}<br>
         </c:forEach>
     </div>
 </div>

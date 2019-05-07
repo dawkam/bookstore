@@ -2,9 +2,7 @@ package pl.polsl.bookstore.rest;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.polsl.bookstore.HibernateSearchService;
 import pl.polsl.bookstore.entity.Books;
 import pl.polsl.bookstore.repository.BooksRepository;
 

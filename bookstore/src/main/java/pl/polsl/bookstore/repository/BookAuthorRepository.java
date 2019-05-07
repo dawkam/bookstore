@@ -35,4 +35,27 @@ public class BookAuthorRepository {
         // return the results
         return bookAuthors;
     }
+
+    @Transactional
+    public List<BookAuthor> bookTitleSearch(String searchTerm) {
+        if(!searchTerm.equals(""))
+        {
+            // get the current hibernate session
+            Session currentSession = entityManager.unwrap(Session.class);
+
+            // create a query
+            Query<BookAuthor> theQuery =
+                    currentSession.createQuery("SELECT ba FROM BookAuthor ba " +
+                            "where ba.booksB.title " +
+                            "LIKE concat('%', :searchTerm, '%') or ba.authorsB.firstName "+
+                            "LIKE concat('%', :searchTerm, '%') order by ba.booksB.title")
+                                    .setParameter("searchTerm", searchTerm);      //from odnosi sie do klasy nie do tabeli
+
+            // execute query and get result list
+            List<BookAuthor> bookAuthor = theQuery.getResultList();
+            // return the results
+            return bookAuthor;
+        }
+        else return findAll();
+    }
 }
