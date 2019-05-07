@@ -5,19 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.polsl.bookstore.HibernateSearchService;
+import pl.polsl.bookstore.entity.BookAuthor;
 import pl.polsl.bookstore.repository.BooksRepository;
+
 
 @Controller
 public class HomePageController {
 
     private BooksRepository bookRepo;
-    private HibernateSearchService searchService;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, HibernateSearchService searchService){
+    public HomePageController(BooksRepository theBookRepo){
         bookRepo = theBookRepo;
-        this.searchService = searchService;
     }
 
     @GetMapping("/home")
@@ -43,20 +42,6 @@ public class HomePageController {
 
         return "login";
     }
-
-
-
-//    @GetMapping(value="/searchFor")
-//    public String getSearchForBooks(@ModelAttribute("book") Books book, Model model){
-//
-//        return "home";
-//    }
-//
-//    @PostMapping(value="/searchFor")
-//    public String postSearchForBooks(@ModelAttribute("book") Books book, Model model){
-//
-//        return "home";
-//    }
 
 
 }
