@@ -16,14 +16,15 @@
     </div>
     <div id="login_form">
         <br>
-        <br>
         <form>
+            <label>Login: </label>
             <input type="text" placeholder="Login" name="Login"/><br>
+            <label>Hasło: </label>
             <input type="password" placeholder="Hasło" name="Password"/><br>
             <button id="login_button" type="submit">Zaloguj</button>
         </form>
         Nie masz konta? <br>
-        <a href="rejestracja.jsp">Zarejestruj się!</a>
+        <a href="register">Zarejestruj się!</a>
     </div>
 </div>
 

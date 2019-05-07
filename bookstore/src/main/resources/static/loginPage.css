@@ -1,4 +1,13 @@
-#login_form{
+#login_form label{
+    float: left;
+    width: 10em;
+    margin-right: 1em;
+    text-align: right;
+    margin-bottom: 3px;
+}
+
+#login_form input{
+    margin-bottom: 3px;
 }
 
 #contents{
@@ -10,6 +19,12 @@
     justify-self: center;
 }
 
+#login_form button{
+    background-color: #5f5144;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 div.logo{
     margin: 5px;
@@ -17,6 +32,7 @@ div.logo{
     height: 94px;
     width: 117.5px;
     cursor: pointer;
+    align-self: flex-start;
 }
 
 img:hover{
