@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.Books;
 
 import javax.persistence.EntityManager;
-import java.util.List;
+import javax.persistence.NoResultException;
+import java.util.*;
 
 @Repository
 public class BooksRepository {
@@ -28,7 +29,7 @@ public class BooksRepository {
 
         // create a query
         Query<Books> theQuery =
-                currentSession.createQuery("from Books", Books.class);      //from odnosi sie do klasy nie do tabeli
+                currentSession.createQuery("from Books b order by b.title", Books.class);      //from odnosi sie do klasy nie do tabeli
 
         // execute query and get result list
         List<Books> books = theQuery.getResultList();
@@ -36,4 +37,24 @@ public class BooksRepository {
         // return the results
         return books;
     }
+
+    @Transactional
+    public List<Books> booksSearch(String searchTerm) {
+        if(!searchTerm.equals(""))
+        {
+            // get the current hibernate session
+            Session currentSession = entityManager.unwrap(Session.class);
+
+            // create a query
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT b FROM Books b where b.title LIKE concat('%', :searchTerm, '%') order by b.title").setParameter("searchTerm", searchTerm);      //from odnosi sie do klasy nie do tabeli
+
+            // execute query and get result list
+            List<Books> books = theQuery.getResultList();
+            // return the results
+            return books;
+        }
+       else return findAll();
+    }
+
 }

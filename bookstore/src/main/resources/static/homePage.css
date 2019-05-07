@@ -10,6 +10,7 @@ div.top_panel{
     align-items: center;
     height: var(--top-panel-height);
     border: 3px solid #f5f0ec;
+    overflow-y:hidden;
 }
 
 div.logo{
@@ -28,6 +29,17 @@ div.search_bar{
     color: #0d0d34 !important;
     margin: 3px;
     float: left;
+}
+
+div .search_bar button{
+    background-color: #5f5144;
+    cursor: pointer;
+}
+
+div.search_bar input{
+    background-color: #5f5144;
+    width: 350px;
+    margin: 10px;
 }
 
 div.left_panel{
@@ -50,6 +62,7 @@ div.main_panel{
     height: calc(100% - 40px - var(--top-panel-height));
     width: calc(82% - 42px);
     border: 3px solid #f5f0ec;
+    overflow-x:auto
 }
 
 div.main_panel_contents{
@@ -57,17 +70,6 @@ div.main_panel_contents{
     overflow-wrap: break-word;
 }
 
-div .search_bar button{
-    background-color: #5f5144;
-    cursor: pointer;
-    margin-right: 20px;
-}
-
-div.search_bar input{
-    background-color: #5f5144;
-    width: 350px;
-    margin: 10px;
-}
 
 div .cart_button button{
     background-color: #5f5144;
@@ -83,6 +85,24 @@ div .profile_button button{
     height: 40px;
     width: 70px;
 }
+
+#search-table{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#search-table td, #search-table tr {
+    border: 1px solid #ddd;
+    padding: 20px;
+}
+#search-table td:hover {
+    background-color: #7f6b64;
+    cursor: pointer;
+}
+
+tr:nth-child(even) {background-color: #5f5144;}
+
 
 html *
 {
