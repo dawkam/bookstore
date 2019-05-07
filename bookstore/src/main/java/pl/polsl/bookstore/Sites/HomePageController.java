@@ -20,13 +20,13 @@ public class HomePageController {
         this.searchService = searchService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String getGreeting(@RequestParam(name ="bookName", required = false, defaultValue = "") String bookName, Model model) {
         model.addAttribute("bookList", bookRepo.booksSearch(bookName));
         return "home";
     }
 
-    @PostMapping("/")
+    @PostMapping("/home")
     public String postGreeting() {
 
         return "home";

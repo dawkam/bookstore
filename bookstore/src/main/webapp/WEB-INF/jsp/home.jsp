@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
+<html>
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="/homePage.css">
@@ -11,10 +12,10 @@
 <body>
 <div class="top_panel">
     <div class="logo">
-        <img src="/logo.png" alt="logo" height="94" class="logo" onclick="location.href='/profile'">
+        <img src="/logo.png" alt="logo" height="94" class="logo" onclick="location.href='/home'">
     </div>
     <div class="search_bar">
-        <form method="GET" action="/">
+        <form method="GET" action="/home">
             <label>Book search</label>
             <input type="text" placeholder="Search.." name="bookName"/>
             <button type="submit">Szukaj</button>
@@ -23,8 +24,11 @@
     <div class="profile_button">
         <button type="submit">Profile</button>
     </div>
-    <div class="cart_button">
+    <div class="profile_button">
         <button type="submit">Cart</button>
+    </div>
+    <div class="cart_button">
+        <button type="submit">Login</button>
     </div>
 </div>
 <div class="left_panel">
@@ -34,9 +38,39 @@
 </div>
 <div class="main_panel">
     <div class="main_panel_contents">
-        <c:forEach items="${bookList}" var="book">
-                ${book.title}<br>
-        </c:forEach>
+        <table id="search-table">
+            <%
+                int i = 0;
+            %>
+            <tr>
+                <c:forEach items="${bookList}" var="book">
+                <%
+                    if (i == 2) {
+                %>
+                <td>
+                        ${book.title}
+                </td>
+            </tr>
+            <%
+                i = 0;
+            } else {
+            %>
+            <td>
+                    ${book.title}
+            </td>
+            <%
+                    i += 1;
+                }
+            %>
+            </c:forEach>
+            <%
+                if (i != 0) {
+            %>
+            </tr>
+            <%
+                }
+            %>
+        </table>
     </div>
 </div>
 </body>
