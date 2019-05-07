@@ -5,22 +5,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.polsl.bookstore.repository.BookAuthorRepository;
+import pl.polsl.bookstore.entity.BookAuthor;
+import pl.polsl.bookstore.repository.BooksRepository;
 
 
 @Controller
 public class HomePageController {
 
-    private BookAuthorRepository bookAuthorRepo;
+    private BooksRepository bookRepo;
 
     @Autowired
-    public HomePageController(BookAuthorRepository theBookAuthorRepo){
-        bookAuthorRepo = theBookAuthorRepo;
+    public HomePageController(BooksRepository theBookRepo){
+        bookRepo = theBookRepo;
     }
 
     @GetMapping("/home")
     public String getGreeting(@RequestParam(name ="bookName", required = false, defaultValue = "") String bookName, Model model) {
-        model.addAttribute("bookAuthorList", bookAuthorRepo.bookTitleSearch(bookName));
+        model.addAttribute("bookList", bookRepo.booksSearch(bookName));
         return "home";
     }
 

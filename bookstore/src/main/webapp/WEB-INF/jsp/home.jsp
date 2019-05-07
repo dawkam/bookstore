@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ page import ="pl.polsl.bookstore.entity.BookAuthor" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,12 +44,12 @@
                 int i = 0;
             %>
             <tr>
-                <c:forEach items="${bookAuthorList}" var="bookAuthor">
+                <c:forEach items="${bookList}" var="book">
                 <%
                     if (i == 2) {
                 %>
                 <td>
-                        ${bookAuthor.booksB.title}
+                        ${book.title} ${book.getFullName()}
                 </td>
             </tr>
             <%
@@ -56,7 +57,7 @@
             } else {
             %>
             <td>
-                    ${bookAuthors.booksB.title}
+                    ${book.title} ${book.getFullName()}
             </td>
             <%
                     i += 1;

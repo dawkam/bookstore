@@ -2,6 +2,7 @@ package pl.polsl.bookstore.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -69,4 +70,44 @@ public class Books {
     this.numberOfPages = numberOfPages;
   }
 
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public Set<BookAuthor> getBookAuthor() {
+    return bookAuthor;
+  }
+
+  public void setBookAuthor(Set<BookAuthor> bookAuthor) {
+    this.bookAuthor = bookAuthor;
+  }
+
+  public Set<Opinions> getOpinions() {
+    return opinions;
+  }
+
+  public void setOpinions(Set<Opinions> opinions) {
+    this.opinions = opinions;
+  }
+
+  public Set<Warehouse> getWarehouse() {
+    return warehouse;
+  }
+
+  public void setWarehouse(Set<Warehouse> warehouse) {
+    this.warehouse = warehouse;
+  }
+
+  public String getFullName(){
+    final String[] fullName = new String[1];
+    fullName[0]="";
+    this.getBookAuthor().forEach((BookAuthor author) -> { fullName[0] +=
+      author.getAuthorsB().getFirstName() + " " + author.getAuthorsB().getSurname() + " ";
+    });
+    return fullName[0];
+  }
 }
