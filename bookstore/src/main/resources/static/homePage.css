@@ -102,8 +102,26 @@ div .profile_button button{
     background-color: #7f6b64;
     cursor: pointer;
 }
+#search-table td td {
 
-tr:nth-child(even) {background-color: #5f5144;}
+    padding: 0px ;
+    border: 0px;
+
+}
+
+#search-table td td td {
+    border-collapse: separate;
+    padding: 5px 5px 5px 50px;
+    border : 0px;
+}
+
+#search-table image {
+    height: 100%;
+    width: 100%;
+}
+
+
+/*tr:nth-child(even) {background-color: #5f5144;}*/
 
 
 html *
