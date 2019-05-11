@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
--- Host: localhost    Database: bd_bookstore
+-- Host: localhost    Database: bookstore
 -- ------------------------------------------------------
 -- Server version	8.0.15
 
@@ -104,7 +104,7 @@ CREATE TABLE `books` (
   `title` varchar(30) DEFAULT NULL,
   `genre` varchar(30) DEFAULT NULL,
   `number_of_pages` int(11) DEFAULT NULL,
-  `image` varchar(30) DEFAULT NULL,
+  `image` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_book`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -115,7 +115,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (1,'Dziady Cz.III','dramat',290,''),(2,'Wybrane Wiersze','poezja',524,''),(3,'Konrad Wallenrod','dramat',243,''),(4,'Kordian, Balladyna','dramat',303,''),(5,'Wybrane Wiersze','poezja',626,''),(6,'Lilla Weneda','dramat',84,''),(7,'Makbet','dramat',158,''),(8,'Romeo i Julia','dramat',135,''),(9,'Hamlet','dramat',229,''),(10,'Fraszki, Pieśni, Treny','liryka',290,''),(11,'Zemsta','dramat',140,''),(12,'W Pustyni i W Puszczy','powieść',462,''),(13,'Quo Vadis','powieść',668,''),(14,'Krzyżacy','powieść',358,''),(15,'Potop','powieść',935,''),(16,'Lalka','powieść',536,''),(17,'Wesele','dramat',232,''),(18,'Noc Listopadowa','dramat',284,''),(19,'Anna Karenina','powieść',908,''),(20,'Wojna i Pokój Tom1','powieść',483,''),(21,'Władca Pierścieni','powieść',1021,''),(22,'Hobbit','powieść',348,''),(23,'Harry Potter i Kamień Filozofi','powieść',326,''),(24,'Harry Potter i Komnata Tajemni','powieść',365,''),(25,'Harry Potter i Więzień Azkaban','powieść',458,''),(26,'Harry Potter i Czara Ognia','powieść',766,''),(27,'Harry Potter i Zakon Feniksa','powieść',954,''),(28,'Harry Potter i Książę Półkrwi','powieść',703,''),(29,'Harry Potter i Insygnia Śmierc','powieść',782,''),(30,'Czerwony Kapturek','kryminał',321,''),(31,'Miodowa Pułapka','kryminał',373,''),(32,'Człowiek Mroku','kryminał',439,''),(33,'Pan Tadeusz','dramat',393,'');
+INSERT INTO `books` VALUES (1,'Dziady Cz.III','dramat',290,'https://3.allegroimg.com/s512/065f87/8122636c42848aee2b029e1def03/Adam-Mickiewicz-Dziady-czesc-III'),(2,'Wybrane Wiersze','poezja',524,'http://ksiegarnia.arcana.pl/144-large_default/wojciech-wencel-wiersze-wybrane.jpg'),(3,'Konrad Wallenrod','dramat',243,'https://ecsmedia.pl/c/konrad-wallenrod-w-iext38867309.jpg'),(4,'Kordian, Balladyna','dramat',303,'https://ecsmedia.pl/c/balladyna-kordian-b-iext47800372.jpg'),(5,'Wybrane Wiersze','poezja',626,'http://www.tom1.pl/349-large_default/lilla-weneda-slowacki-juliusz.jpg'),(6,'Lilla Weneda','dramat',84,'http://www.tom1.pl/349-large_default/lilla-weneda-slowacki-juliusz.jpg'),(7,'Makbet','dramat',158,'https://6.allegroimg.com/s512/000580/64d9bf274253b6abe7a52e5b7726/Makbet-William-Szekspir/Makbet-William-Szekspir'),(8,'Romeo i Julia','dramat',135,'https://image.ceneostatic.pl/data/products/49439472/i-romeo-i-julia.jpg'),(9,'Hamlet','dramat',229,'http://2.bp.blogspot.com/--MiYmUKB3Sk/UWgMxzmTiDI/AAAAAAAACLY/c4ykrvCK-M0/s1600/51cy7hZXHDL.jpg'),(10,'Fraszki, Pieśni, Treny','liryka',290,'https://image.ceneostatic.pl/data/products/24163/i-fraszki-piesni-treny.jpg'),(11,'Zemsta','dramat',140,'https://ecsmedia.pl/c/zemsta-b-iext47974845.jpg'),(12,'W Pustyni i W Puszczy','powieść',462,'https://vignette.wikia.nocookie.net/ksiazkopedia/images/8/84/W_pustyni_i_puszczy.jpg/revision/latest?cb=20130213123252&path-prefix=pl'),(13,'Quo Vadis','powieść',668,'https://zst.chelm.pl/wp-content/uploads/2016/09/quo-vadis-henryk-sienkie_5524.jpg'),(14,'Krzyżacy','powieść',358,'https://ecsmedia.pl/c/krzyzacy-henryka-sienkiewicza-streszczenie-analiza-interpretacja-b-iext43264059.jpg'),(15,'Potop','powieść',935,'https://1.allegroimg.com/s512/033af7/927804c443058c698aa498a8c971/Sienkiewicz-Henryk-Potop-Agencja-Elipsa'),(16,'Lalka','powieść',536,''),(17,'Wesele','dramat',232,''),(18,'Noc Listopadowa','dramat',284,''),(19,'Anna Karenina','powieść',908,''),(20,'Wojna i Pokój Tom1','powieść',483,''),(21,'Władca Pierścieni','powieść',1021,''),(22,'Hobbit','powieść',348,''),(23,'Harry Potter i Kamień Filozofi','powieść',326,''),(24,'Harry Potter i Komnata Tajemni','powieść',365,''),(25,'Harry Potter i Więzień Azkaban','powieść',458,''),(26,'Harry Potter i Czara Ognia','powieść',766,''),(27,'Harry Potter i Zakon Feniksa','powieść',954,''),(28,'Harry Potter i Książę Półkrwi','powieść',703,''),(29,'Harry Potter i Insygnia Śmierc','powieść',782,''),(30,'Czerwony Kapturek','kryminał',321,''),(31,'Miodowa Pułapka','kryminał',373,''),(32,'Człowiek Mroku','kryminał',439,''),(33,'Pan Tadeusz','dramat',393,'https://image.ceneostatic.pl/data/products/109070/i-pan-tadeusz.jpg');
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,18 +213,20 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `users` (
-  `id_user` int(11) NOT NULL,
-  `first_name` varchar(30) DEFAULT NULL,
-  `surname` varchar(30) DEFAULT NULL,
-  `nation` varchar(30) DEFAULT NULL,
-  `city` varchar(30) DEFAULT NULL,
-  `street` varchar(30) DEFAULT NULL,
-  `login` varchar(30) DEFAULT NULL,
-  `password` varchar(30) DEFAULT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `access_to_comments` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(30) NOT NULL,
+  `surname` varchar(30) NOT NULL,
+  `nation` varchar(30) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `street` varchar(30) NOT NULL,
+  `login` varchar(30) NOT NULL,
+  `password` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `access_to_comments` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_user`),
+  UNIQUE KEY `login_UNIQUE` (`login`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +235,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1);
+INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1),(11,'marc','dud','pol','kat','paistow','stelfos','admin','m@d.pl',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,4 +281,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-11 17:31:57
+-- Dump completed on 2019-05-11 19:32:15
