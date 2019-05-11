@@ -40,6 +40,12 @@ public class HomePageController {
         return "home";
     }
 
+    @PostMapping("/logout")
+    public String postLogout() {
+        currentUser=null;
+        return "redirect:home";
+    }
+
     @GetMapping("/login")
     public String getLogin() {
 
