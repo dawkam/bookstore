@@ -37,18 +37,7 @@ CREATE TABLE `authors` (
 
 LOCK TABLES `authors` WRITE;
 /*!40000 ALTER TABLE `authors` DISABLE KEYS */;
-INSERT INTO `authors` VALUES (1,'Adam','Mickiewicz'),
-			(2,		'Juliusz',		'Słowacki'),
-			(3,		'William',		'Shakespeare'),
-			(4,		'Jan',			'Kochanowski'),
-			(5,		'Aleksander',	'Fredro'),
-			(6,		'Henryk',		'Sienkiewicz'),
-			(7,		'Bolesław',		'Prus'),
-			(8,		'Stanisław',	'Wyspiański'),
-			(9,		'Lew',			'Tołstoj'),
-			(10,	'J.R.R.',		'Tolkien'),
-			(11,	'J.K.',			'Rowling'),
-			(12,	'Unni',			'Lindell');
+INSERT INTO `authors` VALUES (1,'Adam','Mickiewicz'),(2,'Juliusz','Słowacki'),(3,'William','Shakespeare'),(4,'Jan','Kochanowski'),(5,'Aleksander','Fredro'),(6,'Henryk','Sienkiewicz'),(7,'Bolesław','Prus'),(8,'Stanisław','Wyspiański'),(9,'Lew','Tołstoj'),(10,'J.R.R.','Tolkien'),(11,'J.K.','Rowling'),(12,'Unni','Lindell');
 /*!40000 ALTER TABLE `authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,39 +64,7 @@ CREATE TABLE `book_author` (
 
 LOCK TABLES `book_author` WRITE;
 /*!40000 ALTER TABLE `book_author` DISABLE KEYS */;
-INSERT INTO `book_author` VALUES (1,1),
-			(1,2),
-			(1,3),
-			(1,33),
-			(2,4),
-			(2,5),
-			(2,6),
-			(3,7),
-			(3,8),
-			(3,9),
-			(4,10),
-			(5,11),
-			(6,12),
-			(6,13),
-			(6,14),
-			(6,15),
-			(7,16),
-			(8,17),
-			(9,18),
-			(9,19),
-			(10,20),
-			(10,21),
-			(11,22),
-			(11,23),
-			(11,24),
-			(11,25),
-			(11,26),
-			(11,27),
-			(11,28),
-			(11,29),
-			(12,30),
-			(12,31),
-			(12,32);
+INSERT INTO `book_author` VALUES (1,1),(1,2),(1,3),(2,4),(2,5),(2,6),(3,7),(3,8),(3,9),(4,10),(5,11),(6,12),(6,13),(6,14),(6,15),(7,16),(8,17),(9,18),(9,19),(10,20),(10,21),(11,22),(11,23),(11,24),(11,25),(11,26),(11,27),(11,28),(11,29),(12,30),(12,31),(12,32),(1,33);
 /*!40000 ALTER TABLE `book_author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,9 +88,7 @@ CREATE TABLE `book_format` (
 
 LOCK TABLES `book_format` WRITE;
 /*!40000 ALTER TABLE `book_format` DISABLE KEYS */;
-INSERT INTO `book_format` VALUES (1,'audiobook'),
-			(2,'e-book'),
-			(3,'książka');
+INSERT INTO `book_format` VALUES (1,'audiobook'),(2,'e-book'),(3,'książka');
 /*!40000 ALTER TABLE `book_format` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +104,7 @@ CREATE TABLE `books` (
   `title` varchar(30) DEFAULT NULL,
   `genre` varchar(30) DEFAULT NULL,
   `number_of_pages` int(11) DEFAULT NULL,
-  `image` varchar(30) DEFAULT NULL,
+  `image` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_book`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -160,39 +115,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (1,'Dziady Cz.III','dramat',290,''),
-		(2,		'Wybrane Wiersze',						'poezja',	524,	''),
-		(3,		'Konrad Wallenrod',						'dramat',	243,	''),
-		(33,	'Pan Tadeusz',							'dramat',	393,	''),
-		(4,		'Kordian, Balladyna',					'dramat',	303,	''),
-		(5,		'Wybrane Wiersze',						'poezja',	626,	''),
-		(6,		'Lilla Weneda',							'dramat',	84,		''),
-		(7,		'Makbet',								'dramat',	158,	''),
-		(8,		'Romeo i Julia',						'dramat',	135,	''),
-		(9,		'Hamlet',								'dramat',	229,	''),
-		(10,	'Fraszki, Pieśni, Treny',				'liryka',	290,	''),
-		(11,	'Zemsta',								'dramat',	140,	''),
-		(12,	'W Pustyni i W Puszczy',				'powieść',	462,	''),
-		(13,	'Quo Vadis',							'powieść',	668,	''),
-		(14,	'Krzyżacy',								'powieść',	358,	''),
-		(15,	'Potop',								'powieść',	935,	''),
-		(16,	'Lalka',								'powieść',	536,	''),
-		(17,	'Wesele',								'dramat',	232,	''),
-		(18,	'Noc Listopadowa',						'dramat',	284,	''),
-		(19,	'Anna Karenina',						'powieść',	908,	''),
-		(20,	'Wojna i Pokój Tom1',					'powieść',	483,	''),
-		(21,	'Władca Pierścieni',					'powieść',	1021,	''),
-		(22,	'Hobbit',								'powieść',	348,	''),
-		(23,	'Harry Potter i Kamień Filozoficzny',	'powieść',	326,	''),
-		(24,	'Harry Potter i Komnata Tajemnic',		'powieść',	365,	''),
-		(25,	'Harry Potter i Więzień Azkabanu',		'powieść',	458,	''),
-		(26,	'Harry Potter i Czara Ognia',			'powieść',	766,	''),
-		(27,	'Harry Potter i Zakon Feniksa',			'powieść',	954,	''),
-		(28,	'Harry Potter i Książę Półkrwi',		'powieść',	703,	''),
-		(29,	'Harry Potter i Insygnia Śmierci',		'powieść',	782,	''),
-		(30,	'Czerwony Kapturek',					'kryminał',	321,	''),
-		(31,	'Miodowa Pułapka',						'kryminał',	373,	''),
-		(32,	'Człowiek Mroku',						'kryminał',	439,	'');
+INSERT INTO `books` VALUES (1,'Dziady Cz.III','dramat',290,'https://3.allegroimg.com/s512/065f87/8122636c42848aee2b029e1def03/Adam-Mickiewicz-Dziady-czesc-III'),(2,'Wybrane Wiersze','poezja',524,'http://ksiegarnia.arcana.pl/144-large_default/wojciech-wencel-wiersze-wybrane.jpg'),(3,'Konrad Wallenrod','dramat',243,'https://ecsmedia.pl/c/konrad-wallenrod-w-iext38867309.jpg'),(4,'Kordian, Balladyna','dramat',303,'https://ecsmedia.pl/c/balladyna-kordian-b-iext47800372.jpg'),(5,'Wybrane Wiersze','poezja',626,'http://www.tom1.pl/349-large_default/lilla-weneda-slowacki-juliusz.jpg'),(6,'Lilla Weneda','dramat',84,'http://www.tom1.pl/349-large_default/lilla-weneda-slowacki-juliusz.jpg'),(7,'Makbet','dramat',158,'https://6.allegroimg.com/s512/000580/64d9bf274253b6abe7a52e5b7726/Makbet-William-Szekspir/Makbet-William-Szekspir'),(8,'Romeo i Julia','dramat',135,'https://image.ceneostatic.pl/data/products/49439472/i-romeo-i-julia.jpg'),(9,'Hamlet','dramat',229,'http://2.bp.blogspot.com/--MiYmUKB3Sk/UWgMxzmTiDI/AAAAAAAACLY/c4ykrvCK-M0/s1600/51cy7hZXHDL.jpg'),(10,'Fraszki, Pieśni, Treny','liryka',290,'https://image.ceneostatic.pl/data/products/24163/i-fraszki-piesni-treny.jpg'),(11,'Zemsta','dramat',140,'https://ecsmedia.pl/c/zemsta-b-iext47974845.jpg'),(12,'W Pustyni i W Puszczy','powieść',462,'https://vignette.wikia.nocookie.net/ksiazkopedia/images/8/84/W_pustyni_i_puszczy.jpg/revision/latest?cb=20130213123252&path-prefix=pl'),(13,'Quo Vadis','powieść',668,'https://zst.chelm.pl/wp-content/uploads/2016/09/quo-vadis-henryk-sienkie_5524.jpg'),(14,'Krzyżacy','powieść',358,'https://ecsmedia.pl/c/krzyzacy-henryka-sienkiewicza-streszczenie-analiza-interpretacja-b-iext43264059.jpg'),(15,'Potop','powieść',935,'https://1.allegroimg.com/s512/033af7/927804c443058c698aa498a8c971/Sienkiewicz-Henryk-Potop-Agencja-Elipsa'),(16,'Lalka','powieść',536,''),(17,'Wesele','dramat',232,''),(18,'Noc Listopadowa','dramat',284,''),(19,'Anna Karenina','powieść',908,''),(20,'Wojna i Pokój Tom1','powieść',483,''),(21,'Władca Pierścieni','powieść',1021,''),(22,'Hobbit','powieść',348,''),(23,'Harry Potter i Kamień Filozofi','powieść',326,''),(24,'Harry Potter i Komnata Tajemni','powieść',365,''),(25,'Harry Potter i Więzień Azkaban','powieść',458,''),(26,'Harry Potter i Czara Ognia','powieść',766,''),(27,'Harry Potter i Zakon Feniksa','powieść',954,''),(28,'Harry Potter i Książę Półkrwi','powieść',703,''),(29,'Harry Potter i Insygnia Śmierc','powieść',782,''),(30,'Czerwony Kapturek','kryminał',321,''),(31,'Miodowa Pułapka','kryminał',373,''),(32,'Człowiek Mroku','kryminał',439,''),(33,'Pan Tadeusz','dramat',393,'https://image.ceneostatic.pl/data/products/109070/i-pan-tadeusz.jpg');
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,9 +143,7 @@ CREATE TABLE `opinions` (
 
 LOCK TABLES `opinions` WRITE;
 /*!40000 ALTER TABLE `opinions` DISABLE KEYS */;
-INSERT INTO `opinions` VALUES (8,3,'Świetna historia o tragicznej miłości!'),
-			(30,	1,	'Wciąga fabułą!!'),
-			(25,	5,	'Trzecia częćś przygód młodego czarodzieja zachwyca.');
+INSERT INTO `opinions` VALUES (8,3,'Świetna historia o tragicznej miłości!'),(25,5,'Trzecia częćś przygód młodego czarodzieja zachwyca.'),(30,1,'Wciąga fabułą!!');
 /*!40000 ALTER TABLE `opinions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,9 +173,7 @@ CREATE TABLE `order_history` (
 
 LOCK TABLES `order_history` WRITE;
 /*!40000 ALTER TABLE `order_history` DISABLE KEYS */;
-INSERT INTO `order_history` VALUES (8,3,'2019-05-07',1,16.40),
-			(30,	1,	'2019-04-02',	1,	27.20),
-			(25,	5,	'2019-05-01',	2,	46.60);			
+INSERT INTO `order_history` VALUES (8,3,'2019-05-07',1,16),(25,5,'2019-05-01',2,47),(30,1,'2019-04-02',1,27);
 /*!40000 ALTER TABLE `order_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,9 +201,7 @@ CREATE TABLE `shopping_cart` (
 
 LOCK TABLES `shopping_cart` WRITE;
 /*!40000 ALTER TABLE `shopping_cart` DISABLE KEYS */;
-INSERT INTO `shopping_cart` VALUES (8,3,1),
-			(30,	1,	1),
-			(25,	5,	2);
+INSERT INTO `shopping_cart` VALUES (8,3,1),(25,5,2),(30,1,1);
 /*!40000 ALTER TABLE `shopping_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,12 +233,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1),
-			(2,	'Katarzyna',	'Worek',	'polska',	'Gliwice',		'Kwiatowa',	'woreczek',		'mnbpoi159',	'kworek@gmail.com',1),
-			(3,	'Adam',			'Kruk',		'polska',	'Chorzów',		'Miła',		'adasko',		'qwemna356',	'adam.kruk@gmail.com',1),
-			(4,	'Wojciech',		'Nowak',	'polska',	'Katowice',		'Ptasia',	'wojnow',		'kjulop659',	'wojtus@gmail.com',1),
-			(5,	'Tomasz',		'Wolny',	'polska',	'Ruda Śląska',	'Kolejowa',	'tomasz125',	'asdert145',	'tomasz125@gmail.com',1),
-			(6,	'Magdalena',	'Czips',	'polska',	'Katowice',		'Gliwicka',	'lays',			'zxcdsa369',	'paprykowe@gmail.com',1);
+INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,82 +266,9 @@ CREATE TABLE `warehouse` (
 
 LOCK TABLES `warehouse` WRITE;
 /*!40000 ALTER TABLE `warehouse` DISABLE KEYS */;
-INSERT INTO `warehouse` VALUES (1,1,3,25.80,0.00,5,20.80),
-		(2,		2,	3,	36.20,	0.00,	6,	31.20),
-		(3,		3,	3,	19.30,	0.00,	4,	14.30),
-		(4,		4,	3,	28.30,	0.00,	4,	23.80),
-		(5,		5,	3,	40.90,	0.00,	2,	35.90),
-		(6,		6,	3,	23.90,	0.00,	6,	18.90),
-		(7,		7,	3,	23.70,	0.00,	8,	18.70),
-		(8,		8,	3,	21.40,	0.00,	10,	16.40),
-		(9,		9,	3,	25.60,	0.00,	12,	20.60),
-		(10,	10,	3,	18.70,	0.00,	3,	13.70),
-		(11,	11,	3,	8.90,	0.00,	2,	3.90),
-		(12,	12,	3,	27.50,	0.00,	6,	22.50),
-		(13,	13,	3,	29.00,	0.00,	7,	24.00),
-		(14,	14,	3,	28.10,	0.00,	10,	23.10),
-		(15,	15,	3,	36.60,	0.00,	13,	31.60),
-		(16,	16,	3,	38.40,	0.00,	9,	33.40),
-		(17,	17,	3,	21.50,	0.00,	34,	16.50),
-		(18,	18,	3,	19.70,	0.00,	2,	14.70),
-		(19,	19,	3,	41.00,	0.00,	6,	36.00),
-		(20,	20,	3,	30.60,	0.00,	8,	25.60),
-		(21,	21,	3,	48.40,	0.00,	13,	43.40),
-		(22,	22,	3,	32.00,	0.00,	16,	37.00),
-		(23,	23,	3,	26.30,	0.00,	8,	21.30),
-		(24,	24,	3,	26.90,	0.00,	7,	21.90),
-		(25,	25,	3,	28.30,	0.00,	1,	23.30),
-		(26,	26,	3,	29.80,	0.00,	3,	24.80),
-		(27,	27,	3,	30.70,	0.00,	2,	25.70),
-		(28,	28,	3,	35.90,	0.00,	9,	30.90),
-		(29,	29,	3,	33.80,	0.00,	9,	28.80),
-		(30,	30,	3,	32.20,	0.00,	2,	27.20),
-		(31,	31,	3,	27.90,	0.00,	6,	22.90),
-		(32,	32,	3,	27.90,	0.00,	4,	22.90),
-		(33,	33,	3,	27.90,	0.00,	7,	27.90),
-		(34,	1,	2,	25.00,	0.00,	4,	20.00),
-		(35,	2,	1,	32.80,	0.00,	6,	27.80),
-		(36,	3,	2,	25.00,	0.00,	8,	20.00),
-		(37,	4,	2,	25.00,	0.00,	5,	20.00),
-		(38,	5,	2,	25.00,	0.00,	4,	20.00),
-		(39,	6,	1,	18.90,	0.00,	2,	13.90),
-		(40,	7,	1,	29.00,	0.00,	3,	24.00),
-		(41,	8,	2,	25.00,	0.00,	2,	20.00),
-		(42,	9,	1,	26.00,	0.00,	41,	21.00),
-		(43,	10,	2,	25.00,	0.00,	4,	20.00),
-		(44,	11,	2,	25.00,	0.00,	15,	20.00),
-		(45,	12,	2,	25.00,	0.00,	23,	20.00),
-		(46,	13,	1,	30.50,	0.00,	2,	25.50),
-		(47,	14,	2,	25.00,	0.00,	33,	20.00),
-		(48,	15,	1,	40.30,	0.00,	12,	35.30),
-		(49,	16,	2,	25.00,	0.00,	14,	20.00),
-		(50,	17,	2,	25.00,	0.00,	8,	20.00),
-		(51,	18,	1,	20.00,	0.00,	9,	15.00),
-		(52,	19,	2,	25.00,	0.00,	5,	20.00),
-		(53,	20,	1,	25.70,	0.00,	3,	20.70),
-		(54,	21,	1,	50.00,	0.00,	6,	45.00),
-		(55,	22,	1,	30.70,	0.00,	4,	25.70),
-		(56,	23,	2,	25.00,	0.00,	15,	20.00),
-		(57,	24,	2,	25.00,	0.00,	7,	20.00),
-		(58,	25,	2,	25.00,	0.00,	8,	20.00),
-		(59,	26,	1,	29.60,	0.00,	4,	24.60),
-		(60,	27,	2,	25.00,	0.00,	6,	20.00),
-		(61,	28,	1,	31.80,	0.00,	14,	26.80),
-		(62,	29,	2,	25.00,	0.00,	18,	20.00),
-		(63,	30,	1,	32.70,	0.00,	19,	27.70),
-		(64,	31,	2,	25.00,	0.00,	16,	20.00),
-		(65,	32,	1,	26.40,	0.00,	14,	21.40),
-		(66,	33,	2,	25.00,	0.00,	11,	20.00);
+INSERT INTO `warehouse` VALUES (1,1,3,25.80,0,5,20.80),(2,2,3,36.20,0,6,31.20),(3,3,3,19.30,0,4,14.30),(4,4,3,28.30,0,4,23.80),(5,5,3,40.90,0,2,35.90),(6,6,3,23.90,0,6,18.90),(7,7,3,23.70,0,8,18.70),(8,8,3,21.40,0,10,16.40),(9,9,3,25.60,0,12,20.60),(10,10,3,18.70,0,3,13.70),(11,11,3,8.90,0,2,3.90),(12,12,3,27.50,0,6,22.50),(13,13,3,29.00,0,7,24.00),(14,14,3,28.10,0,10,23.10),(15,15,3,36.60,0,13,31.60),(16,16,3,38.40,0,9,33.40),(17,17,3,21.50,0,34,16.50),(18,18,3,19.70,0,2,14.70),(19,19,3,41.00,0,6,36.00),(20,20,3,30.60,0,8,25.60),(21,21,3,48.40,0,13,43.40),(22,22,3,32.00,0,16,37.00),(23,23,3,26.30,0,8,21.30),(24,24,3,26.90,0,7,21.90),(25,25,3,28.30,0,1,23.30),(26,26,3,29.80,0,3,24.80),(27,27,3,30.70,0,2,25.70),(28,28,3,35.90,0,9,30.90),(29,29,3,33.80,0,9,28.80),(30,30,3,32.20,0,2,27.20),(31,31,3,27.90,0,6,22.90),(32,32,3,27.90,0,4,22.90),(33,33,3,27.90,0,7,27.90),(34,1,2,25.00,0,4,20.00),(35,2,1,32.80,0,6,27.80),(36,3,2,25.00,0,8,20.00),(37,4,2,25.00,0,5,20.00),(38,5,2,25.00,0,4,20.00),(39,6,1,18.90,0,2,13.90),(40,7,1,29.00,0,3,24.00),(41,8,2,25.00,0,2,20.00),(42,9,1,26.00,0,41,21.00),(43,10,2,25.00,0,4,20.00),(44,11,2,25.00,0,15,20.00),(45,12,2,25.00,0,23,20.00),(46,13,1,30.50,0,2,25.50),(47,14,2,25.00,0,33,20.00),(48,15,1,40.30,0,12,35.30),(49,16,2,25.00,0,14,20.00),(50,17,2,25.00,0,8,20.00),(51,18,1,20.00,0,9,15.00),(52,19,2,25.00,0,5,20.00),(53,20,1,25.70,0,3,20.70),(54,21,1,50.00,0,6,45.00),(55,22,1,30.70,0,4,25.70),(56,23,2,25.00,0,15,20.00),(57,24,2,25.00,0,7,20.00),(58,25,2,25.00,0,8,20.00),(59,26,1,29.60,0,4,24.60),(60,27,2,25.00,0,6,20.00),(61,28,1,31.80,0,14,26.80),(62,29,2,25.00,0,18,20.00),(63,30,1,32.70,0,19,27.70),(64,31,2,25.00,0,16,20.00),(65,32,1,26.40,0,14,21.40),(66,33,2,25.00,0,11,20.00);
 /*!40000 ALTER TABLE `warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'bookstore'
---
-
---
--- Dumping routines for database 'bookstore'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -440,4 +279,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-05 20:51:32
+-- Dump completed on 2019-05-11 13:28:53
