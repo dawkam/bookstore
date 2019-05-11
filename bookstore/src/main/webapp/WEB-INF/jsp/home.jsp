@@ -2,13 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ page import ="pl.polsl.bookstore.entity.BookAuthor" %>
+<%@ page import="pl.polsl.bookstore.entity.BookAuthor" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="/homePage.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div class="top_panel">
@@ -35,20 +37,36 @@
 <div class="left_panel">
     <div class="left_panel_contents">
         <label class="side_label">Sortuj:</label>
-        <a class="side_button" href="#">Autor (a-z)</a>
-        <a class="side_button" href="#">Autor (z-a)</a>
-        <a class="side_button" href="#">Tytul (a-z)</a>
-        <a class="side_button" href="#">Tytul (z-a)</a>
-        <a class="side_button" href="#">Cena najniżej</a>
-        <a class="side_button" href="#">Cena najwyżej</a>
+        <form method="GET" action="/home">
+            <button class="side_button" type="submit">Autor (a-z)</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button">Autor (z-a)</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button">Tytul (a-z)</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button">Tytul (z-a)</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button">Cena najniżej</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button">Cena najwyżej</button>
+        </form>
         <label class="side_label">Filtruj:</label>
-        <a class="side_button" href="#">Cena najwyżej</a>
-        <a class="side_button" href="#">Cena najwyżej</a>
+        <form method="GET" action="/home">
+            <button class="side_button">Cena najwyżej</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button">Cena najwyżej</button>
+        </form>
     </div>
 </div>
 <div class="main_panel">
     <div class="main_panel_contents">
-        <table id="search-table">
+        <table class="search-table">
             <%
                 int i = 0;
             %>
@@ -58,13 +76,13 @@
                     if (i == 2) {
                 %>
                 <td>
-                    <table id="cell">
+                    <table>
                         <tr>
                             <td>
                                 <img src=${book.image} alt="cover" height="180" width="100">
                             </td>
                             <td>
-                                <table id="text">
+                                <table>
                                     <tr>
                                         <td>
                                                 ${book.title}
@@ -96,13 +114,13 @@
             } else {
             %>
             <td>
-                <table id="call2">
+                <table>
                     <tr>
                         <td>
                             <img src=${book.image} alt="cover" height="180" width="100">
                         </td>
                         <td>
-                            <table id="text2">
+                            <table>
                                 <tr>
                                     <td>
                                             ${book.title}

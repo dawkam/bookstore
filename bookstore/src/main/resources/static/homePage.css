@@ -32,11 +32,20 @@ div.search_bar{
 }
 
 .standard_button{
-    background-color: #5f5144;
+    border: 0;
+    height: 25px;
+    background-color: #352720;
     cursor: pointer;
 }
 
+div .standard_button:hover{
+    cursor: pointer;
+    background-color: #5f5144;
+}
+
 div.search_bar input{
+    height: 25px;
+    border: 0;
     background-color: #5f5144;
     width: 350px;
     margin: 10px;
@@ -63,12 +72,19 @@ div.left_panel_contents{
 
 .side_button:nth-child(even) {background-color: #53453c;}
 
-div .left_panel_contents a{
+div .left_panel_contents button{
     display:block;
+    border: 0;
     background-color: #352720;
     padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 25px;
+    width:100%;
+}
+
+div .left_panel_contents button:hover{
+    cursor: pointer;
+    background-color: #5f5144;
 }
 
 div.main_panel{
@@ -88,56 +104,84 @@ div.main_panel_contents{
 
 
 div .cart_button button{
-    background-color: #5f5144;
+    border: 0;
+    background-color: #352720;
     cursor: pointer;
     height: 40px;
     width: 70px;
     margin-right: 80px;
 }
 
+div .cart_button button:hover{
+     cursor: pointer;
+     background-color: #5f5144;
+ }
+
 div .profile_button button{
-    background-color: #5f5144;
+    border: 0;
+    background-color: #352720;
     cursor: pointer;
     height: 40px;
     width: 70px;
 }
 
-.buy_button{
+div .profile_button button:hover{
+    cursor: pointer;
     background-color: #5f5144;
+}
+
+.buy_button{
+    border:0;
+    z-index: 1;
+    background-color: #352720;
     cursor: pointer;
     width: 40px;
     height: 30px;
 }
 
+.buy_button:hover{
+    cursor: pointer;
+    background-color: #5f5144;
+}
+
+.buy_button::before{
+    background-color: #42342d;
+    top: -20px;
+    bottom: -20px;
+    left: -20px;
+    right: -20px;
+}
 
 
-#search-table{
+.search-table{
     border-collapse: collapse;
     width: 100%;
 }
 
-#search-table td, #search-table tr {
+.search-table td, .search-table tr {
+    transition:background-color 0.5s;
     border: 1px solid #ddd;
     padding: 20px;
 }
-#search-table td:hover {
+
+.search-table td:hover {
     background-color: #7f6b64;
     cursor: pointer;
 }
-#search-table td td {
 
+.search-table td td {
+    border-collapse: unset;
     padding: 0px ;
-    border: 0px;
-
+    border: 0;
 }
 
-#search-table td td td {
-    border-collapse: separate;
+.search-table td td td {
+    border-collapse: unset;
+    border: 0;
     padding: 5px 5px 5px 50px;
-    border : 0px;
 }
 
-#search-table image {
+.search-table image {
     height: 100%;
     width: 100%;
 }
