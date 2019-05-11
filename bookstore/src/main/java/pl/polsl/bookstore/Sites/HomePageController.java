@@ -47,7 +47,7 @@ public class HomePageController {
     }
 
     @PostMapping("/login")
-    public String postLogin() {
+    public String postLogin(@RequestParam String login, String password) {
 
         return "login";
     }
@@ -83,6 +83,7 @@ public class HomePageController {
                 }
                 catch(Exception e)
                 {
+
                     return "register";
                 }
             }
