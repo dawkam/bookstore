@@ -31,7 +31,7 @@ div.search_bar{
     float: left;
 }
 
-div .search_bar button{
+.standard_button{
     background-color: #5f5144;
     cursor: pointer;
 }
