@@ -54,7 +54,7 @@ public class HomePageController {
                 if(password.equals(user.getPassword()))
                 {
                     currentUser = user;
-                    return "home";
+                    return "redirect:home";
                 }
                 else
                 {
@@ -94,7 +94,7 @@ public class HomePageController {
             {
                 try {
                     currentUser = usersRepo.registerUser(login,password,name,surname,nation,city,street,email);
-                    return "home";
+                    return "redirect:home";
 
                 }
                 catch(Exception e)
