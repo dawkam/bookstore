@@ -148,4 +148,6 @@ public class Users {
     this.email = email;
     this.accessToComments = true;
   }
+
+  //public Users() {}
 }

@@ -31,12 +31,12 @@ public class HomePageController {
     @GetMapping("/home")
     public String getGreeting(@RequestParam(name ="bookName", required = false, defaultValue = "") String bookName, Model model) {
         model.addAttribute("bookList", bookRepo.booksSearch(bookName));
+        model.addAttribute("user", currentUser);
         return "home";
     }
 
     @PostMapping("/home")
     public String postGreeting() {
-
         return "home";
     }
 
@@ -65,7 +65,7 @@ public class HomePageController {
         for (Users user:usersRepo.findAll()){
             if(login.equals(user.getLogin()))
             {
-                login="";
+
                 return "register";
             }
         }
@@ -76,28 +76,25 @@ public class HomePageController {
             Matcher m = p.matcher(email);
             if(m.matches())
             {
-                currentUser = usersRepo.registerUser(login,password,name,surname,nation,city,street,email);
-                login="";
-                password="";
-                passwordConfirm="";
-                name="";
-                surname="";
-                nation="";
-                city="";
-                street="";
-                email="";
-                return "home";
+                try {
+                    currentUser = usersRepo.registerUser(login,password,name,surname,nation,city,street,email);
+                    return "home";
+
+                }
+                catch(Exception e)
+                {
+                    return "register";
+                }
             }
             else
             {
-                email="";
+
                 return "register";
             }
         }
         else
         {
-            password="";
-            passwordConfirm="";
+
             return "register";
         }
     }
