@@ -31,9 +31,18 @@
     <div class="profile_button">
         <button type="submit">Cart</button>
     </div>
-    <div class="cart_button">
-        <button onclick="location.href='/login'" type="submit">Login</button>
-    </div>
+    <c:if test="${user == null}">
+        <div class="cart_button">
+            <button onclick="location.href='/login'" type="submit">Login</button>
+        </div>
+    </c:if>
+    <c:if test="${user != null}">
+        <div class="cart_button">
+            <form method="POST" action="/logout">
+                <button type="submit">Wyloguj</button>
+            </form>
+        </div>
+    </c:if>
 </div>
 <div class="left_panel">
     <div class="left_panel_contents">
@@ -104,15 +113,16 @@
                         </tr>
                     </table>
                 </td>
-            <%if (i%3 == 0){
+                <%
+                    if (i % 3 == 0) {
 
-            %>
+                %>
             </tr>
             <tr>
                 <%
                     }
                 %>
-            </c:forEach>
+                </c:forEach>
             </tr>
         </table>
     </div>

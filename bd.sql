@@ -227,7 +227,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +236,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1),(11,'marc','dud','pol','kat','paistow','stelfos','admin','m@d.pl',1);
+INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1),(11,'marc','dud','pol','kat','paistow','stelfos','admin','m@d.pl',1),(12,'Franciszek','Berger','Polska','Bieruń','Torowa 21','Franek','admin','bergerfranek@gmail.com',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-11 19:32:15
+-- Dump completed on 2019-05-11 21:46:35
