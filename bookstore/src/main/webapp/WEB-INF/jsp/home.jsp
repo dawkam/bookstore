@@ -72,7 +72,7 @@
             <tr>
                 <c:forEach items="${bookList}" var="book">
                 <%
-                    if (i == 2) {
+                    i++;
                 %>
                 <td>
                     <table>
@@ -107,56 +107,16 @@
                         </tr>
                     </table>
                 </td>
+            <%if (i%3 == 0){
+
+            %>
             </tr>
-            <%
-                i = 0;
-            } else {
-            %>
-            <td>
-                <table>
-                    <tr>
-                        <td>
-                            <img src=${book.image} alt="cover" height="180" width="100">
-                        </td>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td>
-                                            ${book.title}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            ${book.getFullName()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            ${book.getPrice()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button class="buy_button"><i class='fas fa-cart-plus'></i></button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <%
-                    i += 1;
-                }
-            %>
+            <tr>
+                <%
+                    }
+                %>
             </c:forEach>
-            <%
-                if (i != 0) {
-            %>
             </tr>
-            <%
-                }
-            %>
         </table>
     </div>
 </div>
