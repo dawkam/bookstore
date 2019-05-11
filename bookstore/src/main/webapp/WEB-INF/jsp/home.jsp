@@ -23,9 +23,11 @@
             <button class="standard_button" type="submit">Szukaj</button>
         </form>
     </div>
-    <div class="profile_button">
-        <button type="submit">Profile</button>
-    </div>
+    <c:if test="${user} != null">
+        <div class="profile_button">
+            <button type="submit">Profile</button>
+        </div>
+    </c:if>
     <div class="profile_button">
         <button type="submit">Cart</button>
     </div>
@@ -94,11 +96,6 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                                ${book.getPrice()}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
                                             <button class="buy_button"><i class='fas fa-cart-plus'></i></button>
                                         </td>
                                     </tr>
@@ -128,11 +125,6 @@
                                 <tr>
                                     <td>
                                             ${book.getFullName()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            ${book.getPrice()}
                                     </td>
                                 </tr>
                                 <tr>

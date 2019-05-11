@@ -110,10 +110,4 @@ public class Books {
     });
     return fullName[0];
   }
-
-  public String getPrice(){
-    final double[] price = new double[1];
-    this.getWarehouse().forEach((Warehouse storage) -> { price[0] = storage.getPrice();});
-    return price[0] + " zł";
-  }
 }
