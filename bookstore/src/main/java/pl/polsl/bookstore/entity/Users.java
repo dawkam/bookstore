@@ -37,13 +37,13 @@ public class Users {
   private String email;
 
   @Column(name="access_to_comments")
-  private long accessToComments;
+  private boolean accessToComments;
 
   @OneToMany(mappedBy="usersOr",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<OrderHistory> orderHistory;
 
   @OneToMany(mappedBy="usersO",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Opinions> Opinions;
+  private Set<Opinions> opinions;
 
   @OneToMany(mappedBy="usersSh",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<ShoppingCart> shoppingCart;
@@ -129,13 +129,28 @@ public class Users {
   }
 
 
-  public long getAccessToComments() {
+  public boolean getAccessToComments() {
     return accessToComments;
   }
 
-  public void setAccessToComments(long accessToComments) {
+  public void setAccessToComments(boolean accessToComments) {
     this.accessToComments = accessToComments;
   }
 
+  public Users(String login, String password, String firstName, String surname, String nation, String city, String street, String email) {
+    this.firstName = firstName;
+    this.surname = surname;
+    this.nation = nation;
+    this.city = city;
+    this.street = street;
+    this.login = login;
+    this.password = password;
+    this.email = email;
+    this.accessToComments = true;
+    this.orderHistory = null;
+    this.shoppingCart = null;
+    this.opinions = null;
+  }
 
+  public Users() {}
 }
