@@ -8,6 +8,7 @@
 
 #login_form input{
     margin-bottom: 3px;
+    color: #000000 !important;
 }
 
 #contents{
@@ -42,7 +43,7 @@ img:hover{
 html *
 {
     font-size: 1em !important;
-    color: #000000 !important;
+    color: #ffffff !important;
     font-family: "Arial" !important;
 }
 
