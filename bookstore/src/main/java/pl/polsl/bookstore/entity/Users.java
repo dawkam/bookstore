@@ -43,7 +43,7 @@ public class Users {
   private Set<OrderHistory> orderHistory;
 
   @OneToMany(mappedBy="usersO",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Opinions> Opinions;
+  private Set<Opinions> opinions;
 
   @OneToMany(mappedBy="usersSh",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<ShoppingCart> shoppingCart;
@@ -147,6 +147,9 @@ public class Users {
     this.password = password;
     this.email = email;
     this.accessToComments = true;
+    this.orderHistory = null;
+    this.shoppingCart = null;
+    this.opinions = null;
   }
 
   public Users() {}

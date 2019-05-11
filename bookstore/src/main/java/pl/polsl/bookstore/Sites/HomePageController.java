@@ -48,6 +48,22 @@ public class HomePageController {
 
     @PostMapping("/login")
     public String postLogin(@RequestParam String login, String password) {
+        for (Users user:usersRepo.findAll()){
+            if(login.equals(user.getLogin()))
+            {
+                if(password.equals(user.getPassword()))
+                {
+                    currentUser = user;
+                    return "home";
+                }
+                else
+                {
+                    //Trzeba dodac pop-up
+                    return "login";
+                }
+            }
+        }
+        //Trzeba dodac pop-up
 
         return "login";
     }
@@ -65,7 +81,7 @@ public class HomePageController {
         for (Users user:usersRepo.findAll()){
             if(login.equals(user.getLogin()))
             {
-
+                //Trzeba dodac pop-up
                 return "register";
             }
         }
@@ -83,19 +99,19 @@ public class HomePageController {
                 }
                 catch(Exception e)
                 {
-
+                    //Trzeba dodac pop-up
                     return "register";
                 }
             }
             else
             {
-
+                //Trzeba dodac pop-up
                 return "register";
             }
         }
         else
         {
-
+            //Trzeba dodac pop-up
             return "register";
         }
     }

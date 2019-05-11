@@ -16,11 +16,11 @@
     </div>
     <div id="login_form">
         <br>
-        <form>
+        <form method="POST" action="/login">
             <label>Login: </label>
-            <input type="text" placeholder="Login" name="Login"/><br>
+            <input type="text" placeholder="Login" name="login"/><br>
             <label>Hasło: </label>
-            <input type="password" placeholder="Hasło" name="Password"/><br>
+            <input type="password" placeholder="Hasło" name="password"/><br>
             <button id="login_button" type="submit">Zaloguj</button>
         </form>
         Nie masz konta? <br>
