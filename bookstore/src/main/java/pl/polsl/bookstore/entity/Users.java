@@ -137,7 +137,7 @@ public class Users {
     this.accessToComments = accessToComments;
   }
 
-  public Users(String firstName, String surname, String nation, String city, String street, String login, String password, String email) {
+  public Users(String login, String password, String firstName, String surname, String nation, String city, String street, String email) {
     this.firstName = firstName;
     this.surname = surname;
     this.nation = nation;
@@ -149,5 +149,5 @@ public class Users {
     this.accessToComments = true;
   }
 
-  //public Users() {}
+  public Users() {}
 }
