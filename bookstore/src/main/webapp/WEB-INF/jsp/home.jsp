@@ -23,7 +23,7 @@
             <button class="standard_button" type="submit">Szukaj</button>
         </form>
     </div>
-    <c:if test="${user} != null">
+    <c:if test="${user != null}">
         <div class="profile_button">
             <button type="submit">Profile</button>
         </div>
