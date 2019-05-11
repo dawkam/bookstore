@@ -8,7 +8,7 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="/homePage.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div class="top_panel">
@@ -34,7 +34,16 @@
 </div>
 <div class="left_panel">
     <div class="left_panel_contents">
-        <a href="/api/authors">Wypisz Wszystkich autorów</a><br>
+        <label class="side_label">Sortuj:</label>
+        <a class="side_button" href="#">Autor (a-z)</a>
+        <a class="side_button" href="#">Autor (z-a)</a>
+        <a class="side_button" href="#">Tytul (a-z)</a>
+        <a class="side_button" href="#">Tytul (z-a)</a>
+        <a class="side_button" href="#">Cena najniżej</a>
+        <a class="side_button" href="#">Cena najwyżej</a>
+        <label class="side_label">Filtruj:</label>
+        <a class="side_button" href="#">Cena najwyżej</a>
+        <a class="side_button" href="#">Cena najwyżej</a>
     </div>
 </div>
 <div class="main_panel">
@@ -73,7 +82,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <button class="standard_button" type="submit">Kup</button>
+                                            <button class="buy_button"><i class='fas fa-cart-plus'></i></button>
                                         </td>
                                     </tr>
                                 </table>
@@ -111,7 +120,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <button class="standard_button" type="submit">Kup</button>
+                                        <button class="buy_button"><i class='fas fa-cart-plus'></i></button>
                                     </td>
                                 </tr>
                             </table>

@@ -33,7 +33,7 @@ public class Books {
   private Set<Opinions> opinions;
 
   @OneToMany(mappedBy="booksW",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Warehouse> warehouse;
+  private List<Warehouse> warehouse;
 
   public long getIdBook() {
     return idBook;
@@ -94,11 +94,11 @@ public class Books {
     this.opinions = opinions;
   }
 
-  public Set<Warehouse> getWarehouse() {
+  public List<Warehouse> getWarehouse() {
     return warehouse;
   }
 
-  public void setWarehouse(Set<Warehouse> warehouse) {
+  public void setWarehouse(List<Warehouse> warehouse) {
     this.warehouse = warehouse;
   }
 
