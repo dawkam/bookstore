@@ -19,7 +19,7 @@
         <form method="GET" action="/home">
             <label>Book search</label>
             <input type="text" placeholder="Search.." name="bookName"/>
-            <button type="submit">Szukaj</button>
+            <button class="standard_button" type="submit">Szukaj</button>
         </form>
     </div>
     <div class="profile_button">
@@ -66,6 +66,16 @@
                                                 ${book.getFullName()}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                                ${book.getPrice()}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button class="standard_button" type="submit">Kup</button>
+                                        </td>
+                                    </tr>
                                 </table>
                             </td>
                         </tr>
@@ -92,6 +102,16 @@
                                 <tr>
                                     <td>
                                             ${book.getFullName()}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                            ${book.getPrice()}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button class="standard_button" type="submit">Kup</button>
                                     </td>
                                 </tr>
                             </table>
