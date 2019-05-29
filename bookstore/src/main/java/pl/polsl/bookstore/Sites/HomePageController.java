@@ -121,4 +121,18 @@ public class HomePageController {
             return "register";
         }
     }
+
+    @GetMapping("/shoppingCart")
+    public String getShoppingCart()
+    {
+
+        return "shoppingCart";
+    }
+
+    @PostMapping("/shoppingcart")
+    public String postShoppingCart(@RequestParam int quantity)
+    {
+        return "shoppingCart";
+    }
+
 }
