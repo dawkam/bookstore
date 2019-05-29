@@ -48,29 +48,43 @@
     <div class="left_panel_contents">
         <label class="side_label">Sortuj:</label>
         <form method="GET" action="/home">
-            <button class="side_button" type="submit">Autor (a-z)</button>
+            <button class="side_button" name="authorName(a-z)" value="True">Imie (a-z)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Autor (z-a)</button>
+            <button class="side_button" name="authorName(z-a)" value="True">Imie (z-a)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Tytul (a-z)</button>
+            <button class="side_button" type="submit" name="author(a-z)" value="True">Nazwisko (a-z)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Tytul (z-a)</button>
+            <button class="side_button" name="author(z-a)" value="True">Nazwisko (z-a)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najniżej</button>
+            <button class="side_button" name="title(a-z)" value="True">Tytul (a-z)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najwyżej</button>
-        </form>
-        <label class="side_label">Filtruj:</label>
+            <button class="side_button" name="title(z-a)" value="True">Tytul (z-a)</button>
+        </form> <br>
+        <label class="side_label">Format papierowy:</label>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najwyżej</button>
+            <button class="side_button" name="price_lowest" value="True">Cena najniżej</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najwyżej</button>
+            <button class="side_button" name="price_highest" value="True">Cena najwyżej</button>
+        </form> <br>
+        <label class="side_label">E-book:</label>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_lowest_e_book" value="True">Cena najniżej</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_highest_e_book" value="True">Cena najwyżej</button>
+        </form> <br>
+        <label class="side_label">Audiobook:</label>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_lowest_audiobook" value="True">Cena najniżej</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_highest_audiobook" value="True">Cena najwyżej</button>
         </form>
     </div>
 </div>
