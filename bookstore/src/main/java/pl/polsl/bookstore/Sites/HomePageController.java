@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.bookstore.entity.BookAuthor;
 import pl.polsl.bookstore.entity.Users;
 import pl.polsl.bookstore.repository.BooksRepository;
+import pl.polsl.bookstore.repository.ShoppingCartRepository;
 import pl.polsl.bookstore.repository.UsersRepository;
 
 import javax.validation.constraints.Null;
@@ -20,12 +21,14 @@ public class HomePageController {
 
     private BooksRepository bookRepo;
     private UsersRepository usersRepo;
+    private ShoppingCartRepository shoppingCartRepo;
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo){
+    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo){
         bookRepo = theBookRepo;
         usersRepo= theUsersRepo;
+        shoppingCartRepo=theShoppingCartRepo;
     }
 
     @GetMapping("/home")
@@ -157,15 +160,23 @@ public class HomePageController {
     }
 
     @GetMapping("/shoppingCart")
-    public String getShoppingCart()
+    public String getShoppingCart(Model model)
     {
+        if (currentUser == null)
+            return "redirect:login";
+
+        model.addAttribute("user", currentUser);
 
         return "shoppingCart";
     }
 
     @PostMapping("/shoppingcart")
-    public String postShoppingCart(@RequestParam int quantity)
+    public String postShoppingCart(@RequestParam(required = false)long idWarehouse, int quantity)
     {
+
+        shoppingCartRepo.updateShoppingCart(idWarehouse,currentUser.getIdUser(),quantity);
+        //currentUser.getShoppingCart().Find();
+
         return "shoppingCart";
     }
 

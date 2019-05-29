@@ -107,39 +107,35 @@ div .profile_button button:hover{
 }
 
 
-.search-table{
+.shopping-table{
     border-collapse: collapse;
+    text-align: center;
     width: 100%;
 }
 
-.search-table td, .search-table tr {
+.shopping-table tr {
     transition:background-color 0.5s;
     border: 1px solid #ddd;
     padding: 20px;
+
 }
 
-.search-table td:hover {
-    background-color: #7f6b64;
-    cursor: pointer;
+.shopping-table td {
+    transition:background-color 0.5s;
+    padding: 20px;
+    margin: 5px;
+
 }
 
-.search-table td td {
-    border-collapse: unset;
-    padding: 0px ;
-    border: 0;
-}
-
-.search-table td td td {
-    border-collapse: unset;
-    border: 0;
-    padding: 5px 5px 5px 50px;
-}
-
-.search-table image {
+.shopping-table image {
     height: 100%;
     width: 100%;
 }
 
+.quantity{
+    width:50px;
+    color: #000000 !important;
+}
 
 html *
 {

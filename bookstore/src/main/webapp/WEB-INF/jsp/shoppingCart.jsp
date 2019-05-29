@@ -19,15 +19,15 @@
 
     <c:if test="${user != null}">
         <div class="profile_button">
-            <button type="submit">Profile</button>
+            <button type="submit">Profil</button>
         </div>
     </c:if>
     <div class="cart_button">
-        <button onclick="location.href='/shoppingCart'" type="submit">Cart</button>
+        <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
     <c:if test="${user == null}">
         <div class="profile_button">
-            <button onclick="location.href='/login'" type="submit">Login</button>
+            <button onclick="location.href='/login'" type="submit">Zaloguj</button>
         </div>
     </c:if>
     <c:if test="${user != null}">
@@ -41,49 +41,65 @@
 
 <div class="main_panel">
     <div class="main_panel_contents">
-        <table class="search-table">
-            <%
-                int i = 0;
-            %>
+        <table class="shopping-table">
             <tr>
-                <c:forEach items="${shoppingCart}" var="book">
-                <%
-                    i++;
-                %>
-                <td>
-                    <table>
-                        <tr>
+            <td>
+
+            </td>
+            <td>
+                Tytuł
+            </td>
+            <td>
+                Autorzy
+            </td>
+            <td>
+                Ilość
+            </td>
+            <td>
+                Format
+            </td>
+            <td>
+               Cena(zł)
+            </td>
+            <td>
+
+            </td>
+            </tr>
+
+            <tr>
+                <c:forEach items="${user.shoppingCart}" var="item">
+
                             <td>
-                                <img src=${book.image} alt="cover" height="180" width="100">
+                                <img src=${item.warehouseSh.booksW.image} alt="cover" height="180" width="100">
                             </td>
                             <td>
-                                    ${book.title}
+                                    ${item.warehouseSh.booksW.title}
                             </td>
                             <td>
-                                    ${book.getFullName()}
+                                    ${item.warehouseSh.booksW.getFullName()}
                             </td>
                             <td>
-                                <form>
-                                    <input type="number" name="quantity" min="1" max="999">
+                                <form method="POST" action="/shoppingcart">
+                                    <input type="number" name="quantity" class="quantity" value="${item.quantity}" min="1" max="999">
+                                    <br>
+                                    <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
+                                    <button onclick="" type="submit">Zmień</button>
                                 </form>
                             </td>
                             <td>
-                                    ${book.value}
+                                    ${item.warehouseSh.bookFormatW.bookFormat}
+                            </td>
+                            <td>
+
+                                    ${item.warehouseSh.price}
+                            </td>
+                             <td>
+                             <form class="delete">
+                                 <button onclick="location.href='/shoppingCart'" type="submit">Usuń</button>
+                             </form>
                             </td>
                         </tr>
-                    </table>
-                </td>
-                <%
-                    if (i % 3 == 0) {
-
-                %>
-            </tr>
-            <tr>
-                <%
-                    }
-                %>
-                </c:forEach>
-            </tr>
+            </c:forEach>
         </table>
 
 

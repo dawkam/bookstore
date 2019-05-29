@@ -36,4 +36,16 @@ public class ShoppingCartRepository {
         // return the results
         return shoppingCart;
     }
+
+    @Transactional
+    public void updateShoppingCart(long idWarehouse,long idUser,int quantity){
+        Query query = (Query) entityManager.createQuery("UPDATE ShoppingCart sh SET quantity = :quantity" +
+                " WHERE id_book_warehouse = :id_warehouse AND id_user= :id_user");
+        int updateQuery = query
+                .setParameter("id_warehouse", idWarehouse)
+                .setParameter("id_user", idUser)
+                .setParameter("quantity" ,Long.valueOf(quantity) )
+                .executeUpdate();
+
+    }
 }
