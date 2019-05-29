@@ -18,22 +18,22 @@
     </div>
     <div class="search_bar">
         <form method="GET" action="/home">
-            <label>Book search</label>
+            <label>Szukaj</label>
             <input type="text" placeholder="Search.." name="bookName"/>
-            <button class="standard_button" type="submit">Szukaj</button>
+            <button class="standard_button" type="submit">Wyszukaj</button>
         </form>
     </div>
     <c:if test="${user != null}">
         <div class="profile_button">
-            <button type="submit">Profile</button>
+            <button onclick="location.href='/profile'" type="submit">Profil</button>
         </div>
     </c:if>
     <div class="cart_button">
-        <button onclick="location.href='/shoppingCart'" type="submit">Cart</button>
+        <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
     <c:if test="${user == null}">
         <div class="profile_button">
-            <button onclick="location.href='/login'" type="submit">Login</button>
+            <button onclick="location.href='/login'" type="submit">Zaloguj</button>
         </div>
     </c:if>
     <c:if test="${user != null}">

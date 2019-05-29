@@ -1,5 +1,6 @@
 package pl.polsl.bookstore.repository;
 
+import org.apache.catalina.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,23 @@ public class UsersRepository {
     public Users registerUser(String login, String password, String name, String surname, String nation, String city, String street, String email){
         Users user= new Users(login,password,name,surname,nation,city,street,email);
         this.entityManager.persist(user);
+        return user;
+    }
+
+    @Transactional
+    public Users updateUser(Users user, String password, String name, String surname, String nation, String city, String street, String email){
+        Query query = (Query) entityManager.createQuery("UPDATE Users u SET password = :password, first_name = :name, surname = :surname, nation = :nation, city = :city, street = :street, email = :email" +
+                " WHERE id_user = :id");
+        int updateQuery = query
+                            .setParameter("password", password)
+                            .setParameter("name", name)
+                            .setParameter("surname", surname)
+                            .setParameter("nation", nation)
+                            .setParameter("city", city)
+                            .setParameter("street", street)
+                            .setParameter("email", email)
+                            .setParameter("id", user.getIdUser())
+                .executeUpdate();
         return user;
     }
 }

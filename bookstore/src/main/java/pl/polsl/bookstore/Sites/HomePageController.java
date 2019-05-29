@@ -48,7 +48,8 @@ public class HomePageController {
 
     @GetMapping("/login")
     public String getLogin() {
-
+        if(currentUser != null)
+            return "redirect:home";
         return "login";
     }
 
@@ -77,6 +78,8 @@ public class HomePageController {
     @GetMapping("/register")
     public String getRegister()
     {
+        if (currentUser != null)
+            return "redirect:home";
         return "register";
     }
 
@@ -120,6 +123,37 @@ public class HomePageController {
             //Trzeba dodac pop-up
             return "register";
         }
+    }
+
+    @GetMapping("/profile")
+    public String getProfile(Model model)
+    {
+        if (currentUser == null)
+            return "redirect:home";
+        model.addAttribute("user", currentUser);
+        return "profile";
+    }
+
+    @PostMapping("/profile")
+    public String postProfile(@RequestParam (required = false)String password, String passwordConfirm, String name, String surname, String nation, String city, String street, String email) {
+        //walidacja hasla
+        if (password.equals(passwordConfirm) || (passwordConfirm == "" && password.equals(currentUser.getPassword()))) {
+            //walidacja emaila
+            Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+            Matcher m = p.matcher(email);
+            if (m.matches()) {
+                usersRepo.updateUser(currentUser, password, name, surname, nation, city, street, email);
+                currentUser.setEmail(email);
+                currentUser.setStreet(street);
+                currentUser.setCity(city);
+                currentUser.setNation(nation);
+                currentUser.setSurname(surname);
+                currentUser.setFirstName(name);
+                currentUser.setPassword(password);
+                return "redirect:home";
+            }
+        }
+        return "redirect:profile";
     }
 
     @GetMapping("/shoppingCart")
