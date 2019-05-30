@@ -156,15 +156,17 @@ DROP TABLE IF EXISTS `order_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `order_history` (
-  `id_book_warehouse` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `id_order_history` int(11) NOT NULL AUTO_INCREMENT,
+  `id_book_warehouse` int(11) DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `purchase_price` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_book_warehouse`,`id_user`),
-  KEY `id_user` (`id_user`),
-  CONSTRAINT `order_history_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
-  CONSTRAINT `order_history_ibfk_2` FOREIGN KEY (`id_book_warehouse`) REFERENCES `warehouse` (`id_book_warehouse`)
+  PRIMARY KEY (`id_order_history`),
+  KEY `id_book_warehouse_idx` (`id_book_warehouse`),
+  KEY `id_user_idx` (`id_user`),
+  CONSTRAINT `id_book_warehouse` FOREIGN KEY (`id_book_warehouse`) REFERENCES `warehouse` (`id_book_warehouse`),
+  CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -174,7 +176,6 @@ CREATE TABLE `order_history` (
 
 LOCK TABLES `order_history` WRITE;
 /*!40000 ALTER TABLE `order_history` DISABLE KEYS */;
-INSERT INTO `order_history` VALUES (8,3,'2019-05-07',1,16),(25,5,'2019-05-01',2,47),(30,1,'2019-04-02',1,27);
 /*!40000 ALTER TABLE `order_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,6 +273,14 @@ LOCK TABLES `warehouse` WRITE;
 INSERT INTO `warehouse` VALUES (1,1,3,25.80,0,5,20.80),(2,2,3,36.20,0,6,31.20),(3,3,3,19.30,0,4,14.30),(4,4,3,28.30,0,4,23.80),(5,5,3,40.90,0,2,35.90),(6,6,3,23.90,0,6,18.90),(7,7,3,23.70,0,8,18.70),(8,8,3,21.40,0,10,16.40),(9,9,3,25.60,0,12,20.60),(10,10,3,18.70,0,3,13.70),(11,11,3,8.90,0,2,3.90),(12,12,3,27.50,0,6,22.50),(13,13,3,29.00,0,7,24.00),(14,14,3,28.10,0,10,23.10),(15,15,3,36.60,0,13,31.60),(16,16,3,38.40,0,9,33.40),(17,17,3,21.50,0,34,16.50),(18,18,3,19.70,0,2,14.70),(19,19,3,41.00,0,6,36.00),(20,20,3,30.60,0,8,25.60),(21,21,3,48.40,0,13,43.40),(22,22,3,32.00,0,16,37.00),(23,23,3,26.30,0,8,21.30),(24,24,3,26.90,0,7,21.90),(25,25,3,28.30,0,1,23.30),(26,26,3,29.80,0,3,24.80),(27,27,3,30.70,0,2,25.70),(28,28,3,35.90,0,9,30.90),(29,29,3,33.80,0,9,28.80),(30,30,3,32.20,0,2,27.20),(31,31,3,27.90,0,6,22.90),(32,32,3,27.90,0,4,22.90),(33,33,3,27.90,0,7,27.90),(34,1,2,25.00,0,4,20.00),(35,2,1,32.80,0,6,27.80),(36,3,2,25.00,0,8,20.00),(37,4,2,25.00,0,5,20.00),(38,5,2,25.00,0,4,20.00),(39,6,1,18.90,0,2,13.90),(40,7,1,29.00,0,3,24.00),(41,8,2,25.00,0,2,20.00),(42,9,1,26.00,0,41,21.00),(43,10,2,25.00,0,4,20.00),(44,11,2,25.00,0,15,20.00),(45,12,2,25.00,0,23,20.00),(46,13,1,30.50,0,2,25.50),(47,14,2,25.00,0,33,20.00),(48,15,1,40.30,0,12,35.30),(49,16,2,25.00,0,14,20.00),(50,17,2,25.00,0,8,20.00),(51,18,1,20.00,0,9,15.00),(52,19,2,25.00,0,5,20.00),(53,20,1,25.70,0,3,20.70),(54,21,1,50.00,0,6,45.00),(55,22,1,30.70,0,4,25.70),(56,23,2,25.00,0,15,20.00),(57,24,2,25.00,0,7,20.00),(58,25,2,25.00,0,8,20.00),(59,26,1,29.60,0,4,24.60),(60,27,2,25.00,0,6,20.00),(61,28,1,31.80,0,14,26.80),(62,29,2,25.00,0,18,20.00),(63,30,1,32.70,0,19,27.70),(64,31,2,25.00,0,16,20.00),(65,32,1,26.40,0,14,21.40),(66,33,2,25.00,0,11,20.00);
 /*!40000 ALTER TABLE `warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'bookstore'
+--
+
+--
+-- Dumping routines for database 'bookstore'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -282,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-11 21:46:35
+-- Dump completed on 2019-05-30 21:22:57
