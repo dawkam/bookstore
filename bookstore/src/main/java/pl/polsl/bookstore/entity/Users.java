@@ -45,7 +45,7 @@ public class Users {
   @OneToMany(mappedBy="usersO",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Opinions> opinions;
 
-  @OneToMany(mappedBy="usersSh",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy="usersSh",cascade = CascadeType.ALL, fetch = FetchType.EAGER )
   private List<ShoppingCart> shoppingCart;
 
   public boolean isAccessToComments() {
@@ -74,6 +74,12 @@ public class Users {
 
   public void setShoppingCart(List<ShoppingCart> shoppingCart) {
     this.shoppingCart = shoppingCart;
+  }
+
+  public void deleteBookFromShoppingCart(ShoppingCart theShoppingCart)
+  {
+    shoppingCart.remove(theShoppingCart);
+
   }
 
   public long getIdUser() {

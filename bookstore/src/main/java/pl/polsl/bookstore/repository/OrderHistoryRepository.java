@@ -1,5 +1,6 @@
 package pl.polsl.bookstore.repository;
 
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.OrderHistory;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -35,5 +38,18 @@ public class OrderHistoryRepository {
 
         // return the results
         return orderHistory;
+    }
+
+    @Transactional
+    public void updateOrderHistory(long idUser, long idWarehouse, double purchasePrice,long quantity){
+        Query query = (Query) entityManager.createQuery("UPDATE OrderHistory  SET id_book_warehouse=: idWarehouse, id_user= :idUser, date=:date, quantity= :quantity, purchase_price=:purchasePrice" +
+                " WHERE id_user = :id");
+        int updateQuery = query
+                .setParameter("idWarehouse", idWarehouse)
+                .setParameter("idUser", idUser)
+                .setParameter("date", new java.sql.Date(System.currentTimeMillis()))
+                .setParameter("quantity", quantity)
+                .setParameter("purchasePrice", purchasePrice)
+                .executeUpdate();
     }
 }

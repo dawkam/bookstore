@@ -48,4 +48,15 @@ public class ShoppingCartRepository {
                 .executeUpdate();
 
     }
+
+    @Transactional
+    public void deleteBookFromShoppingCart(long idWarehouse,long idUser){
+        Query query = (Query) entityManager.createQuery("DELETE FROM ShoppingCart sh" +
+                " WHERE id_book_warehouse = :id_warehouse AND id_user= :id_user");
+        int deleteQuery = query
+                .setParameter("id_warehouse", idWarehouse)
+                .setParameter("id_user", idUser)
+                .executeUpdate();
+
+    }
 }

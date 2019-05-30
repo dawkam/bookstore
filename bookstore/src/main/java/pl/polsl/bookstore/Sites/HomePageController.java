@@ -6,12 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.bookstore.entity.BookAuthor;
+import pl.polsl.bookstore.entity.ShoppingCart;
 import pl.polsl.bookstore.entity.Users;
+import pl.polsl.bookstore.entity.Warehouse;
 import pl.polsl.bookstore.repository.BooksRepository;
 import pl.polsl.bookstore.repository.ShoppingCartRepository;
 import pl.polsl.bookstore.repository.UsersRepository;
 
 import javax.validation.constraints.Null;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -170,14 +173,52 @@ public class HomePageController {
         return "shoppingCart";
     }
 
-    @PostMapping("/shoppingcart")
-    public String postShoppingCart(@RequestParam(required = false)long idWarehouse, int quantity)
+    @PostMapping("/shoppingCart/changeQuantity")
+    public String postShoppingCartChangeQuantity(@RequestParam(required = false)long idWarehouse, int quantity)
     {
 
-        shoppingCartRepo.updateShoppingCart(idWarehouse,currentUser.getIdUser(),quantity);
-        //currentUser.getShoppingCart().Find();
+            shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), quantity);
+            ShoppingCart tmp;
+            for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
+                if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
+                    tmp = shoppingcart;
+                    tmp.setQuantity(quantity);
+                }
+            }
 
         return "shoppingCart";
     }
+
+    @PostMapping("/shoppingCart/deleteBook")
+    public String postShoppingCartDeleteBook(@RequestParam(required = false)long idWarehouse)
+    {
+        shoppingCartRepo.deleteBookFromShoppingCart(idWarehouse, currentUser.getIdUser());
+        ShoppingCart tmp= new ShoppingCart();
+        for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
+
+            if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
+                tmp = shoppingcart;
+            }
+        }
+        currentUser.deleteBookFromShoppingCart(tmp);
+        return "shoppingCart";
+    }
+
+//    @PostMapping("/shoppingCart/pay")
+//    public String postShoppingCartPay(@RequestParam(required = false)long idWarehouse)
+//    {
+//        shoppingCartRepo.deleteBookFromShoppingCart(idWarehouse, currentUser.getIdUser());
+//        ShoppingCart tmp= new ShoppingCart();
+//        for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
+//
+//
+//            if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
+//                tmp = shoppingcart;
+//            }
+//        }
+//        currentUser.deleteBookFromShoppingCart(tmp);
+
+//        return "shoppingCart";
+//    }
 
 }

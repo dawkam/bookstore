@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -42,33 +43,44 @@
 <div class="main_panel">
     <div class="main_panel_contents">
         <table class="shopping-table">
-            <tr>
-            <td>
+            <%
+                int i = 0;
+            %>
 
-            </td>
-            <td>
-                Tytuł
-            </td>
-            <td>
-                Autorzy
-            </td>
-            <td>
-                Ilość
-            </td>
-            <td>
-                Format
-            </td>
-            <td>
-               Cena(zł)
-            </td>
-            <td>
-
-            </td>
-            </tr>
-
-            <tr>
                 <c:forEach items="${user.shoppingCart}" var="item">
+                    <%
+                        i++;
+                        if (i  == 1) {
 
+                    %>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            Tytuł
+                        </td>
+                        <td>
+                            Autorzy
+                        </td>
+                        <td>
+                            Ilość
+                        </td>
+                        <td>
+                            Format
+                        </td>
+                        <td>
+                            Cena(zł)
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                    <%
+                        }
+                    %>
                             <td>
                                 <img src=${item.warehouseSh.booksW.image} alt="cover" height="180" width="100">
                             </td>
@@ -79,31 +91,44 @@
                                     ${item.warehouseSh.booksW.getFullName()}
                             </td>
                             <td>
-                                <form method="POST" action="/shoppingcart">
+                                <form method="POST" action="/shoppingCart/changeQuantity">
                                     <input type="number" name="quantity" class="quantity" value="${item.quantity}" min="1" max="999">
                                     <br>
                                     <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
-                                    <button onclick="" type="submit">Zmień</button>
+                                    <button class="standard_button" type="submit">Zmień</button>
                                 </form>
                             </td>
                             <td>
                                     ${item.warehouseSh.bookFormatW.bookFormat}
                             </td>
                             <td>
-
-                                    ${item.warehouseSh.price}
+                                <c:set var="price" value="${0}"/>
+                                <c:set var="price" value="${item.warehouseSh.price - ((item.warehouseSh.price * item.warehouseSh.discount)/100)}" />
+                                <fmt:formatNumber value="${price}" currencySymbol="zł" type="currency" />
                             </td>
                              <td>
-                             <form class="delete">
-                                 <button onclick="location.href='/shoppingCart'" type="submit">Usuń</button>
+                             <form method="POST" action="/shoppingCart/deleteBook">
+                                 <button class="standard_button" type="submit">Usuń</button>
+                                 <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
                              </form>
                             </td>
                         </tr>
             </c:forEach>
         </table>
+        <%
+            if (i  != 0) {
 
-
-
+        %>
+        <form method="POST" action="/shoppingCart/pay">
+            <button class="standard_button" type="submit">Zapłać</button>
+        </form>
+        <%
+            }else {
+        %>
+        Koszyk jest pusty.
+        <%
+            }
+        %>
     </div>
 </div>
 </body>

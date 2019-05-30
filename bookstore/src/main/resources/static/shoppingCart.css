@@ -33,6 +33,7 @@ img:hover{
     cursor: pointer;
 }
 
+
 div .standard_button:hover{
     cursor: pointer;
     background-color: #5f5144;
@@ -83,6 +84,8 @@ div .profile_button button:hover{
     cursor: pointer;
     background-color: #5f5144;
 }
+
+
 
 .buy_button{
     border:0;
