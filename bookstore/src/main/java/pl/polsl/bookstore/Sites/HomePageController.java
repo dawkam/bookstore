@@ -10,10 +10,12 @@ import pl.polsl.bookstore.entity.ShoppingCart;
 import pl.polsl.bookstore.entity.Users;
 import pl.polsl.bookstore.entity.Warehouse;
 import pl.polsl.bookstore.repository.BooksRepository;
+import pl.polsl.bookstore.repository.OrderHistoryRepository;
 import pl.polsl.bookstore.repository.ShoppingCartRepository;
 import pl.polsl.bookstore.repository.UsersRepository;
 
 import javax.validation.constraints.Null;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,13 +27,15 @@ public class HomePageController {
     private BooksRepository bookRepo;
     private UsersRepository usersRepo;
     private ShoppingCartRepository shoppingCartRepo;
+    private OrderHistoryRepository orderHistoryRepo;
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo){
+    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo){
         bookRepo = theBookRepo;
         usersRepo= theUsersRepo;
         shoppingCartRepo=theShoppingCartRepo;
+        orderHistoryRepo = theOrderHistoryRepo;
     }
 
     @GetMapping("/home")
@@ -174,7 +178,7 @@ public class HomePageController {
     }
 
     @PostMapping("/shoppingCart/changeQuantity")
-    public String postShoppingCartChangeQuantity(@RequestParam(required = false)long idWarehouse, int quantity)
+    public String postShoppingCartChangeQuantity(@RequestParam(required = false)long idWarehouse, int quantity, Model model)
     {
 
             shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), quantity);
@@ -185,12 +189,12 @@ public class HomePageController {
                     tmp.setQuantity(quantity);
                 }
             }
-
+        model.addAttribute("user", currentUser);
         return "shoppingCart";
     }
 
     @PostMapping("/shoppingCart/deleteBook")
-    public String postShoppingCartDeleteBook(@RequestParam(required = false)long idWarehouse)
+    public String postShoppingCartDeleteBook(@RequestParam(required = false)long idWarehouse, Model model)
     {
         shoppingCartRepo.deleteBookFromShoppingCart(idWarehouse, currentUser.getIdUser());
         ShoppingCart tmp= new ShoppingCart();
@@ -201,24 +205,24 @@ public class HomePageController {
             }
         }
         currentUser.deleteBookFromShoppingCart(tmp);
+        model.addAttribute("user", currentUser);
         return "shoppingCart";
     }
 
-//    @PostMapping("/shoppingCart/pay")
-//    public String postShoppingCartPay(@RequestParam(required = false)long idWarehouse)
-//    {
-//        shoppingCartRepo.deleteBookFromShoppingCart(idWarehouse, currentUser.getIdUser());
-//        ShoppingCart tmp= new ShoppingCart();
-//        for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
-//
-//
-//            if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
-//                tmp = shoppingcart;
-//            }
-//        }
-//        currentUser.deleteBookFromShoppingCart(tmp);
+    @PostMapping("/shoppingCart/pay")
+    public String postShoppingCartPay(Model model)
+    {
+        Iterator iterator= currentUser.getShoppingCart().iterator();
+        ShoppingCart shoppingcart= new ShoppingCart();
 
-//        return "shoppingCart";
-//    }
+        while(iterator.hasNext()){
+            shoppingcart=(ShoppingCart)iterator.next();
+            orderHistoryRepo.addOrderHistory(shoppingcart.getWarehouseSh(),currentUser,shoppingcart.getQuantity(),shoppingcart.getWarehouseSh().calculatePrice(shoppingcart.getQuantity()));
+            iterator.remove();
+        }
+        shoppingCartRepo.deleteBooksFromShoppingCart(currentUser.getIdUser());
+        model.addAttribute("user", currentUser);
+        return "shoppingCart";
+    }
 
 }

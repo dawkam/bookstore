@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.OrderHistory;
+import pl.polsl.bookstore.entity.Warehouse;
+import pl.polsl.bookstore.entity.Users;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -41,15 +41,9 @@ public class OrderHistoryRepository {
     }
 
     @Transactional
-    public void updateOrderHistory(long idUser, long idWarehouse, double purchasePrice,long quantity){
-        Query query = (Query) entityManager.createQuery("UPDATE OrderHistory  SET id_book_warehouse=: idWarehouse, id_user= :idUser, date=:date, quantity= :quantity, purchase_price=:purchasePrice" +
-                " WHERE id_user = :id");
-        int updateQuery = query
-                .setParameter("idWarehouse", idWarehouse)
-                .setParameter("idUser", idUser)
-                .setParameter("date", new java.sql.Date(System.currentTimeMillis()))
-                .setParameter("quantity", quantity)
-                .setParameter("purchasePrice", purchasePrice)
-                .executeUpdate();
+    public void addOrderHistory(Warehouse warehouse,Users user, long quantity, double purchasePrice){
+        java.sql.Date date =new java.sql.Date(System.currentTimeMillis());
+        OrderHistory orderHistory= new OrderHistory(warehouse, user,date, quantity, purchasePrice);
+        this.entityManager.persist(orderHistory);
     }
 }

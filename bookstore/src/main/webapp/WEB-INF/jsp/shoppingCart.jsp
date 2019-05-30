@@ -103,7 +103,7 @@
                             </td>
                             <td>
                                 <c:set var="price" value="${0}"/>
-                                <c:set var="price" value="${item.warehouseSh.price - ((item.warehouseSh.price * item.warehouseSh.discount)/100)}" />
+                                <c:set var="price" value="${(item.warehouseSh.price - ((item.warehouseSh.price * item.warehouseSh.discount)/100)) * item.quantity }" />
                                 <fmt:formatNumber value="${price}" currencySymbol="zł" type="currency" />
                             </td>
                              <td>

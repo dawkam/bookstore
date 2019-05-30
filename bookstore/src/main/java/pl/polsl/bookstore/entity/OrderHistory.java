@@ -11,11 +11,15 @@ import java.sql.Date;
 public class OrderHistory implements Serializable {
 
   @Id
+  @GeneratedValue(strategy= GenerationType.IDENTITY)
+  @Column(name="id_order_history")
+  private long idOrderHistory;
+
   @ManyToOne
   @JoinColumn(name="id_book_warehouse" , referencedColumnName = "id_book_warehouse")
   Warehouse warehouseOr;
 
-  @Id
+
   @ManyToOne
   @JoinColumn(name="id_user" , referencedColumnName = "id_user")
   Users usersOr;
@@ -28,8 +32,23 @@ public class OrderHistory implements Serializable {
   private long quantity;
 
   @Column(name="purchase_price")
-  private long purchasePrice;
+  private double purchasePrice;
 
+  public OrderHistory(Warehouse warehouseOr, Users usersOr, Date date, long quantity, double purchasePrice) {
+    this.warehouseOr = warehouseOr;
+    this.usersOr = usersOr;
+    this.date = date;
+    this.quantity = quantity;
+    this.purchasePrice = purchasePrice;
+  }
+
+  public long getIdOrderHistory() {
+    return idOrderHistory;
+  }
+
+  public void setIdOrderHistory(long idOrderHistory) {
+    this.idOrderHistory = idOrderHistory;
+  }
 
   public Warehouse getWarehouseOr() {
     return warehouseOr;
@@ -63,7 +82,7 @@ public class OrderHistory implements Serializable {
     this.quantity = quantity;
   }
 
-  public long getPurchasePrice() {
+  public double getPurchasePrice() {
     return purchasePrice;
   }
 
