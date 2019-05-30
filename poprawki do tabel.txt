@@ -1,0 +1,37 @@
+DELETE FROM `bookstore`.`order_history` WHERE (`id_book_warehouse` = '8') and (`id_user` = '3');
+DELETE FROM `bookstore`.`order_history` WHERE (`id_book_warehouse` = '25') and (`id_user` = '5');
+DELETE FROM `bookstore`.`order_history` WHERE (`id_book_warehouse` = '30') and (`id_user` = '1');
+
+
+ALTER TABLE `bookstore`.`order_history` 
+DROP FOREIGN KEY `order_history_ibfk_2`,
+DROP FOREIGN KEY `order_history_ibfk_1`;
+ALTER TABLE `bookstore`.`order_history` 
+CHANGE COLUMN `id_book_warehouse` `id_book_warehouse` INT(11) NULL ,
+CHANGE COLUMN `id_user` `id_user` INT(11) NULL ,
+DROP INDEX `id_user` ,
+DROP PRIMARY KEY;
+;
+
+
+ALTER TABLE `bookstore`.`order_history` 
+ADD COLUMN `id_order_history` INT NOT NULL AUTO_INCREMENT AFTER `purchase_price`,
+ADD PRIMARY KEY (`id_order_history`),
+ADD INDEX `id_book_warehouse_idx` (`id_book_warehouse` ASC) VISIBLE,
+ADD INDEX `id_user_idx` (`id_user` ASC) VISIBLE;
+;
+ALTER TABLE `bookstore`.`order_history` 
+ADD CONSTRAINT `id_book_warehouse`
+  FOREIGN KEY (`id_book_warehouse`)
+  REFERENCES `bookstore`.`warehouse` (`id_book_warehouse`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `id_user`
+  FOREIGN KEY (`id_user`)
+  REFERENCES `bookstore`.`users` (`id_user`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+  
+  ALTER TABLE `bookstore`.`order_history` 
+CHANGE COLUMN `id_order_history` `id_order_history` INT(11) NOT NULL AUTO_INCREMENT FIRST;
