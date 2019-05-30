@@ -17,6 +17,7 @@ import pl.polsl.bookstore.repository.UsersRepository;
 import javax.validation.constraints.Null;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,8 +40,58 @@ public class HomePageController {
     }
 
     @GetMapping("/home")
-    public String getGreeting(@RequestParam(name ="bookName", required = false, defaultValue = "") String bookName, Model model) {
+    public String getGreeting(@RequestParam Map<String,String> requestParams, Model model) {
+
+        String bookName = (requestParams.get("bookName") != null) ? requestParams.get("bookName") : "";
         model.addAttribute("bookList", bookRepo.booksSearch(bookName));
+        String authorNameAZ = (requestParams.get("authorName(a-z)") != null) ? requestParams.get("authorName(a-z)") : "";
+        if(authorNameAZ.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByAuthorName(true));
+        }
+        String authorNameZA = (requestParams.get("authorName(z-a)") != null) ? requestParams.get("authorName(z-a)") : "";
+        if(authorNameZA.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByAuthorName(false));
+        }
+        String authorAZ = (requestParams.get("author(a-z)") != null) ? requestParams.get("author(a-z)") : "";
+        if(authorAZ.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByAuthor(true));
+        }
+        String authorZA = (requestParams.get("author(z-a)") != null) ? requestParams.get("author(z-a)") : "";
+        if(authorZA.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByAuthor(false));
+        }
+        String titleAZ = (requestParams.get("title(a-z)") != null) ? requestParams.get("title(a-z)") : "";
+        if(titleAZ.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByTitle(true));
+        }
+        String titleZA = (requestParams.get("title(z-a)") != null) ? requestParams.get("title(z-a)") : "";
+        if(titleZA.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByTitle(false));
+        }
+        String priceLowest = (requestParams.get("price_lowest") != null) ? requestParams.get("price_lowest") : "";
+        if(priceLowest.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByPrice(true));
+        }
+        String priceHighest = (requestParams.get("price_highest") != null) ? requestParams.get("price_highest") : "";
+        if(priceHighest.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByPrice(false));
+        }
+        String priceHighestEbook = (requestParams.get("price_highest_e_book") != null) ? requestParams.get("price_highest_e_book") : "";
+        if(priceHighestEbook.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByPriceEbook(false));
+        }
+        String priceLowestEbook = (requestParams.get("price_lowest_e_book") != null) ? requestParams.get("price_lowest_e_book") : "";
+        if(priceLowestEbook.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByPriceEbook(true));
+        }
+        String priceHighestAudiobook = (requestParams.get("price_highest_audiobook") != null) ? requestParams.get("price_highest_audiobook") : "";
+        if(priceHighestAudiobook.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByPriceAudiobook(false));
+        }
+        String priceLowestAudiobook = (requestParams.get("price_lowest_audiobook") != null) ? requestParams.get("price_lowest_audiobook") : "";
+        if(priceLowestAudiobook.equals("True")){
+            model.addAttribute("bookList", bookRepo.searchByPriceAudiobook(true));
+        }
         model.addAttribute("user", currentUser);
         return "home";
     }

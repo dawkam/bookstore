@@ -57,4 +57,109 @@ public class BooksRepository {
        else return findAll();
     }
 
+    @Transactional
+    public List<Books> searchByAuthor(boolean isAscending) {
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        if(isAscending){
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT ba.booksB FROM BookAuthor ba order by ba.authorsB.surname ASC");
+            return theQuery.getResultList();
+        }
+        else{
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT ba.booksB FROM BookAuthor ba order by ba.authorsB.surname DESC");
+            return theQuery.getResultList();
+        }
+    }
+
+    @Transactional
+    public List<Books> searchByAuthorName(boolean isAscending) {
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        if(isAscending){
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT ba.booksB FROM BookAuthor ba order by ba.authorsB.firstName ASC");
+            return theQuery.getResultList();
+        }
+        else{
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT ba.booksB FROM BookAuthor ba order by ba.authorsB.firstName DESC");
+            return theQuery.getResultList();
+        }
+    }
+
+    @Transactional
+    public List<Books> searchByTitle(boolean isAscending) {
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        if(isAscending){
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT ba.booksB FROM BookAuthor ba order by ba.booksB.title ASC");
+            return theQuery.getResultList();
+        }
+        else{
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT ba.booksB FROM BookAuthor ba order by ba.booksB.title DESC");
+            return theQuery.getResultList();
+        }
+    }
+
+    @Transactional
+    public List<Books> searchByPrice(boolean isAscending) {
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        // create a query
+        if(isAscending){
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT w.booksW FROM Warehouse w where w.bookFormatW.bookFormat='książka' order by w.price ASC");      //from odnosi sie do klasy nie do tabeli
+            return theQuery.getResultList();
+        }
+        else{
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT w.booksW FROM Warehouse w where w.bookFormatW.bookFormat='książka' order by w.price DESC");      //from odnosi sie do klasy nie do tabeli
+            return theQuery.getResultList();
+        }
+    }
+
+    @Transactional
+    public List<Books> searchByPriceEbook(boolean isAscending) {
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        // create a query
+        if(isAscending){
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT w.booksW FROM Warehouse w where w.bookFormatW.bookFormat='e-book' order by w.price ASC");      //from odnosi sie do klasy nie do tabeli
+            return theQuery.getResultList();
+        }
+        else{
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT w.booksW FROM Warehouse w where w.bookFormatW.bookFormat='e-book' order by w.price DESC");      //from odnosi sie do klasy nie do tabeli
+            return theQuery.getResultList();
+        }
+    }
+
+    @Transactional
+    public List<Books> searchByPriceAudiobook(boolean isAscending) {
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        // create a query
+        if(isAscending){
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT w.booksW FROM Warehouse w where w.bookFormatW.bookFormat='audiobook' order by w.price ASC");      //from odnosi sie do klasy nie do tabeli
+            return theQuery.getResultList();
+        }
+        else{
+            Query<Books> theQuery =
+                    currentSession.createQuery("SELECT w.booksW FROM Warehouse w where w.bookFormatW.bookFormat='audiobook' order by w.price DESC");      //from odnosi sie do klasy nie do tabeli
+            return theQuery.getResultList();
+        }
+    }
+
 }
