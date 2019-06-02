@@ -113,4 +113,10 @@ public class Warehouse {
     this.shoppingCart = shoppingCart;
   }
 
+  public double calculatePrice(long quantity)
+  {
+    double thequantity=(double)quantity;
+    double total=(price - ( price*discount/100))*thequantity;
+    return total;
+  }
 }

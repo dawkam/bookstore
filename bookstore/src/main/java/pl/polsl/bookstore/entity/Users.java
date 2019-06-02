@@ -1,7 +1,7 @@
 package pl.polsl.bookstore.entity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -40,13 +40,47 @@ public class Users {
   private boolean accessToComments;
 
   @OneToMany(mappedBy="usersOr",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<OrderHistory> orderHistory;
+  private List<OrderHistory> orderHistory;
 
   @OneToMany(mappedBy="usersO",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Opinions> opinions;
+  private List<Opinions> opinions;
 
-  @OneToMany(mappedBy="usersSh",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<ShoppingCart> shoppingCart;
+  @OneToMany(mappedBy="usersSh",cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+  private List<ShoppingCart> shoppingCart;
+
+  public boolean isAccessToComments() {
+    return accessToComments;
+  }
+
+  public List<OrderHistory> getOrderHistory() {
+    return orderHistory;
+  }
+
+  public void setOrderHistory(List<OrderHistory> orderHistory) {
+    this.orderHistory = orderHistory;
+  }
+
+  public List<Opinions> getOpinions() {
+    return opinions;
+  }
+
+  public void setOpinions(List<Opinions> opinions) {
+    this.opinions = opinions;
+  }
+
+  public List<ShoppingCart> getShoppingCart() {
+    return shoppingCart;
+  }
+
+  public void setShoppingCart(List<ShoppingCart> shoppingCart) {
+    this.shoppingCart = shoppingCart;
+  }
+
+  public void deleteBookFromShoppingCart(ShoppingCart theShoppingCart)
+  {
+    shoppingCart.remove(theShoppingCart);
+
+  }
 
   public long getIdUser() {
     return idUser;

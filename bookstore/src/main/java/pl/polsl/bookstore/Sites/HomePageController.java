@@ -5,13 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.polsl.bookstore.entity.BookAuthor;
+import pl.polsl.bookstore.entity.ShoppingCart;
 import pl.polsl.bookstore.entity.Books;
 import pl.polsl.bookstore.entity.Users;
 import pl.polsl.bookstore.entity.Warehouse;
 import pl.polsl.bookstore.repository.BooksRepository;
+import pl.polsl.bookstore.repository.OrderHistoryRepository;
+import pl.polsl.bookstore.repository.ShoppingCartRepository;
 import pl.polsl.bookstore.repository.UsersRepository;
 import pl.polsl.bookstore.repository.WarehouseRepository;
 
+import javax.validation.constraints.Null;
+import java.util.Iterator;
+import java.util.Optional;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -23,12 +30,16 @@ public class HomePageController {
 
     private BooksRepository bookRepo;
     private UsersRepository usersRepo;
+    private ShoppingCartRepository shoppingCartRepo;
+    private OrderHistoryRepository orderHistoryRepo;
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo, WarehouseRepository warehouseRepo) {
+    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo){
         bookRepo = theBookRepo;
-        usersRepo = theUsersRepo;
+        usersRepo= theUsersRepo;
+        shoppingCartRepo=theShoppingCartRepo;
+        orderHistoryRepo = theOrderHistoryRepo;
     }
 
     @GetMapping("/home")
@@ -193,6 +204,66 @@ public class HomePageController {
         }
         return "redirect:profile";
     }
+
+    @GetMapping("/shoppingCart")
+    public String getShoppingCart(Model model)
+    {
+        if (currentUser == null)
+            return "redirect:login";
+
+        model.addAttribute("user", currentUser);
+
+        return "shoppingCart";
+    }
+
+    @PostMapping("/shoppingCart/changeQuantity")
+    public String postShoppingCartChangeQuantity(@RequestParam(required = false)long idWarehouse, int quantity, Model model)
+    {
+
+            shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), quantity);
+            ShoppingCart tmp;
+            for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
+                if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
+                    tmp = shoppingcart;
+                    tmp.setQuantity(quantity);
+                }
+            }
+        model.addAttribute("user", currentUser);
+        return "shoppingCart";
+    }
+
+    @PostMapping("/shoppingCart/deleteBook")
+    public String postShoppingCartDeleteBook(@RequestParam(required = false)long idWarehouse, Model model)
+    {
+        shoppingCartRepo.deleteBookFromShoppingCart(idWarehouse, currentUser.getIdUser());
+        ShoppingCart tmp= new ShoppingCart();
+        for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
+
+            if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
+                tmp = shoppingcart;
+            }
+        }
+        currentUser.deleteBookFromShoppingCart(tmp);
+        model.addAttribute("user", currentUser);
+        return "shoppingCart";
+    }
+
+    @PostMapping("/shoppingCart/pay")
+    public String postShoppingCartPay(Model model)
+    {
+        Iterator iterator= currentUser.getShoppingCart().iterator();
+        ShoppingCart shoppingcart= new ShoppingCart();
+
+        while(iterator.hasNext()){
+            shoppingcart=(ShoppingCart)iterator.next();
+            orderHistoryRepo.addOrderHistory(shoppingcart.getWarehouseSh(),currentUser,shoppingcart.getQuantity(),shoppingcart.getWarehouseSh().calculatePrice(shoppingcart.getQuantity()));
+            iterator.remove();
+        }
+        shoppingCartRepo.deleteBooksFromShoppingCart(currentUser.getIdUser());
+        model.addAttribute("user", currentUser);
+        return "shoppingCart";
+    }
+
 
     @PostMapping("/book")
     public String postBook() {
