@@ -39,6 +39,23 @@ public class BooksRepository {
     }
 
     @Transactional
+    public Books findBookById(String id) {
+
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        // create a query
+        Query<Books> theQuery =
+                currentSession.createQuery("select b from Books b where  b.idBook LIKE concat('%', :id, '%')", Books.class).setParameter("id", id);      //from odnosi sie do klasy nie do tabeli
+
+        // execute query and get result list
+        List<Books> books = theQuery.getResultList();
+
+        // return the results
+        return books.get(0);
+    }
+
+    @Transactional
     public List<Books> booksSearch(String searchTerm) {
         if(!searchTerm.equals(""))
         {
@@ -161,5 +178,4 @@ public class BooksRepository {
             return theQuery.getResultList();
         }
     }
-
 }

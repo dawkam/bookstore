@@ -186,10 +186,39 @@ div .profile_button button:hover{
     width: 100%;
 }
 
+#book_img_div{
+    margin: 50px;
+}
+
+#book_info{
+    position: relative;
+    left: 230px;
+    top: -360px;
+    font-size: 2em
+}
+
+.typ_ksiazki{
+    color: #000000 !important;
+}
+
+.do_koszyka_button{
+    border: 0;
+    background-color: #352720;
+    cursor: pointer;
+    height: 30px;
+    width: 140px;
+    margin-left: 30px;
+}
+
+.do_koszyka_button:hover{
+    cursor: pointer;
+    background-color: #5f5144;
+}
+
 
 html *
 {
-    color: #ffffff !important;}
+    color: #ffffff;}
 
 body{
     background-color: #42342d;

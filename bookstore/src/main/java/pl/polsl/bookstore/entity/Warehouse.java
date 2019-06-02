@@ -1,6 +1,9 @@
 package pl.polsl.bookstore.entity;
 
+import pl.polsl.bookstore.repository.BooksRepository;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -109,4 +112,5 @@ public class Warehouse {
   public void setShoppingCart(Set<ShoppingCart> shoppingCart) {
     this.shoppingCart = shoppingCart;
   }
+
 }
