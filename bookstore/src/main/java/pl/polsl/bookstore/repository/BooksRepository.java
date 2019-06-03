@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.Books;
+import pl.polsl.bookstore.entity.Opinions;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -56,5 +57,11 @@ public class BooksRepository {
         }
        else return findAll();
     }
+
+    @Transactional
+    public void addOpinion(Opinions opinion){
+        this.entityManager.persist(opinion);
+    }
+
 
 }
