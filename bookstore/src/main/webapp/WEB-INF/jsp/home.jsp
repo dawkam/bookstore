@@ -28,16 +28,16 @@
             <button onclick="location.href='/profile'" type="submit">Profil</button>
         </div>
     </c:if>
-    <div class="profile_button">
-        <button type="submit">Koszyk</button>
+    <div class="cart_button">
+        <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
     <c:if test="${user == null}">
-        <div class="cart_button">
+        <div class="profile_button">
             <button onclick="location.href='/login'" type="submit">Zaloguj</button>
         </div>
     </c:if>
     <c:if test="${user != null}">
-        <div class="cart_button">
+        <div class="profile_button">
             <form method="POST" action="/logout">
                 <button type="submit">Wyloguj</button>
             </form>
@@ -48,29 +48,46 @@
     <div class="left_panel_contents">
         <label class="side_label">Sortuj:</label>
         <form method="GET" action="/home">
-            <button class="side_button" type="submit">Autor (a-z)</button>
+            <button class="side_button" name="authorName(a-z)" value="True">Imie (a-z)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Autor (z-a)</button>
+            <button class="side_button" name="authorName(z-a)" value="True">Imie (z-a)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Tytul (a-z)</button>
+            <button class="side_button" type="submit" name="author(a-z)" value="True">Nazwisko (a-z)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Tytul (z-a)</button>
+            <button class="side_button" name="author(z-a)" value="True">Nazwisko (z-a)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najniżej</button>
+            <button class="side_button" name="title(a-z)" value="True">Tytul (a-z)</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najwyżej</button>
+            <button class="side_button" name="title(z-a)" value="True">Tytul (z-a)</button>
         </form>
-        <label class="side_label">Filtruj:</label>
+        <br>
+        <label class="side_label">Format papierowy:</label>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najwyżej</button>
+            <button class="side_button" name="price_lowest" value="True">Cena najniżej</button>
         </form>
         <form method="GET" action="/home">
-            <button class="side_button">Cena najwyżej</button>
+            <button class="side_button" name="price_highest" value="True">Cena najwyżej</button>
+        </form>
+        <br>
+        <label class="side_label">E-book:</label>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_lowest_e_book" value="True">Cena najniżej</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_highest_e_book" value="True">Cena najwyżej</button>
+        </form>
+        <br>
+        <label class="side_label">Audiobook:</label>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_lowest_audiobook" value="True">Cena najniżej</button>
+        </form>
+        <form method="GET" action="/home">
+            <button class="side_button" name="price_highest_audiobook" value="True">Cena najwyżej</button>
         </form>
     </div>
 </div>
@@ -86,32 +103,35 @@
                     i++;
                 %>
                 <td>
-                    <table>
-                        <tr>
-                            <td>
-                                <img src=${book.image} alt="cover" height="180" width="100">
-                            </td>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td>
-                                                ${book.title}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                                ${book.getFullName()}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button class="buy_button"><i class='fas fa-cart-plus'></i></button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+                    <form method="GET" action="/book">
+                        <input type="hidden" name="bookId" value=${book.idBook}>
+                        <table>
+                            <tr>
+                                <td>
+                                    <img src=${book.image} alt="cover" height="180" width="100">
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                    ${book.title}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                    ${book.getFullName()}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="buy_button"><i class='fas fa-cart-plus'></i></button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </td>
                 <%
                     if (i % 3 == 0) {

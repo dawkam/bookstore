@@ -43,4 +43,5 @@ public class ShoppingCart implements Serializable {
   public void setQuantity(long quantity) {
     this.quantity = quantity;
   }
+
 }

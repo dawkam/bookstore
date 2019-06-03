@@ -26,7 +26,7 @@ public class Books {
   @Column(name="image")
   private String image;
 
-  @OneToMany(mappedBy="booksB",cascade = CascadeType.ALL, fetch = FetchType.LAZY)       //przy mapowaniach ostatnia litera nazwy jest to pierwsza litera (lub litery) klasy z ktora sie laczy(zabezpiecza w momencie,
+  @OneToMany(mappedBy="booksB",cascade = CascadeType.ALL, fetch = FetchType.EAGER)       //przy mapowaniach ostatnia litera nazwy jest to pierwsza litera (lub litery) klasy z ktora sie laczy(zabezpiecza w momencie,
   private Set<BookAuthor> bookAuthor;                                                    // gdy z jednej tablicy jest wiele mapowan)
 
   @OneToMany(mappedBy="booksO",cascade = CascadeType.ALL, fetch = FetchType.LAZY)

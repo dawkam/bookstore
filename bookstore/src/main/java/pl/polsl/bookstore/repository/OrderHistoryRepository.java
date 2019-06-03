@@ -1,11 +1,14 @@
 package pl.polsl.bookstore.repository;
 
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.OrderHistory;
+import pl.polsl.bookstore.entity.Warehouse;
+import pl.polsl.bookstore.entity.Users;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -35,5 +38,12 @@ public class OrderHistoryRepository {
 
         // return the results
         return orderHistory;
+    }
+
+    @Transactional
+    public void addOrderHistory(Warehouse warehouse,Users user, long quantity, double purchasePrice){
+        java.sql.Date date =new java.sql.Date(System.currentTimeMillis());
+        OrderHistory orderHistory= new OrderHistory(warehouse, user,date, quantity, purchasePrice);
+        this.entityManager.persist(orderHistory);
     }
 }
