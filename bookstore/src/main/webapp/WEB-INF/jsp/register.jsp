@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>NewBook</title>
     <link rel="stylesheet" href="/loginPage.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>

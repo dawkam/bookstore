@@ -5,6 +5,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.polsl.bookstore.entity.Authors;
 import pl.polsl.bookstore.entity.Warehouse;
 
 import javax.persistence.EntityManager;
@@ -35,5 +36,24 @@ public class WarehouseRepository {
 
         // return the results
         return warehouse;
+    }
+
+    @Transactional
+    public Warehouse findWarehouse(Warehouse warehouse){
+        try{
+            Query<Warehouse> query = (Query<Warehouse>) entityManager.createQuery("SELECT w FROM Warehouse w WHERE w.bookW = :book AND w.bookFormatW = :foramt")
+                    .setParameter("book", warehouse.getBooksW())
+                    .setParameter("foramt", warehouse.getBookFormatW());
+            return query.getSingleResult();
+        }
+        catch (Exception e){
+            return warehouse;
+        }
+    }
+
+    @Transactional
+    public void addWarehouse(Warehouse warehouse)
+    {
+        this.entityManager.persist(warehouse);
     }
 }

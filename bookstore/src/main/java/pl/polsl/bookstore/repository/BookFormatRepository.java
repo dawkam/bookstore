@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.BookFormat;
+import pl.polsl.bookstore.entity.Role;
 
 import javax.persistence.EntityManager;
+import java.awt.print.Book;
 import java.util.List;
 
 @Repository
@@ -36,4 +38,13 @@ public class BookFormatRepository {
         // return the results
         return bookFormat;
     }
+
+    @Transactional
+    public BookFormat findByName(String bookFormat){
+        Query<BookFormat> query = (Query<BookFormat>) entityManager.createQuery("SELECT bf From BookFormat bf Where bf.bookFormat=:bookFormat" )
+                .setParameter("bookFormat", bookFormat);
+        BookFormat result = query.getSingleResult();
+        return result;
+    }
+
 }

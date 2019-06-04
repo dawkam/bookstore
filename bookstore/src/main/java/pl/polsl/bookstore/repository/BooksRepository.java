@@ -5,6 +5,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.polsl.bookstore.entity.Authors;
 import pl.polsl.bookstore.entity.Books;
 import pl.polsl.bookstore.entity.Opinions;
 
@@ -183,5 +184,25 @@ public class BooksRepository {
                     currentSession.createQuery("SELECT w.booksW FROM Warehouse w where w.bookFormatW.bookFormat='audiobook' order by w.price DESC");      //from odnosi sie do klasy nie do tabeli
             return theQuery.getResultList();
         }
+    }
+
+    @Transactional
+    public Books findBook(Books book){
+        try{
+            Query<Books> query = (Query<Books>) entityManager.createQuery("SELECT b FROM Books b WHERE b.title= :title AND b.genre = :genre AND b.numberOfPages =:pages")
+                    .setParameter("title", book.getTitle())
+                    .setParameter("genre", book.getGenre())
+                    .setParameter("pages", book.getNumberOfPages());
+            return query.getSingleResult();
+        }
+        catch (Exception e){
+            return book;
+        }
+    }
+
+    @Transactional
+    public void addBook(Books book)
+    {
+        this.entityManager.persist(book);
     }
 }

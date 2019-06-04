@@ -6,14 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.polsl.bookstore.entity.BookAuthor;
-import pl.polsl.bookstore.entity.ShoppingCart;
-import pl.polsl.bookstore.entity.Books;
-import pl.polsl.bookstore.entity.Users;
-import pl.polsl.bookstore.entity.Warehouse;
+import pl.polsl.bookstore.entity.*;
 import pl.polsl.bookstore.repository.*;
 
 import javax.validation.constraints.Null;
+import java.awt.print.Book;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.List;
@@ -26,19 +23,27 @@ import java.util.regex.Pattern;
 public class HomePageController {
 
     private BooksRepository bookRepo;
+    private BookFormatRepository bookFormatRepo;
+    private BookAuthorRepository bookAuthorRepo;
+    private AuthorsRepository authorsRepo;
     private UsersRepository usersRepo;
     private ShoppingCartRepository shoppingCartRepo;
     private OrderHistoryRepository orderHistoryRepo;
     private RoleRepository roleRepo;
+    private WarehouseRepository warehouseRepo;
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,RoleRepository theRoleRepo){
+    public HomePageController(BookAuthorRepository theBookAuthorRepo, BooksRepository theBookRepo,BookFormatRepository theBookFormatRepo, AuthorsRepository theAuthorsRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,RoleRepository theRoleRepo, WarehouseRepository theWarehouseRepo){
         bookRepo = theBookRepo;
+        bookFormatRepo= theBookFormatRepo;
+        bookAuthorRepo = theBookAuthorRepo;
+        authorsRepo= theAuthorsRepo;
         usersRepo= theUsersRepo;
         shoppingCartRepo=theShoppingCartRepo;
         orderHistoryRepo = theOrderHistoryRepo;
         roleRepo= theRoleRepo;
+        warehouseRepo = theWarehouseRepo;
     }
 
     @GetMapping("/home")
@@ -306,4 +311,40 @@ public class HomePageController {
         }
         return "book";
     }
+
+    @GetMapping("/newBook")
+    public String getNewBook(){
+        if(currentUser.getRoleU().getRole().equals("worker"))
+            return "newBook";
+        else{
+            return "redirect:home";
+        }
+    }
+
+    @PostMapping("/newBook")
+    public String postNewBook(@RequestParam String title, String name, String surname, String cover, String type,double purchasePrize, double prize,double discount, long quantity, String description, String genre ,long pages){
+        try{
+
+            Books book = new Books(title,genre,pages,cover,description);
+            book = bookRepo.findBook(book);
+            bookRepo.addBook(book);
+
+            Authors author= authorsRepo.findAuthor(name,surname);
+            authorsRepo.addAuthor(author);
+
+            BookAuthor bookAuthor = new BookAuthor();
+            bookAuthor.setBooksB(book);
+            bookAuthor.setAuthorsB(author);
+            bookAuthorRepo.addBookAuthor(bookAuthor);
+
+            Warehouse warehouse = new Warehouse(book,bookFormatRepo.findByName(type),prize,discount,quantity,purchasePrize);
+            warehouse = warehouseRepo.findWarehouse(warehouse);
+            warehouseRepo.addWarehouse(warehouse);
+        }
+        catch (Exception e){
+            return "redirect:newBook";
+        }
+        return"redirect:home";
+    }
+
 }
