@@ -46,7 +46,7 @@
             <%
                 int i = 0;
             %>
-
+                <c:set var="sum" value="${0}"/>
                 <c:forEach items="${user.shoppingCart}" var="item">
                     <%
                         i++;
@@ -92,7 +92,7 @@
                             </td>
                             <td>
                                 <form method="POST" action="/shoppingCart/changeQuantity">
-                                    <input type="number" name="quantity" class="quantity" value="${item.quantity}" min="1" max="999">
+                                    <input type="number" name="quantity" class="quantity" value="${item.quantity}" min="1" max="${item.warehouseSh.quantity}">
                                     <br>
                                     <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
                                     <button class="standard_button" type="submit">Zmień</button>
@@ -104,6 +104,7 @@
                             <td>
                                 <c:set var="price" value="${0}"/>
                                 <c:set var="price" value="${(item.warehouseSh.price - ((item.warehouseSh.price * item.warehouseSh.discount)/100)) * item.quantity }" />
+                                <c:set var="sum" value=" ${sum + price}" />
                                 <fmt:formatNumber value="${price}" currencySymbol="zł" type="currency" />
                             </td>
                              <td>
@@ -120,6 +121,7 @@
 
         %>
         <form method="POST" action="/shoppingCart/pay">
+            <fmt:formatNumber value="${sum}" currencySymbol="zł" type="currency" /><br>
             <button class="standard_button" type="submit">Zapłać</button>
         </form>
         <%

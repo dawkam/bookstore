@@ -2,6 +2,7 @@ package pl.polsl.bookstore.Sites;
 
 
 //import org.apache.catalina.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +31,12 @@ public class HomePageController {
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,RoleRepository theRoleRepo){
+    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo, ShoppingCartRepository theShoppingCartRepo, OrderHistoryRepository theOrderHistoryRepo, RoleRepository theRoleRepo) {
         bookRepo = theBookRepo;
-        usersRepo= theUsersRepo;
-        shoppingCartRepo=theShoppingCartRepo;
+        usersRepo = theUsersRepo;
+        shoppingCartRepo = theShoppingCartRepo;
         orderHistoryRepo = theOrderHistoryRepo;
-        roleRepo= theRoleRepo;
+        roleRepo = theRoleRepo;
     }
 
     @GetMapping("/home")
@@ -155,7 +156,7 @@ public class HomePageController {
             if (m.matches()) {
 
                 try {
-                    Users user= new Users(login,password,name,surname,nation,city,street,email, roleRepo.findRole("user"));
+                    Users user = new Users(login, password, name, surname, nation, city, street, email, roleRepo.findRole("user"));
                     currentUser = usersRepo.registerUser(user);
                     return "redirect:home";
 
@@ -204,8 +205,7 @@ public class HomePageController {
     }
 
     @GetMapping("/shoppingCart")
-    public String getShoppingCart(Model model)
-    {
+    public String getShoppingCart(Model model) {
         if (currentUser == null)
             return "redirect:login";
 
@@ -215,26 +215,26 @@ public class HomePageController {
     }
 
     @PostMapping("/shoppingCart/changeQuantity")
-    public String postShoppingCartChangeQuantity(@RequestParam(required = false)long idWarehouse, int quantity, Model model)
-    {
+    public String postShoppingCartChangeQuantity(@RequestParam long idWarehouse, String quantity, Model model) {
+        if (!quantity.equals("")) {
 
-            shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), quantity);
+            shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), Integer.valueOf(quantity));
             ShoppingCart tmp;
             for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
                 if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
                     tmp = shoppingcart;
-                    tmp.setQuantity(quantity);
+                    tmp.setQuantity(Integer.valueOf(quantity));
                 }
             }
+        }
         model.addAttribute("user", currentUser);
         return "shoppingCart";
     }
 
     @PostMapping("/shoppingCart/deleteBook")
-    public String postShoppingCartDeleteBook(@RequestParam(required = false)long idWarehouse, Model model)
-    {
+    public String postShoppingCartDeleteBook(@RequestParam long idWarehouse, Model model) {
         shoppingCartRepo.deleteBookFromShoppingCart(idWarehouse, currentUser.getIdUser());
-        ShoppingCart tmp= new ShoppingCart();
+        ShoppingCart tmp = new ShoppingCart();
         for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
 
             if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
@@ -247,16 +247,23 @@ public class HomePageController {
     }
 
     @PostMapping("/shoppingCart/pay")
-    public String postShoppingCartPay(Model model)
-    {
-        Iterator iterator= currentUser.getShoppingCart().iterator();
-        ShoppingCart shoppingcart= new ShoppingCart();
-
-        while(iterator.hasNext()){
-            shoppingcart=(ShoppingCart)iterator.next();
-            orderHistoryRepo.addOrderHistory(shoppingcart.getWarehouseSh(),currentUser,shoppingcart.getQuantity(),shoppingcart.getWarehouseSh().calculatePrice(shoppingcart.getQuantity()));
+    public String postShoppingCartPay(Model model) {
+        Iterator iterator = currentUser.getShoppingCart().iterator();
+        ShoppingCart shoppingcart = new ShoppingCart();
+        while (iterator.hasNext()) {
+            shoppingcart = (ShoppingCart) iterator.next();
+            try {
+                shoppingCartRepo.reduceQuantityWarehouse(shoppingcart.getWarehouseSh().getIdBookWarehouse(), shoppingcart.getWarehouseSh().getQuantity() - shoppingcart.getQuantity());
+            }catch(Exception e)
+            {
+                //pop-up
+               model.addAttribute("user", currentUser);
+               return "shoppingCart";
+            }
+            orderHistoryRepo.addOrderHistory(shoppingcart.getWarehouseSh(), currentUser, shoppingcart.getQuantity(), shoppingcart.getWarehouseSh().calculatePrice(shoppingcart.getQuantity()));
             iterator.remove();
         }
+
         shoppingCartRepo.deleteBooksFromShoppingCart(currentUser.getIdUser());
         model.addAttribute("user", currentUser);
         return "shoppingCart";
@@ -278,19 +285,19 @@ public class HomePageController {
         model.addAttribute("audiobookFormat", null);
         for (Books tmpBook : bookRepo.findAll()) {
             List<Books> tmp0 = bookRepo.findAll();
-            String tmp1= Long.toString(tmpBook.getIdBook());
+            String tmp1 = Long.toString(tmpBook.getIdBook());
             String tmp2 = tmpBook.getWarehouse().get(0).getBookFormatW().getBookFormat();
             if (Long.toString(tmpBook.getIdBook()).equals(bookId))
-                for(Warehouse wh:tmpBook.getWarehouse()){
-                    if(wh.getBookFormatW().getBookFormat().equals("książka")){
+                for (Warehouse wh : tmpBook.getWarehouse()) {
+                    if (wh.getBookFormatW().getBookFormat().equals("książka")) {
                         model.addAttribute("paperFormat", "True");
                         model.addAttribute("bookPricePaper", wh.getPrice());
                     }
-                    if(wh.getBookFormatW().getBookFormat().equals("e-book")){
+                    if (wh.getBookFormatW().getBookFormat().equals("e-book")) {
                         model.addAttribute("eBookFormat", "True");
                         model.addAttribute("bookPriceEbook", wh.getPrice());
                     }
-                    if(wh.getBookFormatW().getBookFormat().equals("audiobook")){
+                    if (wh.getBookFormatW().getBookFormat().equals("audiobook")) {
                         model.addAttribute("audiobookFormat", "True");
                         model.addAttribute("bookPriceAudiobook", wh.getPrice());
                     }
@@ -303,7 +310,7 @@ public class HomePageController {
     public String getProfit(Model model) {
 //        if (currentUser == null)
 //            return "redirect:login";
-        List<ProfitPerMonth> profitPerMonth= orderHistoryRepo.getProfitPerMonth();
+        List<ProfitPerMonth> profitPerMonth = orderHistoryRepo.getProfitPerMonth();
         List<ProfitPerBook> profitPerBook = orderHistoryRepo.getProfitPerBook();
         List<ProfitPerAuthor> profitPerAuthor = orderHistoryRepo.getProfitPerAuthor();
         model.addAttribute("profitPerMonth", profitPerMonth);
@@ -311,6 +318,7 @@ public class HomePageController {
         model.addAttribute("profitPerAuthor", profitPerAuthor);
         return "profit";
     }
+
     @PostMapping("/profit")
     public String postProfit() {
         return "profit";

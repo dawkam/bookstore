@@ -51,7 +51,8 @@ public class ShoppingCartRepository {
 
     @Transactional
     public void deleteBookFromShoppingCart(long idWarehouse,long idUser){
-        Query query = (Query) entityManager.createQuery("DELETE FROM ShoppingCart sh" +
+
+         Query query = (Query) entityManager.createQuery("DELETE FROM ShoppingCart sh" +
                 " WHERE id_book_warehouse = :id_warehouse AND id_user= :id_user");
         int deleteQuery = query
                 .setParameter("id_warehouse", idWarehouse)
@@ -66,6 +67,16 @@ public class ShoppingCartRepository {
                 " WHERE id_user= :id_user");
         int deleteQuery = query
                 .setParameter("id_user", idUser)
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void reduceQuantityWarehouse (long idWarehouse, long quantity){
+        Query query = (Query) entityManager.createQuery("UPDATE Warehouse wh SET quantity = :quantity" +
+                " WHERE id_book_warehouse = :id_warehouse ");
+        int updateQuery = query
+                .setParameter("id_warehouse", idWarehouse)
+                .setParameter("quantity" ,Long.valueOf(quantity) )
                 .executeUpdate();
     }
 }
