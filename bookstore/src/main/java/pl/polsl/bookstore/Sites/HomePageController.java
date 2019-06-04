@@ -31,6 +31,7 @@ public class HomePageController {
     private OrderHistoryRepository orderHistoryRepo;
     private RoleRepository roleRepo;
     private Users currentUser;
+    private ShoppingCart cart;
 
     @Autowired
     public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,RoleRepository theRoleRepo){
@@ -207,15 +208,15 @@ public class HomePageController {
     }
 
     @GetMapping("/shoppingCart")
-    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, Model model)
+    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, @RequestParam(required = false)Warehouse warehouse, Model model)
     {
         if (currentUser == null)
             return "redirect:login";
-
-        if(!formatKsiazki.equals(""))
-        {
-
-        }
+        cart = new ShoppingCart();
+        cart.setQuantity(1);
+        cart.setUsersSh(currentUser);
+        cart.setWarehouseSh(warehouse);
+        shoppingCartRepo.updateShoppingCart(cart);
 
         model.addAttribute("user", currentUser);
 
@@ -226,7 +227,7 @@ public class HomePageController {
     public String postShoppingCartChangeQuantity(@RequestParam(required = false)long idWarehouse, int quantity, Model model)
     {
 
-            shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), quantity);
+            shoppingCartRepo.updateShoppingCartQuantity(idWarehouse, currentUser.getIdUser(), quantity);
             ShoppingCart tmp;
             for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
                 if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
@@ -293,14 +294,17 @@ public class HomePageController {
                     if(wh.getBookFormatW().getBookFormat().equals("książka")){
                         model.addAttribute("paperFormat", "True");
                         model.addAttribute("bookPricePaper", wh.getPrice());
+                        model.addAttribute("warehouse", wh);
                     }
                     if(wh.getBookFormatW().getBookFormat().equals("e-book")){
                         model.addAttribute("eBookFormat", "True");
                         model.addAttribute("bookPriceEbook", wh.getPrice());
+                        model.addAttribute("warehouse", wh);
                     }
                     if(wh.getBookFormatW().getBookFormat().equals("audiobook")){
                         model.addAttribute("audiobookFormat", "True");
                         model.addAttribute("bookPriceAudiobook", wh.getPrice());
+                        model.addAttribute("warehouse", wh);
                     }
                 }
         }
