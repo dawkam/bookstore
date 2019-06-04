@@ -2,7 +2,7 @@ package pl.polsl.bookstore.Sites;
 
 
 //import org.apache.catalina.User;
-
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.bookstore.entity.*;
 import pl.polsl.bookstore.profit.ProfitPerAuthor;
 import pl.polsl.bookstore.profit.ProfitPerBook;
+import pl.polsl.bookstore.entity.*;
 import pl.polsl.bookstore.repository.*;
 import pl.polsl.bookstore.profit.ProfitPerMonth;
 
+import javax.validation.constraints.Null;
+import java.awt.print.Book;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -24,19 +27,29 @@ import java.util.regex.Pattern;
 public class HomePageController {
 
     private BooksRepository bookRepo;
+    private BookFormatRepository bookFormatRepo;
+    private BookAuthorRepository bookAuthorRepo;
+    private AuthorsRepository authorsRepo;
     private UsersRepository usersRepo;
     private ShoppingCartRepository shoppingCartRepo;
     private OrderHistoryRepository orderHistoryRepo;
+    private OpinionsRepository opinionsRepo;
     private RoleRepository roleRepo;
+    private WarehouseRepository warehouseRepo;
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo, ShoppingCartRepository theShoppingCartRepo, OrderHistoryRepository theOrderHistoryRepo, RoleRepository theRoleRepo) {
+    public HomePageController(BookAuthorRepository theBookAuthorRepo, BooksRepository theBookRepo,BookFormatRepository theBookFormatRepo, AuthorsRepository theAuthorsRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,OpinionsRepository theOpinionsRepo, RoleRepository theRoleRepo, WarehouseRepository theWarehouseRepo){
         bookRepo = theBookRepo;
-        usersRepo = theUsersRepo;
-        shoppingCartRepo = theShoppingCartRepo;
+        bookFormatRepo= theBookFormatRepo;
+        bookAuthorRepo = theBookAuthorRepo;
+        authorsRepo= theAuthorsRepo;
+        usersRepo= theUsersRepo;
+        shoppingCartRepo=theShoppingCartRepo;
         orderHistoryRepo = theOrderHistoryRepo;
-        roleRepo = theRoleRepo;
+        opinionsRepo = theOpinionsRepo;
+        roleRepo= theRoleRepo;
+        warehouseRepo = theWarehouseRepo;
     }
 
     @GetMapping("/home")
@@ -156,7 +169,7 @@ public class HomePageController {
             if (m.matches()) {
 
                 try {
-                    Users user = new Users(login, password, name, surname, nation, city, street, email, roleRepo.findRole("user"));
+                    Users user= new Users(login,password,name,surname,nation,city,street,email, roleRepo.findRole("user"));
                     currentUser = usersRepo.registerUser(user);
                     return "redirect:home";
 
@@ -205,9 +218,29 @@ public class HomePageController {
     }
 
     @GetMapping("/shoppingCart")
-    public String getShoppingCart(Model model) {
+    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, @RequestParam(defaultValue = "")String warehouseidPaper,@RequestParam(defaultValue = "")String warehouseidEbook,@RequestParam(defaultValue = "")String warehouseidAudiobook, Model model)
+    {
         if (currentUser == null)
             return "redirect:login";
+        if(!formatKsiazki.equals(""))
+        {
+            try{
+                ShoppingCart cart = new ShoppingCart();
+                cart.setQuantity(1);
+                cart.setUsersSh(currentUser);
+                if(!warehouseidPaper.equals("") && formatKsiazki.equals("papier"))
+                    cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidPaper)));
+                if(!warehouseidPaper.equals("") && formatKsiazki.equals("ebook"))
+                    cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidEbook)));
+                if(!warehouseidPaper.equals("") && formatKsiazki.equals("audiobook"))
+                    cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidAudiobook)));
+                shoppingCartRepo.updateShoppingCart(cart);
+                currentUser.addBookToShoppingCart(cart);
+            }
+            catch(Exception e){
+                return "redirect:shoppingCart";
+            }
+        }
 
         model.addAttribute("user", currentUser);
 
@@ -218,7 +251,7 @@ public class HomePageController {
     public String postShoppingCartChangeQuantity(@RequestParam long idWarehouse, String quantity, Model model) {
         if (!quantity.equals("")) {
 
-            shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), Integer.valueOf(quantity));
+            shoppingCartRepo.updateShoppingCartQuantity(idWarehouse, currentUser.getIdUser(), Integer.valueOf(quantity));
             ShoppingCart tmp;
             for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
                 if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
@@ -279,6 +312,15 @@ public class HomePageController {
     public String getBook(@RequestParam String bookId, Model model) {
         model.addAttribute("user", currentUser);
         Books book = bookRepo.findBookById(bookId);
+        String opinion = "";
+        for(Opinions op:book.getOpinions())
+        {
+            if(currentUser != null && op.getUsersO().getIdUser() == currentUser.getIdUser())
+            {
+                opinion = op.getOpinion();
+            }
+        }
+        model.addAttribute("userOpinion", opinion);
         model.addAttribute("bookSelected", book);
         model.addAttribute("paperFormat", null);
         model.addAttribute("eBookFormat", null);
@@ -292,19 +334,138 @@ public class HomePageController {
                     if (wh.getBookFormatW().getBookFormat().equals("książka")) {
                         model.addAttribute("paperFormat", "True");
                         model.addAttribute("bookPricePaper", wh.getPrice());
+                        model.addAttribute("warehousePaper", wh.getIdBookWarehouse());
                     }
                     if (wh.getBookFormatW().getBookFormat().equals("e-book")) {
                         model.addAttribute("eBookFormat", "True");
                         model.addAttribute("bookPriceEbook", wh.getPrice());
+                        model.addAttribute("warehouseEbook", wh.getIdBookWarehouse());
                     }
                     if (wh.getBookFormatW().getBookFormat().equals("audiobook")) {
                         model.addAttribute("audiobookFormat", "True");
                         model.addAttribute("bookPriceAudiobook", wh.getPrice());
+                        model.addAttribute("warehouseAudiobook", wh.getIdBookWarehouse());
                     }
                 }
         }
         return "book";
     }
+
+    @GetMapping("/newBook")
+    public String getNewBook(){
+        if(currentUser ==null)
+            return "redirect:home";
+        if(currentUser.getRoleU().getRole().equals("worker"))
+            return "newBook";
+        else{
+            return "redirect:home";
+        }
+    }
+
+    @PostMapping("/newBook")
+    public String postNewBook(@RequestParam String title, String name, String surname, String cover, String type,double purchasePrize, double prize,double discount, long quantity, String description, String genre ,long pages){
+        try{
+
+            Books book = new Books(title,genre,pages,cover,description);
+            book = bookRepo.findBook(book);
+            bookRepo.addBook(book);
+
+            Authors author= authorsRepo.findAuthor(name,surname);
+            authorsRepo.addAuthor(author);
+
+            BookAuthor bookAuthor = new BookAuthor();
+            bookAuthor.setBooksB(book);
+            bookAuthor.setAuthorsB(author);
+            bookAuthorRepo.addBookAuthor(bookAuthor);
+
+            Warehouse warehouse = new Warehouse(book,bookFormatRepo.findByName(type),prize,discount,quantity,purchasePrize);
+            //warehouse = warehouseRepo.findWarehouse(warehouse);
+            warehouseRepo.addWarehouse(warehouse);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return "redirect:newBook";
+        }
+        return"redirect:home";
+    }
+
+    @GetMapping("/comment")
+    public String getComment(@RequestParam String opinion, String bookID){
+        if(currentUser ==null)
+            return "redirect:home";
+        Opinions comment = new Opinions();
+        comment.setBooksO(bookRepo.findBookById(bookID));
+        comment.setOpinion(opinion);
+        comment.setUsersO(currentUser);
+        try{
+            opinionsRepo.addOpinion(comment);
+        }
+        catch (Exception e){
+            try {
+                opinionsRepo.updateOpinion(comment);
+            }
+            catch (Exception ex){
+                return "redirect:home";
+            }
+            return"redirect:home";
+        }
+        return"redirect:home";
+    }
+    @PostMapping("/coment")
+    public String postCommnet(){
+        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+            return "redirect:home";
+        return "redirect:home";
+    }
+
+    @GetMapping("/report")
+    public String getReport(@RequestParam long userId, long bookId){
+        if(currentUser ==null)
+            return "redirect:home";
+        Opinions opinions = opinionsRepo.findOpinionByIds(userId,bookId);
+        opinionsRepo.updateReported(opinions);
+        return "redirect:home";
+    }
+
+    @GetMapping("/reported")
+    public String getReported(Model model){
+        if(currentUser ==null)
+            return "redirect:home";
+        if(currentUser.getRoleU().getRole().equals("worker")) {
+            List<Opinions> opinions = opinionsRepo.findReported();
+            model.addAttribute("opinions", opinions);
+            return "reported";
+        }
+        else{
+            return "redirect:home";
+        }
+    }
+
+    @PostMapping("/reported")
+    public String postReported(@RequestParam Model model){
+        List<Opinions> opinions = opinionsRepo.findReported();
+        model.addAttribute("opinions", opinions);
+
+        return "reported";
+    }
+
+    @GetMapping("/block")
+    public String getBlock(@RequestParam long userId){
+        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+            return "redirect:home";
+        usersRepo.findById(userId).setAccessToComments(false);
+        opinionsRepo.deleteUsersOpinions(usersRepo.findById(userId));
+        return "redirect:home";
+    }
+
+    @GetMapping("/deleteComment")
+    public String getDeleteComment(@RequestParam long userId, long bookId){
+        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+            return "redirect:home";
+        opinionsRepo.deleteOpinion(opinionsRepo.findOpinionByIds(userId,bookId));
+        return "redirect:home";
+    }
+
 
     @GetMapping("/profit")
     public String getProfit(Model model) {

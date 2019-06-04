@@ -119,4 +119,17 @@ public class Warehouse {
     double total=(price - ( price*discount/100))*thequantity;
     return total;
   }
+
+  public Warehouse(Books booksW, BookFormat bookFormatW, double price, double discount, long quantity, double purchasePrice) {
+    this.booksW = booksW;
+    this.bookFormatW = bookFormatW;
+    this.price = price;
+    this.discount = discount;
+    this.quantity = quantity;
+    this.purchasePrice = purchasePrice;
+    this.orderHistory = null;
+    this.shoppingCart = null;
+  }
+
+  public Warehouse() {}
 }

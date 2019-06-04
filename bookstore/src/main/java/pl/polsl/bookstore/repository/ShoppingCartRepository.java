@@ -38,21 +38,25 @@ public class ShoppingCartRepository {
     }
 
     @Transactional
-    public void updateShoppingCart(long idWarehouse,long idUser,int quantity){
+    public void updateShoppingCart(ShoppingCart cart) {
+        this.entityManager.persist(cart);
+    }
+
+    @Transactional
+    public void updateShoppingCartQuantity(long idWarehouse, long idUser, int quantity) {
         Query query = (Query) entityManager.createQuery("UPDATE ShoppingCart sh SET quantity = :quantity" +
                 " WHERE id_book_warehouse = :id_warehouse AND id_user= :id_user");
         int updateQuery = query
                 .setParameter("id_warehouse", idWarehouse)
                 .setParameter("id_user", idUser)
-                .setParameter("quantity" ,Long.valueOf(quantity) )
+                .setParameter("quantity", Long.valueOf(quantity))
                 .executeUpdate();
 
     }
 
     @Transactional
-    public void deleteBookFromShoppingCart(long idWarehouse,long idUser){
-
-         Query query = (Query) entityManager.createQuery("DELETE FROM ShoppingCart sh" +
+    public void deleteBookFromShoppingCart(long idWarehouse, long idUser) {
+        Query query = (Query) entityManager.createQuery("DELETE FROM ShoppingCart sh" +
                 " WHERE id_book_warehouse = :id_warehouse AND id_user= :id_user");
         int deleteQuery = query
                 .setParameter("id_warehouse", idWarehouse)
@@ -62,7 +66,7 @@ public class ShoppingCartRepository {
     }
 
     @Transactional
-    public void deleteBooksFromShoppingCart(long idUser){
+    public void deleteBooksFromShoppingCart(long idUser) {
         Query query = (Query) entityManager.createQuery("DELETE FROM ShoppingCart sh" +
                 " WHERE id_user= :id_user");
         int deleteQuery = query

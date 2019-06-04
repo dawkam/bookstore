@@ -63,4 +63,13 @@ public class UsersRepository {
                 .executeUpdate();
         return user;
     }
+
+    @Transactional
+    public Users findById(long id){
+        Query theQuery = (Query) entityManager.createQuery("SELECT u FROM Users u WHERE u.idUser = :id")
+                .setParameter("id", id);
+
+        return (Users) theQuery.getSingleResult();
+    }
+
 }

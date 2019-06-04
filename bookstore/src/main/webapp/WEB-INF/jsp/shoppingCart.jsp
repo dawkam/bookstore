@@ -20,7 +20,7 @@
 
     <c:if test="${user != null}">
         <div class="profile_button">
-            <button type="submit">Profil</button>
+            <button onclick="location.href='/profile'" type="submit">Profil</button>
         </div>
     </c:if>
     <div class="cart_button">

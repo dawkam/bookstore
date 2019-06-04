@@ -42,6 +42,7 @@ div .standard_button:hover{
 
 div.main_panel{
     display: flex;
+    justify-content: center;
     align-items: center;
     margin: 4px;
     height: calc(100% - 40px - var(--top-panel-height));
