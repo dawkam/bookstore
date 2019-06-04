@@ -23,7 +23,7 @@ public class Opinions implements Serializable {
   private String opinion;
 
   @Column(name="reported")
-  private boolean reported;
+  private long reported;
 
     public Books getBooksO() {
         return booksO;
@@ -49,11 +49,11 @@ public class Opinions implements Serializable {
         this.opinion = opinion;
     }
 
-    public boolean isReported() {
+    public long getReported() {
         return reported;
     }
 
-    public void setReported(boolean reported) {
+    public void setReported(long reported) {
         this.reported = reported;
     }
 }

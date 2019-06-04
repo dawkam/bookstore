@@ -69,7 +69,7 @@
 <div id="comment_section">
     <c:if test="${user != null}">
     <form method="GET" action="/comment">
-        <input id="comment" type="text" maxlength="1000" placeholder="Wyraź swoją opinię" name="opinion"><br>
+        <input id="comment" type="text" maxlength="1000" value="${userOpinion}" name="opinion"><br>
         <input type="hidden" name="bookID" value="${bookSelected.idBook}">
         <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
     </form>
@@ -80,6 +80,13 @@
                 <td>
                     ${comment.getUsersO().getLogin()}:<br>
                     ${comment.opinion}
+                        <c:if test="${user != null}">
+                            <form method="GET" action="/report">
+                                <input type="hidden" name="bookId" value="${comment.booksO.idBook}">
+                                <input type="hidden" name="userId" value="${comment.usersO.idUser}">
+                                <button id="reportButton" class="report" type="submit">Zreportuj</button>
+                            </form>
+                        </c:if>
                 </td>
             </tr>
         </c:forEach>
