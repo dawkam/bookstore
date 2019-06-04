@@ -131,6 +131,7 @@ CREATE TABLE `opinions` (
   `id_book` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `opinion` text,
+  `reported` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id_book`,`id_user`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `opinions_ibfk_1` FOREIGN KEY (`id_book`) REFERENCES `books` (`id_book`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -144,7 +145,7 @@ CREATE TABLE `opinions` (
 
 LOCK TABLES `opinions` WRITE;
 /*!40000 ALTER TABLE `opinions` DISABLE KEYS */;
-INSERT INTO `opinions` VALUES (8,3,'Świetna historia o tragicznej miłości!'),(25,5,'Trzecia częćś przygód młodego czarodzieja zachwyca.'),(30,1,'Wciąga fabułą!!');
+INSERT INTO `opinions` VALUES (8,3,'Świetna historia o tragicznej miłości!',NULL),(25,5,'Trzecia częćś przygód młodego czarodzieja zachwyca.',NULL),(30,1,'Wciąga fabułą!!',NULL);
 /*!40000 ALTER TABLE `opinions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,6 +181,31 @@ LOCK TABLES `order_history` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `role` (
+  `id_role` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_role`),
+  UNIQUE KEY `role_UNIQUE` (`role`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'user'),(2,'worker');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `shopping_cart`
 --
 
@@ -203,7 +229,7 @@ CREATE TABLE `shopping_cart` (
 
 LOCK TABLES `shopping_cart` WRITE;
 /*!40000 ALTER TABLE `shopping_cart` DISABLE KEYS */;
-INSERT INTO `shopping_cart` VALUES (8,3,1),(25,5,2),(30,1,1);
+INSERT INTO `shopping_cart` VALUES (8,3,1),(11,13,999),(14,13,999),(25,5,2),(30,1,1),(45,13,999),(46,13,999),(55,13,999),(56,13,999);
 /*!40000 ALTER TABLE `shopping_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,10 +251,13 @@ CREATE TABLE `users` (
   `password` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
   `access_to_comments` tinyint(1) NOT NULL,
+  `id_role` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `login_UNIQUE` (`login`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `id_role_idx` (`id_role`),
+  CONSTRAINT `id_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +266,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1),(11,'marc','dud','pol','kat','paistow','stelfos','admin','m@d.pl',1),(12,'Franciszek','Berger','Polska','Bieruń','Torowa 21','Franek','admin','bergerfranek@gmail.com',1);
+INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1,NULL),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1,NULL),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1,NULL),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1,NULL),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1,NULL),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1,NULL),(11,'marc','dud','pol','kat','paistow','stelfos','admin','m@d.pl',1,NULL),(12,'Franciszek','Berger','Polska','Bieruń','Torowa 21','Franek','admin','bergerfranek@gmail.com',1,NULL),(13,'s','s','s','s','s','aS','s','s@s.pl',1,1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,14 +302,6 @@ LOCK TABLES `warehouse` WRITE;
 INSERT INTO `warehouse` VALUES (1,1,3,25.80,0,5,20.80),(2,2,3,36.20,0,6,31.20),(3,3,3,19.30,0,4,14.30),(4,4,3,28.30,0,4,23.80),(5,5,3,40.90,0,2,35.90),(6,6,3,23.90,0,6,18.90),(7,7,3,23.70,0,8,18.70),(8,8,3,21.40,0,10,16.40),(9,9,3,25.60,0,12,20.60),(10,10,3,18.70,0,3,13.70),(11,11,3,8.90,0,2,3.90),(12,12,3,27.50,0,6,22.50),(13,13,3,29.00,0,7,24.00),(14,14,3,28.10,0,10,23.10),(15,15,3,36.60,0,13,31.60),(16,16,3,38.40,0,9,33.40),(17,17,3,21.50,0,34,16.50),(18,18,3,19.70,0,2,14.70),(19,19,3,41.00,0,6,36.00),(20,20,3,30.60,0,8,25.60),(21,21,3,48.40,0,13,43.40),(22,22,3,32.00,0,16,37.00),(23,23,3,26.30,0,8,21.30),(24,24,3,26.90,0,7,21.90),(25,25,3,28.30,0,1,23.30),(26,26,3,29.80,0,3,24.80),(27,27,3,30.70,0,2,25.70),(28,28,3,35.90,0,9,30.90),(29,29,3,33.80,0,9,28.80),(30,30,3,32.20,0,2,27.20),(31,31,3,27.90,0,6,22.90),(32,32,3,27.90,0,4,22.90),(33,33,3,27.90,0,7,27.90),(34,1,2,25.00,0,4,20.00),(35,2,1,32.80,0,6,27.80),(36,3,2,25.00,0,8,20.00),(37,4,2,25.00,0,5,20.00),(38,5,2,25.00,0,4,20.00),(39,6,1,18.90,0,2,13.90),(40,7,1,29.00,0,3,24.00),(41,8,2,25.00,0,2,20.00),(42,9,1,26.00,0,41,21.00),(43,10,2,25.00,0,4,20.00),(44,11,2,25.00,0,15,20.00),(45,12,2,25.00,0,23,20.00),(46,13,1,30.50,0,2,25.50),(47,14,2,25.00,0,33,20.00),(48,15,1,40.30,0,12,35.30),(49,16,2,25.00,0,14,20.00),(50,17,2,25.00,0,8,20.00),(51,18,1,20.00,0,9,15.00),(52,19,2,25.00,0,5,20.00),(53,20,1,25.70,0,3,20.70),(54,21,1,50.00,0,6,45.00),(55,22,1,30.70,0,4,25.70),(56,23,2,25.00,0,15,20.00),(57,24,2,25.00,0,7,20.00),(58,25,2,25.00,0,8,20.00),(59,26,1,29.60,0,4,24.60),(60,27,2,25.00,0,6,20.00),(61,28,1,31.80,0,14,26.80),(62,29,2,25.00,0,18,20.00),(63,30,1,32.70,0,19,27.70),(64,31,2,25.00,0,16,20.00),(65,32,1,26.40,0,14,21.40),(66,33,2,25.00,0,11,20.00);
 /*!40000 ALTER TABLE `warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'bookstore'
---
-
---
--- Dumping routines for database 'bookstore'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -291,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-30 21:22:57
+-- Dump completed on 2019-06-04 11:13:58
