@@ -28,6 +28,14 @@
             <button onclick="location.href='/profile'" type="submit">Profil</button>
         </div>
     </c:if>
+    <c:if test="${user.getRoleU().getIdRole() == 2}">
+        <div class="profile_button">
+            <button id="addBookButton" onclick="location.href='/newBook'" type="submit">Dodaj Książkę</button>
+        </div>
+        <div class="raports_button">
+            <button id="profitButton" onclick="location.href='/profit'" type="submit">Raport</button>
+        </div>
+    </c:if>
     <div class="cart_button">
         <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
