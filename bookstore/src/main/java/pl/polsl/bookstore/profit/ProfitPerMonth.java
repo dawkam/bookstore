@@ -1,4 +1,4 @@
-package pl.polsl.bookstore.tmp;
+package pl.polsl.bookstore.profit;
 
 public class ProfitPerMonth {
 

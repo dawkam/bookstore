@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 
 @Entity
 @Table(name="order_history")
@@ -72,6 +73,22 @@ public class OrderHistory implements Serializable {
 
   public void setDate(Date date) {
     this.date = date;
+  }
+
+  public int getYear()
+  {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.get(Calendar.YEAR);
+
+  }
+
+  public int getMonth()
+  {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.get(Calendar.MONTH);
+
   }
 
   public long getQuantity() {

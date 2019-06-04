@@ -6,16 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.polsl.bookstore.entity.BookAuthor;
-import pl.polsl.bookstore.entity.ShoppingCart;
-import pl.polsl.bookstore.entity.Books;
-import pl.polsl.bookstore.entity.Users;
-import pl.polsl.bookstore.entity.Warehouse;
+import pl.polsl.bookstore.entity.*;
+import pl.polsl.bookstore.profit.ProfitPerAuthor;
+import pl.polsl.bookstore.profit.ProfitPerBook;
 import pl.polsl.bookstore.repository.*;
+import pl.polsl.bookstore.profit.ProfitPerMonth;
 
-import javax.validation.constraints.Null;
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -301,4 +298,23 @@ public class HomePageController {
         }
         return "book";
     }
+
+    @GetMapping("/profit")
+    public String getProfit(Model model) {
+//        if (currentUser == null)
+//            return "redirect:login";
+        List<ProfitPerMonth> profitPerMonth= orderHistoryRepo.getProfitPerMonth();
+        List<ProfitPerBook> profitPerBook = orderHistoryRepo.getProfitPerBook();
+        List<ProfitPerAuthor> profitPerAuthor = orderHistoryRepo.getProfitPerAuthor();
+        model.addAttribute("profitPerMonth", profitPerMonth);
+        model.addAttribute("profitPerBook", profitPerBook);
+        model.addAttribute("profitPerAuthor", profitPerAuthor);
+        return "profit";
+    }
+    @PostMapping("/profit")
+    public String postProfit() {
+        return "profit";
+    }
+
+
 }
