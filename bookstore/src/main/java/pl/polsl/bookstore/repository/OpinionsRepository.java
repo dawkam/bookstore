@@ -40,20 +40,6 @@ public class OpinionsRepository {
     }
 
     @Transactional
-    public void addOpinion(Users user,Books book, String opinion) {
-
-        // get the current hibernate session
-        Session currentSession = entityManager.unwrap(Session.class);
-
-        // create a query
-        Query<Opinions> theQuery =
-                currentSession.createQuery("from Opinions", Opinions.class);      //from odnosi sie do klasy nie do tabeli
-
-        // execute query and get result list
-        List<Opinions> opinions = theQuery.getResultList();
-
-
-
-    }
+    public void addOpinion(Opinions opinion) {entityManager.persist(opinion);}
 
 }

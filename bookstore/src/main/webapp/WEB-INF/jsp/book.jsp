@@ -76,7 +76,25 @@
         </form>
     </div>
 </div>
-
+<div id="comment_section">
+    <c:if test="${user != null}">
+    <form method="GET" action="/comment">
+        <input id="comment" type="text" maxlength="1000" placeholder="Wyraź swoją opinię" name="opinion"><br>
+        <input type="hidden" name="bookID" value="${bookSelected.idBook}">
+        <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
+    </form>
+    </c:if>
+    <table class="comments">
+        <c:forEach items="${bookSelected.getOpinions()}" var="comment">
+            <tr>
+                <td>
+                    ${comment.getUsersO().getLogin()}:<br>
+                    ${comment.opinion}
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
 <script>
     function myFunction() {
         var selectBox = document.getElementById("selectBox");
