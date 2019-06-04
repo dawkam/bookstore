@@ -24,7 +24,7 @@
             <input id="surname" type="text" placeholder="Nazwisko" name="surname"/><br>
             <label>Okładka: </label>
             <input type="text" placeholder="Okładka" name="cover"/><br>
-            <label>Foramty: </label>
+            <label>Formaty: </label>
             <input type="radio" placeholder="Papierowa" name="type" value="książka"/>Papierowa<br>
             <input type="radio" placeholder="Ebook" name="type" value="e-book"/>E-book<br>
             <input type="radio" placeholder="Audiobook" name="type" value="audiobook"/>Audiobook<br>
