@@ -91,6 +91,11 @@ public class Users {
 
   }
 
+  public void addBookToShoppingCart(ShoppingCart theShoppingCart)
+  {
+    shoppingCart.add(theShoppingCart);
+  }
+
   public Role getRoleU() {
     return roleU;
   }

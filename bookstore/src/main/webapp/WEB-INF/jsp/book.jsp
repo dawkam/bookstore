@@ -61,6 +61,15 @@
                 <c:if test="${audiobookFormat != null}">
                     <option class="typ_ksiazki" value="audiobook">Audiobook</option>
                 </c:if>
+                <c:if test="${paperFormat != null}">
+                    <input type="hidden" name="warehouseidPaper" value=${warehousePaper}>
+                </c:if>
+                <c:if test="${eBookFormat != null}">
+                    <input type="hidden" name="warehouseidEbook" value=${warehouseEbook}>
+                </c:if>
+                <c:if test="${audiobookFormat != null}">
+                    <input type="hidden" name="warehouseidAudiobook" value=${warehouseAudiobook}>
+                </c:if>
                 <input class="do_koszyka_button" type="submit" value="Dodaj do koszyka">
             </select>
         </form>
@@ -93,14 +102,14 @@
     </table>
 </div>
 <script>
-    function myFunction(){
+    function myFunction() {
         var selectBox = document.getElementById("selectBox");
         var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-        if(selectedValue === "papier")
+        if (selectedValue === "papier")
             document.getElementById("cena").innerHTML = "Cena: ${bookPricePaper} zł";
-        else if(selectedValue === "ebook")
+        else if (selectedValue === "ebook")
             document.getElementById("cena").innerHTML = "Cena: ${bookPriceEbook} zł";
-        else if(selectedValue === "audiobook")
+        else if (selectedValue === "audiobook")
             document.getElementById("cena").innerHTML = "Cena: ${bookPriceAudiobook} zł";
         else
             document.getElementById("cena").innerHTML = "hmmmm";

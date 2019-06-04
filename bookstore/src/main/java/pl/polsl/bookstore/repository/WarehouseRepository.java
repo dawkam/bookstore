@@ -39,6 +39,13 @@ public class WarehouseRepository {
     }
 
     @Transactional
+    public Warehouse findWarehouseById(Long warehouseId){
+            Query<Warehouse> query = (Query<Warehouse>) entityManager.createQuery("SELECT w FROM Warehouse w WHERE w.idBookWarehouse = :book")
+                    .setParameter("book", warehouseId);
+            return query.getSingleResult();
+    }
+
+    @Transactional
     public Warehouse findWarehouse(Warehouse warehouse){
         try{
             Query<Warehouse> query = (Query<Warehouse>) entityManager.createQuery("SELECT w FROM Warehouse w WHERE w.bookW = :book AND w.bookFormatW = :foramt")

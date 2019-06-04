@@ -2,6 +2,7 @@ package pl.polsl.bookstore.Sites;
 
 
 //import org.apache.catalina.User;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -214,14 +215,28 @@ public class HomePageController {
     }
 
     @GetMapping("/shoppingCart")
-    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, Model model)
+    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, @RequestParam(defaultValue = "")String warehouseidPaper,@RequestParam(defaultValue = "")String warehouseidEbook,@RequestParam(defaultValue = "")String warehouseidAudiobook, Model model)
     {
         if (currentUser == null)
             return "redirect:login";
-
         if(!formatKsiazki.equals(""))
         {
-
+            try{
+                ShoppingCart cart = new ShoppingCart();
+                cart.setQuantity(1);
+                cart.setUsersSh(currentUser);
+                if(!warehouseidPaper.equals("") && formatKsiazki.equals("papier"))
+                    cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidPaper)));
+                if(!warehouseidPaper.equals("") && formatKsiazki.equals("ebook"))
+                    cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidEbook)));
+                if(!warehouseidPaper.equals("") && formatKsiazki.equals("audiobook"))
+                    cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidAudiobook)));
+                shoppingCartRepo.updateShoppingCart(cart);
+                currentUser.addBookToShoppingCart(cart);
+            }
+            catch(Exception e){
+                return "redirect:shoppingCart";
+            }
         }
 
         model.addAttribute("user", currentUser);
@@ -233,7 +248,7 @@ public class HomePageController {
     public String postShoppingCartChangeQuantity(@RequestParam(required = false)long idWarehouse, int quantity, Model model)
     {
 
-            shoppingCartRepo.updateShoppingCart(idWarehouse, currentUser.getIdUser(), quantity);
+            shoppingCartRepo.updateShoppingCartQuantity(idWarehouse, currentUser.getIdUser(), quantity);
             ShoppingCart tmp;
             for (ShoppingCart shoppingcart : currentUser.getShoppingCart()) {
                 if (shoppingcart.getWarehouseSh().getIdBookWarehouse() == idWarehouse) {
@@ -309,14 +324,17 @@ public class HomePageController {
                     if(wh.getBookFormatW().getBookFormat().equals("książka")){
                         model.addAttribute("paperFormat", "True");
                         model.addAttribute("bookPricePaper", wh.getPrice());
+                        model.addAttribute("warehousePaper", wh.getIdBookWarehouse());
                     }
                     if(wh.getBookFormatW().getBookFormat().equals("e-book")){
                         model.addAttribute("eBookFormat", "True");
                         model.addAttribute("bookPriceEbook", wh.getPrice());
+                        model.addAttribute("warehouseEbook", wh.getIdBookWarehouse());
                     }
                     if(wh.getBookFormatW().getBookFormat().equals("audiobook")){
                         model.addAttribute("audiobookFormat", "True");
                         model.addAttribute("bookPriceAudiobook", wh.getPrice());
+                        model.addAttribute("warehouseAudiobook", wh.getIdBookWarehouse());
                     }
                 }
         }
