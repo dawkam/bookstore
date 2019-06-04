@@ -58,4 +58,11 @@ public class BookAuthorRepository {
         }
         else return findAll();
     }
+
+    @Transactional
+    public void addBookAuthor(BookAuthor bookAuthor)
+    {
+        this.entityManager.persist(bookAuthor);
+    }
+
 }

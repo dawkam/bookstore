@@ -49,4 +49,15 @@ public class Authors {
     this.surname = surname;
   }
 
+  public void addBookAuthor(BookAuthor bookAuthor){
+      this.bookAuthor.add(bookAuthor);
+  }
+
+  public Authors(String firstName, String surname){
+      this.firstName=firstName;
+      this.surname= surname;
+      this.bookAuthor =null;
+  }
+
+    public Authors() {}
 }

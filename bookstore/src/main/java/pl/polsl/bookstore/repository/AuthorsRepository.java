@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.bookstore.entity.Authors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -39,5 +40,24 @@ public class AuthorsRepository {
 
         // return the results
         return authors;
+    }
+
+    @Transactional
+    public Authors findAuthor(String name, String surname){
+        try{
+            Query<Authors> query = (Query<Authors>) entityManager.createQuery("SELECT a FROM Authors a WHERE a.firstName= :name AND a.surname = :surname")
+                    .setParameter("name", name)
+                    .setParameter("surname", surname);
+            return query.getSingleResult();
+        }
+        catch (Exception e){
+            return new Authors(name,surname);
+        }
+    }
+
+    @Transactional
+    public void addAuthor(Authors authors)
+    {
+        this.entityManager.persist(authors);
     }
 }

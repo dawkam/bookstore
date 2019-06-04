@@ -36,6 +36,11 @@
             <button onclick="location.href='/login'" type="submit">Zaloguj</button>
         </div>
     </c:if>
+    <c:if test="${user.getRoleU().getIdRole() == 2}">
+        <div class="profile_button">
+            <button id="addBookButton" onclick="location.href='/newBook'" type="submit">Dodaj Książkę</button>
+        </div>
+    </c:if>
     <c:if test="${user != null}">
         <div class="profile_button">
             <form method="POST" action="/logout">

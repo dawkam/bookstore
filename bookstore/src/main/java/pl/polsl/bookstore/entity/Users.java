@@ -91,6 +91,14 @@ public class Users {
 
   }
 
+  public Role getRoleU() {
+    return roleU;
+  }
+
+  public void setRoleU(Role roleU) {
+    this.roleU = roleU;
+  }
+
   public long getIdUser() {
     return idUser;
   }

@@ -214,6 +214,17 @@ div .profile_button button:hover{
     background-color: #5f5144;
 }
 
+#addBookButton{
+    border: 0;
+    background-color: #352720;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#addBookButton:hover{
+    cursor: pointer;
+    background-color: #5f5144;
+}
 
 html *
 {

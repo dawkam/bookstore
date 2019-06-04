@@ -26,6 +26,9 @@ public class Books {
   @Column(name="image")
   private String image;
 
+  @Column(name="description")
+  private String description;
+
   @OneToMany(mappedBy="booksB",cascade = CascadeType.ALL, fetch = FetchType.EAGER)       //przy mapowaniach ostatnia litera nazwy jest to pierwsza litera (lub litery) klasy z ktora sie laczy(zabezpiecza w momencie,
   private Set<BookAuthor> bookAuthor;                                                    // gdy z jednej tablicy jest wiele mapowan)
 
@@ -102,6 +105,14 @@ public class Books {
     this.warehouse = warehouse;
   }
 
+  public void addBookAuthor(BookAuthor bookAuthor){
+    this.bookAuthor.add(bookAuthor);
+  }
+
+  public void addWarehouse(Warehouse warehouse){
+    this.warehouse.add(warehouse);
+  }
+
   public String getFullName(){
     final String[] fullName = new String[1];
     fullName[0]="";
@@ -110,4 +121,17 @@ public class Books {
     });
     return fullName[0];
   }
+
+  public Books(String title, String genre,long numberOfPages, String image,String description){
+    this.title = title;
+    this.genre = genre;
+    this.numberOfPages = numberOfPages;
+    this.image = image;
+    this.description = description;
+    this.opinions = null;
+    this.bookAuthor =null;
+    this.warehouse = null;
+  }
+
+  public Books(){}
 }
