@@ -42,4 +42,57 @@ public class OpinionsRepository {
     @Transactional
     public void addOpinion(Opinions opinion) {entityManager.persist(opinion);}
 
+    @Transactional
+    public void updateOpinion(Opinions opinion){
+        Query query = (Query) entityManager.createQuery("UPDATE Opinions o SET o.opinion = :opinion" +
+                " WHERE o.usersO.idUser = :id AND o.booksO.idBook = :bookId")
+                .setParameter("opinion", opinion.getOpinion())
+                .setParameter("id",opinion.getUsersO().getIdUser())
+                .setParameter("bookId", opinion.getBooksO().getIdBook());
+        int updateQuery = query.executeUpdate();
+    }
+
+    @Transactional
+    public void updateReported(Opinions opinions){
+        Query query = (Query) entityManager.createQuery("UPDATE Opinions o SET o.reported = :reported WHERE o.usersO.idUser = :id AND o.booksO.idBook = :bookId")
+                .setParameter("reported", opinions.getReported()+1)
+                .setParameter("id", opinions.getUsersO().getIdUser())
+                .setParameter("bookId", opinions.getBooksO().getIdBook());
+        int updateQuery = query.executeUpdate();
+    }
+
+    @Transactional
+    public Opinions findOpinionByIds(long userId, long bookId){
+        Query query = (Query) entityManager.createQuery("SELECT o FROM Opinions o WHERE o.booksO.idBook = :bookId AND o.usersO.idUser = :userId")
+                .setParameter("bookId", bookId)
+                .setParameter("userId", userId);
+        return (Opinions) query.getSingleResult();
+
+    }
+
+    @Transactional
+    public List<Opinions> findReported(){
+        Query<Opinions> theQuery = (Query<Opinions>) entityManager.createQuery("SELECT o FROM Opinions o WHERE o.reported > 0");
+        List<Opinions> opinions = theQuery.getResultList();
+        return opinions;
+    }
+
+    @Transactional
+    public void deleteUsersOpinions(Users user){
+        Query query = (Query) entityManager.createQuery("DELETE FROM Opinions WHERE usersO.idUser = :id")
+                .setParameter("id",user.getIdUser());
+        int deleteQuery = query
+                .executeUpdate();
+    }
+
+    @Transactional
+    public void deleteOpinion(Opinions opinion){
+        Query query = (Query) entityManager.createQuery("DELETE FROM Opinions WHERE booksO.idBook = :bookId AND usersO.idUser = :id")
+                .setParameter("id",opinion.getUsersO().getIdUser())
+                .setParameter("bookId",opinion.getBooksO().getIdBook());
+        int deleteQuery = query
+                .executeUpdate();
+    }
+
+
 }

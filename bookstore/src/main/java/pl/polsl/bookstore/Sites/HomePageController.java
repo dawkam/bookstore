@@ -302,6 +302,15 @@ public class HomePageController {
     public String getBook(@RequestParam String bookId, Model model) {
         model.addAttribute("user", currentUser);
         Books book = bookRepo.findBookById(bookId);
+        String opinion = "";
+        for(Opinions op:book.getOpinions())
+        {
+            if(currentUser != null && op.getUsersO().getIdUser() == currentUser.getIdUser())
+            {
+                opinion = op.getOpinion();
+            }
+        }
+        model.addAttribute("userOpinion", opinion);
         model.addAttribute("bookSelected", book);
         model.addAttribute("paperFormat", null);
         model.addAttribute("eBookFormat", null);
@@ -372,15 +381,78 @@ public class HomePageController {
 
     @GetMapping("/comment")
     public String getComment(@RequestParam String opinion, String bookID){
+        if(currentUser ==null)
+            return "redirect:home";
         Opinions comment = new Opinions();
         comment.setBooksO(bookRepo.findBookById(bookID));
         comment.setOpinion(opinion);
         comment.setUsersO(currentUser);
-        opinionsRepo.addOpinion(comment);
-        return"redirect:book";
+        try{
+            opinionsRepo.addOpinion(comment);
+        }
+        catch (Exception e){
+            try {
+                opinionsRepo.updateOpinion(comment);
+            }
+            catch (Exception ex){
+                return "redirect:home";
+            }
+            return"redirect:home";
+        }
+        return"redirect:home";
     }
     @PostMapping("/coment")
     public String postCommnet(){
+        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+            return "redirect:home";
+        return "redirect:home";
+    }
+
+    @GetMapping("/report")
+    public String getReport(@RequestParam long userId, long bookId){
+        if(currentUser ==null)
+            return "redirect:home";
+        Opinions opinions = opinionsRepo.findOpinionByIds(userId,bookId);
+        opinionsRepo.updateReported(opinions);
+        return "redirect:home";
+    }
+
+    @GetMapping("/reported")
+    public String getReported(Model model){
+        if(currentUser ==null)
+            return "redirect:home";
+        if(currentUser.getRoleU().getRole().equals("worker")) {
+            List<Opinions> opinions = opinionsRepo.findReported();
+            model.addAttribute("opinions", opinions);
+            return "reported";
+        }
+        else{
+            return "redirect:home";
+        }
+    }
+
+    @PostMapping("/reported")
+    public String postReported(@RequestParam Model model){
+        List<Opinions> opinions = opinionsRepo.findReported();
+        model.addAttribute("opinions", opinions);
+
+        return "reported";
+    }
+
+    @GetMapping("/block")
+    public String getBlock(@RequestParam long userId){
+        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+            return "redirect:home";
+        usersRepo.findById(userId).setAccessToComments(false);
+        opinionsRepo.deleteUsersOpinions(usersRepo.findById(userId));
+        return "redirect:home";
+    }
+
+    @GetMapping("/deleteComment")
+    public String getDeleteComment(@RequestParam long userId, long bookId){
+        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+            return "redirect:home";
+        opinionsRepo.deleteOpinion(opinionsRepo.findOpinionByIds(userId,bookId));
         return "redirect:home";
     }
 

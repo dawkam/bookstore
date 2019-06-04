@@ -25,7 +25,7 @@
         </form>
     </div>
     <div class="profile_button">
-        <button type="submit">Koszyk</button>
+        <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
         <div class="cart_button">
             <form method="POST" action="/logout">
