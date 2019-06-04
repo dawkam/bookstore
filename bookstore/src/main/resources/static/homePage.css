@@ -226,6 +226,20 @@ div .profile_button button:hover{
     background-color: #5f5144;
 }
 
+#commitComent{
+    cursor: pointer;
+    background-color: #352720;
+}
+
+#comment{
+    color: #000000 !important;
+}
+
+#commentButton{
+    cursor: pointer;
+    background-color: #352720;
+}
+
 html *
 {
     color: #ffffff;}

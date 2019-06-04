@@ -29,12 +29,13 @@ public class HomePageController {
     private UsersRepository usersRepo;
     private ShoppingCartRepository shoppingCartRepo;
     private OrderHistoryRepository orderHistoryRepo;
+    private OpinionsRepository opinionsRepo;
     private RoleRepository roleRepo;
     private WarehouseRepository warehouseRepo;
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BookAuthorRepository theBookAuthorRepo, BooksRepository theBookRepo,BookFormatRepository theBookFormatRepo, AuthorsRepository theAuthorsRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,RoleRepository theRoleRepo, WarehouseRepository theWarehouseRepo){
+    public HomePageController(BookAuthorRepository theBookAuthorRepo, BooksRepository theBookRepo,BookFormatRepository theBookFormatRepo, AuthorsRepository theAuthorsRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,OpinionsRepository theOpinionsRepo, RoleRepository theRoleRepo, WarehouseRepository theWarehouseRepo){
         bookRepo = theBookRepo;
         bookFormatRepo= theBookFormatRepo;
         bookAuthorRepo = theBookAuthorRepo;
@@ -42,6 +43,7 @@ public class HomePageController {
         usersRepo= theUsersRepo;
         shoppingCartRepo=theShoppingCartRepo;
         orderHistoryRepo = theOrderHistoryRepo;
+        opinionsRepo = theOpinionsRepo;
         roleRepo= theRoleRepo;
         warehouseRepo = theWarehouseRepo;
     }
@@ -314,6 +316,8 @@ public class HomePageController {
 
     @GetMapping("/newBook")
     public String getNewBook(){
+        if(currentUser ==null)
+            return "redirect:home";
         if(currentUser.getRoleU().getRole().equals("worker"))
             return "newBook";
         else{
@@ -338,13 +342,28 @@ public class HomePageController {
             bookAuthorRepo.addBookAuthor(bookAuthor);
 
             Warehouse warehouse = new Warehouse(book,bookFormatRepo.findByName(type),prize,discount,quantity,purchasePrize);
-            warehouse = warehouseRepo.findWarehouse(warehouse);
+            //warehouse = warehouseRepo.findWarehouse(warehouse);
             warehouseRepo.addWarehouse(warehouse);
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             return "redirect:newBook";
         }
         return"redirect:home";
+    }
+
+    @GetMapping("/comment")
+    public String getComment(@RequestParam String opinion, String bookID){
+        Opinions comment = new Opinions();
+        comment.setBooksO(bookRepo.findBookById(bookID));
+        comment.setOpinion(opinion);
+        comment.setUsersO(currentUser);
+        opinionsRepo.addOpinion(comment);
+        return"redirect:book";
+    }
+    @PostMapping("/coment")
+    public String postCommnet(){
+        return "redirect:home";
     }
 
 }
