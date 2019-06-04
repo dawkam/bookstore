@@ -34,6 +34,13 @@
         </div>
 </div>
 <div id="contents">
+    <div id="reported_button">
+        <c:if test="${user.getRoleU().getIdRole() == 2}">
+            <div>
+                <button id="reported" onclick="location.href='/reported'" type="submit">Do zareportowanych komentarzy!</button>
+            </div>
+        </c:if>
+    </div>
     <div id="login_form">
         <br>
         <form method="POST" action="/profile">

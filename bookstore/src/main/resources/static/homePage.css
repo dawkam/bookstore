@@ -240,6 +240,34 @@ div .profile_button button:hover{
     background-color: #352720;
 }
 
+#reported{
+    width: 200px;
+    height: 60px;
+    background-color: #352720;
+    cursor: pointer;
+
+}
+
+#reported button:hover{
+    cursor: pointer;
+    background-color: #5f5144;
+}
+
+#reported_button{
+    position: relative;
+    left : -250px;
+    margin-right: 50px;
+    top: 120px;
+}
+
+#login_form{
+    position:relative;
+    margin-left : 30px;
+    top : 50px;
+}
+
+
+
 html *
 {
     color: #ffffff;}
