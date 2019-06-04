@@ -28,8 +28,8 @@
             <button onclick="location.href='/profile'" type="submit">Profil</button>
         </div>
     </c:if>
-    <div class="profile_button">
-        <button type="submit">Koszyk</button>
+    <div class="cart_button">
+        <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
     <c:if test="${user == null}">
         <div class="cart_button">
@@ -50,7 +50,7 @@
         Autor: ${bookSelected.getFullName()}<br>
         Tytuł: ${bookSelected.title}<br>
         <span id="cena"></span><br>
-        <form>
+        <form method="GET" action="/shoppingCart">
             <select name="formatKsiazki" class="typ_ksiazki" id="selectBox" onchange="myFunction()">
                 <c:if test="${paperFormat != null}">
                     <option class="typ_ksiazki" value="papier">Papierowy</option>
@@ -61,16 +61,11 @@
                 <c:if test="${audiobookFormat != null}">
                     <option class="typ_ksiazki" value="audiobook">Audiobook</option>
                 </c:if>
-                <input class="do_koszyka_button" type="button" value="Dodaj do koszyka">
+                <input class="do_koszyka_button" type="submit" value="Dodaj do koszyka">
             </select>
         </form>
     </div>
 </div>
-<!-- begin wwww.htmlcommentbox.com -->
-<div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Form</a> is loading comments...</div>
-<link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-<script type="text/javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="https://www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1559488616396");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
-<!-- end www.htmlcommentbox.com -->
 
 <script>
     function myFunction(){

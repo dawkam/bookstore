@@ -30,7 +30,6 @@ public class BooksRepository {
         // create a query
         Query<Books> theQuery =
                 currentSession.createQuery("from Books b order by b.title", Books.class);      //from odnosi sie do klasy nie do tabeli
-
         // execute query and get result list
         List<Books> books = theQuery.getResultList();
 

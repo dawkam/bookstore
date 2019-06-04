@@ -206,10 +206,15 @@ public class HomePageController {
     }
 
     @GetMapping("/shoppingCart")
-    public String getShoppingCart(Model model)
+    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, Model model)
     {
         if (currentUser == null)
             return "redirect:login";
+
+        if(!formatKsiazki.equals(""))
+        {
+
+        }
 
         model.addAttribute("user", currentUser);
 
