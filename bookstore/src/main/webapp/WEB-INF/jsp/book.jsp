@@ -62,15 +62,14 @@
                     <option class="typ_ksiazki" value="audiobook">Audiobook</option>
                 </c:if>
                 <c:if test="${paperFormat != null}">
-                    <input type="hidden" name="paperBookId" value=${paperBookId}>
+                    <input type="hidden" name="warehouseidPaper" value=${warehousePaper}>
                 </c:if>
                 <c:if test="${eBookFormat != null}">
-                    <input type="hidden" name="ebookBookId" value=${ebookBookId}>
+                    <input type="hidden" name="warehouseidEbook" value=${warehouseEbook}>
                 </c:if>
                 <c:if test="${audiobookFormat != null}">
-                    <input type="hidden" name="audiobookBookId" value=${audiobookBookId}>
+                    <input type="hidden" name="warehouseidAudiobook" value=${warehouseAudiobook}>
                 </c:if>
-                <input type="hidden" name="bookId" value=${book.idBook}>
                 <input class="do_koszyka_button" type="submit" value="Dodaj do koszyka">
             </select>
         </form>
@@ -78,18 +77,18 @@
 </div>
 <div id="comment_section">
     <c:if test="${user != null}">
-    <form method="GET" action="/comment">
-        <input id="comment" type="text" maxlength="1000" placeholder="Wyraź swoją opinię" name="opinion"><br>
-        <input type="hidden" name="bookID" value="${bookSelected.idBook}">
-        <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
-    </form>
+        <form method="GET" action="/comment">
+            <input id="comment" type="text" maxlength="1000" placeholder="Wyraź swoją opinię" name="opinion"><br>
+            <input type="hidden" name="bookID" value="${bookSelected.idBook}">
+            <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
+        </form>
     </c:if>
     <table class="comments">
         <c:forEach items="${bookSelected.getOpinions()}" var="comment">
             <tr>
                 <td>
-                    ${comment.getUsersO().getLogin()}:<br>
-                    ${comment.opinion}
+                        ${comment.getUsersO().getLogin()}:<br>
+                        ${comment.opinion}
                 </td>
             </tr>
         </c:forEach>
