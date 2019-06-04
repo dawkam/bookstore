@@ -251,13 +251,13 @@ CREATE TABLE `users` (
   `password` varchar(30) NOT NULL,
   `email` varchar(30) NOT NULL,
   `access_to_comments` tinyint(1) NOT NULL,
-  `id_role` int(11) DEFAULT NULL,
+  `id_role` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `id_role_idx` (`id_role`),
   CONSTRAINT `id_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,7 +266,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1,NULL),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1,NULL),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1,NULL),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1,NULL),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1,NULL),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1,NULL),(11,'marc','dud','pol','kat','paistow','stelfos','admin','m@d.pl',1,NULL),(12,'Franciszek','Berger','Polska','Bieruń','Torowa 21','Franek','admin','bergerfranek@gmail.com',1,NULL),(13,'s','s','s','s','s','aS','s','s@s.pl',1,1);
+INSERT INTO `users` VALUES (1,'Adrian','Mak','polska','Katowice','Poziomkowa','maczek','lkjuio324','maczek123@gmail.com',1,1),(2,'Katarzyna','Worek','polska','Gliwice','Kwiatowa','woreczek','mnbpoi159','kworek@gmail.com',1,1),(3,'Adam','Kruk','polska','Chorzów','Miła','adasko','qwemna356','adam.kruk@gmail.com',1,1),(4,'Wojciech','Nowak','polska','Katowice','Ptasia','wojnow','kjulop659','wojtus@gmail.com',1,1),(5,'Tomasz','Wolny','polska','Ruda Śląska','Kolejowa','tomasz125','asdert145','tomasz125@gmail.com',1,1),(6,'Magdalena','Czips','polska','Katowice','Gliwicka','lays','zxcdsa369','paprykowe@gmail.com',1,1),(11,'marc','dud','pol','kat','paistow','stelfos','admin','m@d.pl',1,1),(12,'Franciszek','Berger','Polska','Bieruń','Torowa 21','Franek','admin','bergerfranek@gmail.com',1,1),(13,'s','s','s','s','s','aS','s','s@s.pl',1,1),(14,'admin','admin','ad','ad','ad','admin','admin','ad@ad.ad',1,2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-04 11:13:58
+-- Dump completed on 2019-06-04 12:13:14
