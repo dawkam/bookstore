@@ -136,6 +136,10 @@ div .profile_button button:hover{
     width: 100%;
 }
 
+.profitable{
+    vertical-align: top;
+}
+
 .quantity{
     width:50px;
     color: #000000 !important;

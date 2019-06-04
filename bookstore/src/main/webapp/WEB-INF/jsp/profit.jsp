@@ -44,7 +44,7 @@
     <div class="main_panel_contents">
         <table>
             <tr>
-                <td>
+                <td  class="profitable">
                     <table class="shopping-table">
                         <tr>
                             <td>
@@ -77,7 +77,7 @@
 
                     </table>
                 </td>
-                <td>
+                <td class="profitable">
                     <table class="shopping-table">
                         <tr>
                             <td>
@@ -103,7 +103,7 @@
                         </c:forEach>
 
                     </table>
-                <td>
+                <td class="profitable">
                     <table class="shopping-table">
                         <tr>
                             <td>

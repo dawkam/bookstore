@@ -40,7 +40,7 @@
         <div class="profile_button">
             <button id="addBookButton" onclick="location.href='/newBook'" type="submit">Dodaj Książkę</button>
         </div>
-        <div class="raports_button">
+        <div class="profile_button">
             <button id="profitButton" onclick="location.href='/profit'" type="submit">Raport</button>
         </div>
     </c:if>
