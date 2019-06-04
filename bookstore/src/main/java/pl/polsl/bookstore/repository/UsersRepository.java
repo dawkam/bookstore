@@ -1,6 +1,5 @@
 package pl.polsl.bookstore.repository;
 
-import org.apache.catalina.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +41,8 @@ public class UsersRepository {
     }
 
     @Transactional
-    public Users registerUser(String login, String password, String name, String surname, String nation, String city, String street, String email){
-        Users user= new Users(login,password,name,surname,nation,city,street,email);
+    public Users registerUser(Users user){
+
         this.entityManager.persist(user);
         return user;
     }

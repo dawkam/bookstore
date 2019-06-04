@@ -1,6 +1,7 @@
 package pl.polsl.bookstore.Sites;
 
 
+//import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +11,7 @@ import pl.polsl.bookstore.entity.ShoppingCart;
 import pl.polsl.bookstore.entity.Books;
 import pl.polsl.bookstore.entity.Users;
 import pl.polsl.bookstore.entity.Warehouse;
-import pl.polsl.bookstore.repository.BooksRepository;
-import pl.polsl.bookstore.repository.OrderHistoryRepository;
-import pl.polsl.bookstore.repository.ShoppingCartRepository;
-import pl.polsl.bookstore.repository.UsersRepository;
-import pl.polsl.bookstore.repository.WarehouseRepository;
+import pl.polsl.bookstore.repository.*;
 
 import javax.validation.constraints.Null;
 import java.util.Iterator;
@@ -32,14 +29,16 @@ public class HomePageController {
     private UsersRepository usersRepo;
     private ShoppingCartRepository shoppingCartRepo;
     private OrderHistoryRepository orderHistoryRepo;
+    private RoleRepository roleRepo;
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo){
+    public HomePageController(BooksRepository theBookRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,RoleRepository theRoleRepo){
         bookRepo = theBookRepo;
         usersRepo= theUsersRepo;
         shoppingCartRepo=theShoppingCartRepo;
         orderHistoryRepo = theOrderHistoryRepo;
+        roleRepo= theRoleRepo;
     }
 
     @GetMapping("/home")
@@ -157,8 +156,10 @@ public class HomePageController {
             Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
             Matcher m = p.matcher(email);
             if (m.matches()) {
+
                 try {
-                    currentUser = usersRepo.registerUser(login, password, name, surname, nation, city, street, email);
+                    Users user= new Users(login,password,name,surname,nation,city,street,email, roleRepo.findRole("user"));
+                    currentUser = usersRepo.registerUser(user);
                     return "redirect:home";
 
                 } catch (Exception e) {

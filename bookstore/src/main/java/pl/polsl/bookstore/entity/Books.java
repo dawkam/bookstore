@@ -30,7 +30,7 @@ public class Books {
   private Set<BookAuthor> bookAuthor;                                                    // gdy z jednej tablicy jest wiele mapowan)
 
   @OneToMany(mappedBy="booksO",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Opinions> opinions;
+  private List<Opinions> opinions;
 
   @OneToMany(mappedBy="booksW",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<Warehouse> warehouse;
@@ -86,11 +86,11 @@ public class Books {
     this.bookAuthor = bookAuthor;
   }
 
-  public Set<Opinions> getOpinions() {
+  public List<Opinions> getOpinions() {
     return opinions;
   }
 
-  public void setOpinions(Set<Opinions> opinions) {
+  public void setOpinions(List<Opinions> opinions) {
     this.opinions = opinions;
   }
 

@@ -1,5 +1,8 @@
 package pl.polsl.bookstore.entity;
 
+import pl.polsl.bookstore.repository.RoleRepository;
+import pl.polsl.bookstore.repository.UsersRepository;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -39,6 +42,10 @@ public class Users {
   @Column(name="access_to_comments")
   private boolean accessToComments;
 
+  @ManyToOne
+  @JoinColumn(name="id_role" , referencedColumnName = "id_role")
+  Role roleU;
+
   @OneToMany(mappedBy="usersOr",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<OrderHistory> orderHistory;
 
@@ -47,6 +54,8 @@ public class Users {
 
   @OneToMany(mappedBy="usersSh",cascade = CascadeType.ALL, fetch = FetchType.EAGER )
   private List<ShoppingCart> shoppingCart;
+
+
 
   public boolean isAccessToComments() {
     return accessToComments;
@@ -171,7 +180,7 @@ public class Users {
     this.accessToComments = accessToComments;
   }
 
-  public Users(String login, String password, String firstName, String surname, String nation, String city, String street, String email) {
+  public Users(String login, String password, String firstName, String surname, String nation, String city, String street, String email, Role role) {
     this.firstName = firstName;
     this.surname = surname;
     this.nation = nation;
@@ -184,6 +193,7 @@ public class Users {
     this.orderHistory = null;
     this.shoppingCart = null;
     this.opinions = null;
+    this.roleU=role;
   }
 
   public Users() {}

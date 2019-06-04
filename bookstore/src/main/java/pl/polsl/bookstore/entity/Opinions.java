@@ -22,6 +22,9 @@ public class Opinions implements Serializable {
   @Column(name="opinion")
   private String opinion;
 
+  @Column(name="reported")
+  private boolean reported;
+
     public Books getBooksO() {
         return booksO;
     }
@@ -44,5 +47,13 @@ public class Opinions implements Serializable {
 
     public void setOpinion(String opinion) {
         this.opinion = opinion;
+    }
+
+    public boolean isReported() {
+        return reported;
+    }
+
+    public void setReported(boolean reported) {
+        this.reported = reported;
     }
 }
