@@ -405,13 +405,13 @@ public class HomePageController {
                 opinionsRepo.updateOpinion(comment);
             }
             catch (Exception ex){
-                return "redirect:home";
+                return "redirect:book?bookId=" + bookID;
             }
-            return"redirect:home";
+            return"redirect:book?bookId=" + bookID;
         }
-        return"redirect:home";
+        return"redirect:book?bookId=" + bookID;
     }
-    @PostMapping("/coment")
+    @PostMapping("/comment")
     public String postCommnet(){
         if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
             return "redirect:home";

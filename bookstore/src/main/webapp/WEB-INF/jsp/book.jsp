@@ -52,58 +52,62 @@
         </div>
     </c:if>
 </div>
-<div id="book_img_div">
-    <img src=${bookSelected.image} alt="cover" height="360" width="200">
-    <div id="book_info">
-        Autor: ${bookSelected.getFullName()}<br>
-        Tytuł: ${bookSelected.title}<br>
-        <span id="cena"></span><br>
-        <form method="GET" action="/shoppingCart">
-            <select name="formatKsiazki" class="typ_ksiazki" id="selectBox" onchange="myFunction()">
-                <c:if test="${paperFormat != null}">
-                    <option class="typ_ksiazki" value="papier">Papierowy</option>
-                </c:if>
-                <c:if test="${eBookFormat != null}">
-                    <option class="typ_ksiazki" value="ebook">E-book</option>
-                </c:if>
-                <c:if test="${audiobookFormat != null}">
-                    <option class="typ_ksiazki" value="audiobook">Audiobook</option>
-                </c:if>
-                <c:if test="${paperFormat != null}">
-                    <input type="hidden" name="warehouseidPaper" value=${warehousePaper}>
-                </c:if>
-                <c:if test="${eBookFormat != null}">
-                    <input type="hidden" name="warehouseidEbook" value=${warehouseEbook}>
-                </c:if>
-                <c:if test="${audiobookFormat != null}">
-                    <input type="hidden" name="warehouseidAudiobook" value=${warehouseAudiobook}>
-                </c:if>
-                <input class="do_koszyka_button" type="submit" value="Dodaj do koszyka">
-            </select>
-        </form>
+<div id="info_section">
+    <div id="book_img_div">
+        <img src=${bookSelected.image} alt="cover"
+             onerror="this.onerror=null;this.src='https://about.canva.com/wp-content/uploads/sites/3/2015/01/art_bookcover.png';"
+             height="360" width="200">
+        <div id="book_info">
+            Autor: ${bookSelected.getFullName()}<br>
+            Tytuł: ${bookSelected.title}<br>
+            <span id="cena"></span><br>
+            <form method="GET" action="/shoppingCart">
+                <select name="formatKsiazki" class="typ_ksiazki" id="selectBox" onchange="myFunction()">
+                    <c:if test="${paperFormat != null}">
+                        <option class="typ_ksiazki" value="papier">Papierowy</option>
+                    </c:if>
+                    <c:if test="${eBookFormat != null}">
+                        <option class="typ_ksiazki" value="ebook">E-book</option>
+                    </c:if>
+                    <c:if test="${audiobookFormat != null}">
+                        <option class="typ_ksiazki" value="audiobook">Audiobook</option>
+                    </c:if>
+                    <c:if test="${paperFormat != null}">
+                        <input type="hidden" name="warehouseidPaper" value=${warehousePaper}>
+                    </c:if>
+                    <c:if test="${eBookFormat != null}">
+                        <input type="hidden" name="warehouseidEbook" value=${warehouseEbook}>
+                    </c:if>
+                    <c:if test="${audiobookFormat != null}">
+                        <input type="hidden" name="warehouseidAudiobook" value=${warehouseAudiobook}>
+                    </c:if>
+                    <input class="do_koszyka_button" type="submit" value="Dodaj do koszyka">
+                </select>
+            </form>
+        </div>
     </div>
 </div>
 <div id="comment_section">
     <c:if test="${user != null}">
-    <form method="GET" action="/comment">
-        <input id="comment" type="text" maxlength="1000" value="${userOpinion}" name="opinion"><br>
-        <input type="hidden" name="bookID" value="${bookSelected.idBook}">
-        <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
-    </form>
+        <form method="GET" action="/comment">
+            <input id="comment" type="text" maxlength="1000" value="${userOpinion}" name="opinion"><br>
+            <input type="hidden" name="bookID" value="${bookSelected.idBook}">
+            <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
+        </form>
     </c:if>
     <table class="comments">
         <c:forEach items="${bookSelected.getOpinions()}" var="comment">
             <tr>
                 <td>
-                    ${comment.getUsersO().getLogin()}:<br>
-                    ${comment.opinion}
-                        <c:if test="${user != null}">
-                            <form method="GET" action="/report">
-                                <input type="hidden" name="bookId" value="${comment.booksO.idBook}">
-                                <input type="hidden" name="userId" value="${comment.usersO.idUser}">
-                                <button id="reportButton" class="report" type="submit">Zreportuj</button>
-                            </form>
-                        </c:if>
+                        ${comment.getUsersO().getLogin()}:<br>
+                        ${comment.opinion}
+                    <c:if test="${user != null}">
+                        <form method="GET" action="/report">
+                            <input type="hidden" name="bookId" value="${comment.booksO.idBook}">
+                            <input type="hidden" name="userId" value="${comment.usersO.idUser}">
+                            <button id="reportButton" class="report" type="submit">Zreportuj</button>
+                        </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
