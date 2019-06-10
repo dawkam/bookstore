@@ -18,23 +18,23 @@
         <br>
         <form method="POST" action="/register">
             <label>Login: </label>
-            <input type="text" placeholder="Login" name="login"/><br>
+            <input type="text" placeholder="Login" value="${user.login}" name="login"/><br>
             <label>Hasło: </label>
-            <input type="password" placeholder="Hasło" name="password"/><br>
+            <input type="password" placeholder="Hasło"  value="${user.password}" name="password"/><br>
             <label>Potwierdź hasło: </label>
-            <input type="password" placeholder="Potwierdź hasło" name="passwordConfirm"/><br>
+            <input type="password" placeholder="Potwierdź hasło" value="${passwordConfirm}" name="passwordConfirm"/><br>
             <label>Imie: </label>
-            <input type="text" placeholder="Imie" name="name"/><br>
+            <input type="text" placeholder="Imie"  value="${user.firstName}" name="name"/><br>
             <label>Nazwisko: </label>
-            <input type="text" placeholder="Nazwisko" name="surname"/><br>
+            <input type="text" placeholder="Nazwisko"  value="${user.surname}" name="surname"/><br>
             <label>Narodowość: </label>
-            <input type="text" placeholder="Narodowść" name="nation"/><br>
+            <input type="text" placeholder="Narodowść"  value="${user.nation}" name="nation"/><br>
             <label>Miejscowość: </label>
-            <input type="text" placeholder="Miejscowość" name="city"/><br>
+            <input type="text" placeholder="Miejscowość"  value="${user.city}" name="city"/><br>
             <label>Ulica: </label>
-            <input type="text" placeholder="Ulica" name="street"/><br>
+            <input type="text" placeholder="Ulica"  value="${user.street}" name="street"/><br>
             <label>E-mail: </label>
-            <input type="text" placeholder="E-mail" name="email"/><br>
+            <input type="text" placeholder="E-mail" value="${user.email}" name="email"/><br>
             <button id="login_button" type="submit">Zarejestruj</button>
         </form>
         Masz już konto? <br>
