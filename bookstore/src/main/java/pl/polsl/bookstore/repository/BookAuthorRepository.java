@@ -5,7 +5,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.polsl.bookstore.entity.Authors;
 import pl.polsl.bookstore.entity.BookAuthor;
+import pl.polsl.bookstore.entity.Books;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -65,4 +67,17 @@ public class BookAuthorRepository {
         this.entityManager.persist(bookAuthor);
     }
 
+    @Transactional
+    public BookAuthor findBookAuthor(Books book, Authors author){
+        try{
+            Query query = (Query) entityManager.createQuery("SELECT ba FROM BookAuthor ba WHERE ba.booksB.idBook = :idBook AND ba.authorsB.idAuthor = :idAuthor")
+                    .setParameter("idBook", book.getIdBook())
+                    .setParameter("idAuthor", author.getIdAuthor());
+            return (BookAuthor) query.getSingleResult();
+        }
+        catch (Exception e){
+            return new BookAuthor(author,book);
+        }
+
+    }
 }

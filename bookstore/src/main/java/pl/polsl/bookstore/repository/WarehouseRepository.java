@@ -48,7 +48,7 @@ public class WarehouseRepository {
     @Transactional
     public Warehouse findWarehouse(Warehouse warehouse){
         try{
-            Query<Warehouse> query = (Query<Warehouse>) entityManager.createQuery("SELECT w FROM Warehouse w WHERE w.bookW = :book AND w.bookFormatW = :foramt")
+            Query<Warehouse> query = (Query<Warehouse>) entityManager.createQuery("SELECT w FROM Warehouse w WHERE w.booksW = :book AND w.bookFormatW = :foramt")
                     .setParameter("book", warehouse.getBooksW())
                     .setParameter("foramt", warehouse.getBookFormatW());
             return query.getSingleResult();

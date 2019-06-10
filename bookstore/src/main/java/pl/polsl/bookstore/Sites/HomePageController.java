@@ -170,8 +170,8 @@ public class HomePageController {
 
                 try {
                     Users user= new Users(login,password,name,surname,nation,city,street,email, roleRepo.findRole("user"));
-                    currentUser = usersRepo.registerUser(user);
-                    return "redirect:home";
+                    user = usersRepo.registerUser(user);
+                    return "redirect:login";
 
                 } catch (Exception e) {
                     //Trzeba dodac pop-up
@@ -373,13 +373,11 @@ public class HomePageController {
             Authors author= authorsRepo.findAuthor(name,surname);
             authorsRepo.addAuthor(author);
 
-            BookAuthor bookAuthor = new BookAuthor();
-            bookAuthor.setBooksB(book);
-            bookAuthor.setAuthorsB(author);
+            BookAuthor bookAuthor = bookAuthorRepo.findBookAuthor(book, author);
             bookAuthorRepo.addBookAuthor(bookAuthor);
 
             Warehouse warehouse = new Warehouse(book,bookFormatRepo.findByName(type),prize,discount,quantity,purchasePrize);
-            //warehouse = warehouseRepo.findWarehouse(warehouse);
+            warehouse = warehouseRepo.findWarehouse(warehouse);
             warehouseRepo.addWarehouse(warehouse);
         }
         catch (Exception e){
