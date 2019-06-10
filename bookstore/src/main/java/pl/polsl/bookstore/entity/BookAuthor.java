@@ -32,4 +32,12 @@ public class BookAuthor implements Serializable {
   public void setBooksB(Books booksA) {
     this.booksB = booksA;
   }
+
+  public BookAuthor(Authors authorsB, Books booksB) {
+    this.authorsB = authorsB;
+    this.booksB = booksB;
+  }
+
+  public BookAuthor() {
+  }
 }

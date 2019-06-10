@@ -1,21 +1,19 @@
 package pl.polsl.bookstore.Sites;
 
 
-//import org.apache.catalina.User;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.polsl.bookstore.entity.*;
 import pl.polsl.bookstore.profit.ProfitPerAuthor;
 import pl.polsl.bookstore.profit.ProfitPerBook;
-import pl.polsl.bookstore.entity.*;
-import pl.polsl.bookstore.repository.*;
 import pl.polsl.bookstore.profit.ProfitPerMonth;
+import pl.polsl.bookstore.repository.*;
 
-import javax.validation.constraints.Null;
-import java.awt.print.Book;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -39,16 +37,16 @@ public class HomePageController {
     private Users currentUser;
 
     @Autowired
-    public HomePageController(BookAuthorRepository theBookAuthorRepo, BooksRepository theBookRepo,BookFormatRepository theBookFormatRepo, AuthorsRepository theAuthorsRepo, UsersRepository theUsersRepo,ShoppingCartRepository  theShoppingCartRepo,OrderHistoryRepository theOrderHistoryRepo,OpinionsRepository theOpinionsRepo, RoleRepository theRoleRepo, WarehouseRepository theWarehouseRepo){
+    public HomePageController(BookAuthorRepository theBookAuthorRepo, BooksRepository theBookRepo, BookFormatRepository theBookFormatRepo, AuthorsRepository theAuthorsRepo, UsersRepository theUsersRepo, ShoppingCartRepository theShoppingCartRepo, OrderHistoryRepository theOrderHistoryRepo, OpinionsRepository theOpinionsRepo, RoleRepository theRoleRepo, WarehouseRepository theWarehouseRepo) {
         bookRepo = theBookRepo;
-        bookFormatRepo= theBookFormatRepo;
+        bookFormatRepo = theBookFormatRepo;
         bookAuthorRepo = theBookAuthorRepo;
-        authorsRepo= theAuthorsRepo;
-        usersRepo= theUsersRepo;
-        shoppingCartRepo=theShoppingCartRepo;
+        authorsRepo = theAuthorsRepo;
+        usersRepo = theUsersRepo;
+        shoppingCartRepo = theShoppingCartRepo;
         orderHistoryRepo = theOrderHistoryRepo;
         opinionsRepo = theOpinionsRepo;
-        roleRepo= theRoleRepo;
+        roleRepo = theRoleRepo;
         warehouseRepo = theWarehouseRepo;
     }
 
@@ -153,10 +151,13 @@ public class HomePageController {
     }
 
     @PostMapping("/register")
-    public String postRegister(@RequestParam String login, String password, String passwordConfirm, String name, String surname, String nation, String city, String street, String email) {
+    public String postRegister(@RequestParam String login, String password, String passwordConfirm, String name, String surname, String nation, String city, String street, String email, Model model) {
+        Users tmpUser = new Users(login, password, name, surname, nation, city, street, email, null);
         //walidacja loginu
         for (Users user : usersRepo.findAll()) {
             if (login.equals(user.getLogin())) {
+                model.addAttribute("user", tmpUser);
+                model.addAttribute("passwordConfirm", passwordConfirm);
                 //Trzeba dodac pop-up
                 return "register";
             }
@@ -169,19 +170,25 @@ public class HomePageController {
             if (m.matches()) {
 
                 try {
-                    Users user= new Users(login,password,name,surname,nation,city,street,email, roleRepo.findRole("user"));
-                    currentUser = usersRepo.registerUser(user);
-                    return "redirect:home";
+                    Users user = new Users(login, password, name, surname, nation, city, street, email, roleRepo.findRole("user"));
+                    user = usersRepo.registerUser(user);
+                    return "redirect:login";
 
                 } catch (Exception e) {
                     //Trzeba dodac pop-up
+                    model.addAttribute("user", tmpUser);
+                    model.addAttribute("passwordConfirm", passwordConfirm);
                     return "register";
                 }
             } else {
                 //Trzeba dodac pop-up
+                model.addAttribute("user", tmpUser);
+                model.addAttribute("passwordConfirm", passwordConfirm);
                 return "register";
             }
         } else {
+            model.addAttribute("user", tmpUser);
+            model.addAttribute("passwordConfirm", passwordConfirm);
             //Trzeba dodac pop-up
             return "register";
         }
@@ -218,26 +225,23 @@ public class HomePageController {
     }
 
     @GetMapping("/shoppingCart")
-    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, @RequestParam(defaultValue = "")String warehouseidPaper,@RequestParam(defaultValue = "")String warehouseidEbook,@RequestParam(defaultValue = "")String warehouseidAudiobook, Model model)
-    {
+    public String getShoppingCart(@RequestParam(defaultValue = "") String formatKsiazki, @RequestParam(defaultValue = "") String warehouseidPaper, @RequestParam(defaultValue = "") String warehouseidEbook, @RequestParam(defaultValue = "") String warehouseidAudiobook, Model model) {
         if (currentUser == null)
             return "redirect:login";
-        if(!formatKsiazki.equals(""))
-        {
-            try{
+        if (!formatKsiazki.equals("")) {
+            try {
                 ShoppingCart cart = new ShoppingCart();
                 cart.setQuantity(1);
                 cart.setUsersSh(currentUser);
-                if(!warehouseidPaper.equals("") && formatKsiazki.equals("papier"))
+                if (!warehouseidPaper.equals("") && formatKsiazki.equals("papier"))
                     cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidPaper)));
-                if(!warehouseidPaper.equals("") && formatKsiazki.equals("ebook"))
+                if (!warehouseidPaper.equals("") && formatKsiazki.equals("ebook"))
                     cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidEbook)));
-                if(!warehouseidPaper.equals("") && formatKsiazki.equals("audiobook"))
+                if (!warehouseidPaper.equals("") && formatKsiazki.equals("audiobook"))
                     cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidAudiobook)));
                 shoppingCartRepo.updateShoppingCart(cart);
                 currentUser.addBookToShoppingCart(cart);
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 return "redirect:shoppingCart";
             }
         }
@@ -287,11 +291,10 @@ public class HomePageController {
             shoppingcart = (ShoppingCart) iterator.next();
             try {
                 shoppingCartRepo.reduceQuantityWarehouse(shoppingcart.getWarehouseSh().getIdBookWarehouse(), shoppingcart.getWarehouseSh().getQuantity() - shoppingcart.getQuantity());
-            }catch(Exception e)
-            {
+            } catch (Exception e) {
                 //pop-up
-               model.addAttribute("user", currentUser);
-               return "shoppingCart";
+                model.addAttribute("user", currentUser);
+                return "shoppingCart";
             }
             orderHistoryRepo.addOrderHistory(shoppingcart.getWarehouseSh(), currentUser, shoppingcart.getQuantity(), shoppingcart.getWarehouseSh().calculatePrice(shoppingcart.getQuantity()));
             iterator.remove();
@@ -313,10 +316,8 @@ public class HomePageController {
         model.addAttribute("user", currentUser);
         Books book = bookRepo.findBookById(bookId);
         String opinion = "";
-        for(Opinions op:book.getOpinions())
-        {
-            if(currentUser != null && op.getUsersO().getIdUser() == currentUser.getIdUser())
-            {
+        for (Opinions op : book.getOpinions()) {
+            if (currentUser != null && op.getUsersO().getIdUser() == currentUser.getIdUser()) {
                 opinion = op.getOpinion();
             }
         }
@@ -352,97 +353,92 @@ public class HomePageController {
     }
 
     @GetMapping("/newBook")
-    public String getNewBook(){
-        if(currentUser ==null)
+    public String getNewBook() {
+        if (currentUser == null)
             return "redirect:home";
-        if(currentUser.getRoleU().getRole().equals("worker"))
+        if (currentUser.getRoleU().getRole().equals("worker"))
             return "newBook";
-        else{
+        else {
             return "redirect:home";
         }
     }
 
     @PostMapping("/newBook")
-    public String postNewBook(@RequestParam String title, String name, String surname, String cover, String type,double purchasePrize, double prize,double discount, long quantity, String description, String genre ,long pages){
-        try{
+    public String postNewBook(@RequestParam String title, String name, String surname, String cover, String type, double purchasePrize, double prize, double discount, long quantity, String description, String genre, long pages) {
+        try {
 
-            Books book = new Books(title,genre,pages,cover,description);
+            Books book = new Books(title, genre, pages, cover, description);
             book = bookRepo.findBook(book);
             bookRepo.addBook(book);
 
-            Authors author= authorsRepo.findAuthor(name,surname);
+            Authors author = authorsRepo.findAuthor(name, surname);
             authorsRepo.addAuthor(author);
 
-            BookAuthor bookAuthor = new BookAuthor();
-            bookAuthor.setBooksB(book);
-            bookAuthor.setAuthorsB(author);
+            BookAuthor bookAuthor = bookAuthorRepo.findBookAuthor(book, author);
             bookAuthorRepo.addBookAuthor(bookAuthor);
 
-            Warehouse warehouse = new Warehouse(book,bookFormatRepo.findByName(type),prize,discount,quantity,purchasePrize);
-            //warehouse = warehouseRepo.findWarehouse(warehouse);
+            Warehouse warehouse = new Warehouse(book, bookFormatRepo.findByName(type), prize, discount, quantity, purchasePrize);
+            warehouse = warehouseRepo.findWarehouse(warehouse);
             warehouseRepo.addWarehouse(warehouse);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return "redirect:newBook";
         }
-        return"redirect:home";
+        return "redirect:home";
     }
 
     @GetMapping("/comment")
-    public String getComment(@RequestParam String opinion, String bookID){
-        if(currentUser ==null)
+    public String getComment(@RequestParam String opinion, String bookID) {
+        if (currentUser == null)
             return "redirect:home";
         Opinions comment = new Opinions();
         comment.setBooksO(bookRepo.findBookById(bookID));
         comment.setOpinion(opinion);
         comment.setUsersO(currentUser);
-        try{
+        try {
             opinionsRepo.addOpinion(comment);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             try {
                 opinionsRepo.updateOpinion(comment);
-            }
-            catch (Exception ex){
+            } catch (Exception ex) {
                 return "redirect:book?bookId=" + bookID;
             }
-            return"redirect:book?bookId=" + bookID;
+            return "redirect:book?bookId=" + bookID;
         }
-        return"redirect:book?bookId=" + bookID;
+        return "redirect:book?bookId=" + bookID;
     }
+
     @PostMapping("/comment")
-    public String postCommnet(){
-        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+    public String postCommnet() {
+        if (currentUser == null || !currentUser.getRoleU().getRole().equals("worker"))
             return "redirect:home";
         return "redirect:home";
     }
 
     @GetMapping("/report")
-    public String getReport(@RequestParam long userId, long bookId){
-        if(currentUser ==null)
+    public String getReport(@RequestParam long userId, long bookId) {
+        if (currentUser == null)
             return "redirect:home";
-        Opinions opinions = opinionsRepo.findOpinionByIds(userId,bookId);
+        Opinions opinions = opinionsRepo.findOpinionByIds(userId, bookId);
         opinionsRepo.updateReported(opinions);
         return "redirect:home";
     }
 
     @GetMapping("/reported")
-    public String getReported(Model model){
-        if(currentUser ==null)
+    public String getReported(Model model) {
+        if (currentUser == null)
             return "redirect:home";
-        if(currentUser.getRoleU().getRole().equals("worker")) {
+        if (currentUser.getRoleU().getRole().equals("worker")) {
             List<Opinions> opinions = opinionsRepo.findReported();
             model.addAttribute("opinions", opinions);
             return "reported";
-        }
-        else{
+        } else {
             return "redirect:home";
         }
     }
 
     @PostMapping("/reported")
-    public String postReported(@RequestParam Model model){
+    public String postReported(@RequestParam Model model) {
         List<Opinions> opinions = opinionsRepo.findReported();
         model.addAttribute("opinions", opinions);
 
@@ -450,8 +446,8 @@ public class HomePageController {
     }
 
     @GetMapping("/block")
-    public String getBlock(@RequestParam long userId){
-        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+    public String getBlock(@RequestParam long userId) {
+        if (currentUser == null || !currentUser.getRoleU().getRole().equals("worker"))
             return "redirect:home";
         usersRepo.findById(userId).setAccessToComments(false);
         opinionsRepo.deleteUsersOpinions(usersRepo.findById(userId));
@@ -459,10 +455,10 @@ public class HomePageController {
     }
 
     @GetMapping("/deleteComment")
-    public String getDeleteComment(@RequestParam long userId, long bookId){
-        if(currentUser ==null || !currentUser.getRoleU().getRole().equals("worker"))
+    public String getDeleteComment(@RequestParam long userId, long bookId) {
+        if (currentUser == null || !currentUser.getRoleU().getRole().equals("worker"))
             return "redirect:home";
-        opinionsRepo.deleteOpinion(opinionsRepo.findOpinionByIds(userId,bookId));
+        opinionsRepo.deleteOpinion(opinionsRepo.findOpinionByIds(userId, bookId));
         return "redirect:home";
     }
 

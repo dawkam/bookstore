@@ -203,9 +203,6 @@ public class Users {
     this.password = password;
     this.email = email;
     this.accessToComments = true;
-    this.orderHistory = null;
-    this.shoppingCart = null;
-    this.opinions = null;
     this.roleU=role;
   }
 

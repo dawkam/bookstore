@@ -88,12 +88,14 @@
     </div>
 </div>
 <div id="comment_section">
-    <c:if test="${user != null}">
-        <form method="GET" action="/comment">
-            <input id="comment" type="text" maxlength="1000" value="${userOpinion}" name="opinion"><br>
-            <input type="hidden" name="bookID" value="${bookSelected.idBook}">
-            <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
-        </form>
+    <c:if test="${(user != null)}">
+        <c:if test="${(user.accessToComments == true)}">
+            <form method="GET" action="/comment">
+                <input id="comment" type="text" maxlength="1000" value="${userOpinion}" name="opinion"><br>
+                <input type="hidden" name="bookID" value="${bookSelected.idBook}">
+                <button id="commentButton" class="commitComment" type="submit">Zakomentuj</button>
+            </form>
+        </c:if>
     </c:if>
     <table class="comments">
         <c:forEach items="${bookSelected.getOpinions()}" var="comment">
