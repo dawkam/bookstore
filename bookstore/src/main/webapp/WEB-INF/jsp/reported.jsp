@@ -36,7 +36,7 @@
             <button onclick="location.href='/login'" type="submit">Zaloguj</button>
         </div>
     </c:if>
-    <c:if test="${user.getRoleU().getIdRole() == 2}">
+    <c:if test="${user.getRoleU().getRole() == worker}">
         <div class="profile_button">
             <button id="addBookButton" onclick="location.href='/newBook'" type="submit">Dodaj Książkę</button>
         </div>
@@ -53,7 +53,7 @@
     <c:forEach items="${opinions}" var="comment">
         <tr>
             <td>
-                    Zreportowyn: ${comment.getReported()}  Użytkownik: ${comment.getUsersO().getLogin()}:<br>
+                    Zreportowyn: ${comment.getReported()}  Użytkownik: ${comment.getUsersO().getLogin()} Książka: ${comment.getBooksO().getTitle()}<br>
                     ${comment.opinion}
                     <form method="GET" action="/block">
                         <input type="hidden" name="userId" value="${comment.usersO.idUser}">

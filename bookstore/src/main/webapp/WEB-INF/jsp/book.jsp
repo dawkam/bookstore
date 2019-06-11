@@ -28,7 +28,7 @@
             <button onclick="location.href='/profile'" type="submit">Profil</button>
         </div>
     </c:if>
-    <c:if test="${user.getRoleU().getIdRole() == 2}">
+    <c:if test="${user.getRoleU().getRole() == worker}">
         <div class="profile_button">
             <button id="addBookButton" onclick="location.href='/newBook'" type="submit">Dodaj Książkę</button>
         </div>

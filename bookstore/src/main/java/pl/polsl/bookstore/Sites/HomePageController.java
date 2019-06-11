@@ -423,7 +423,7 @@ public class HomePageController {
             return "redirect:home";
         Opinions opinions = opinionsRepo.findOpinionByIds(userId, bookId);
         opinionsRepo.updateReported(opinions);
-        return "redirect:home";
+        return "redirect:book?bookId=" + bookId;
     }
 
     @GetMapping("/reported")
@@ -453,7 +453,7 @@ public class HomePageController {
             return "redirect:home";
         usersRepo.findById(userId).setAccessToComments(false);
         opinionsRepo.deleteUsersOpinions(usersRepo.findById(userId));
-        return "redirect:home";
+        return "redirect:reported";
     }
 
     @GetMapping("/deleteComment")
@@ -461,7 +461,7 @@ public class HomePageController {
         if (currentUser == null || !currentUser.getRoleU().getRole().equals("worker"))
             return "redirect:home";
         opinionsRepo.deleteOpinion(opinionsRepo.findOpinionByIds(userId, bookId));
-        return "redirect:home";
+        return "redirect:reported";
     }
 
 
