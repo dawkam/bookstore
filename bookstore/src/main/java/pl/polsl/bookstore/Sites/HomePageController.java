@@ -294,7 +294,7 @@ public class HomePageController {
                 if(shoppingcart.getWarehouseSh().getBookFormatW().getBookFormat().equals("książka"))
                 shoppingCartRepo.reduceQuantityWarehouse(shoppingcart.getWarehouseSh().getIdBookWarehouse(), shoppingcart.getWarehouseSh().getQuantity() - shoppingcart.getQuantity());
             } catch (Exception e) {
-                model.addAttribute("error", "Brak książki "+ shoppingcart.getWarehouseSh().getBooksW().getFullName());// do pliku jsp jest przesyłana treść błędu
+                model.addAttribute("error", "Brak książki "+ shoppingcart.getWarehouseSh().getBooksW().getTitle());// do pliku jsp jest przesyłana treść błędu
                 model.addAttribute("user", currentUser);
                 return "shoppingCart";
             }
