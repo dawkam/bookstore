@@ -235,9 +235,9 @@ public class HomePageController {
                 cart.setUsersSh(currentUser);
                 if (!warehouseidPaper.equals("") && formatKsiazki.equals("papier"))
                     cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidPaper)));
-                if (!warehouseidPaper.equals("") && formatKsiazki.equals("ebook"))
+                if (!warehouseidEbook.equals("") && formatKsiazki.equals("ebook"))
                     cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidEbook)));
-                if (!warehouseidPaper.equals("") && formatKsiazki.equals("audiobook"))
+                if (!warehouseidAudiobook.equals("") && formatKsiazki.equals("audiobook"))
                     cart.setWarehouseSh(warehouseRepo.findWarehouseById(Long.parseLong(warehouseidAudiobook)));
                 shoppingCartRepo.updateShoppingCart(cart);
                 currentUser.addBookToShoppingCart(cart);
@@ -332,17 +332,17 @@ public class HomePageController {
             String tmp2 = tmpBook.getWarehouse().get(0).getBookFormatW().getBookFormat();
             if (Long.toString(tmpBook.getIdBook()).equals(bookId))
                 for (Warehouse wh : tmpBook.getWarehouse()) {
-                    if (wh.getBookFormatW().getBookFormat().equals("książka")) {
+                    if (wh.getBookFormatW().getBookFormat().equals("książka") && wh.getQuantity() > 0) {
                         model.addAttribute("paperFormat", "True");
                         model.addAttribute("bookPricePaper", wh.getPrice());
                         model.addAttribute("warehousePaper", wh.getIdBookWarehouse());
                     }
-                    if (wh.getBookFormatW().getBookFormat().equals("e-book")) {
+                    if (wh.getBookFormatW().getBookFormat().equals("e-book") && wh.getQuantity() > 0) {
                         model.addAttribute("eBookFormat", "True");
                         model.addAttribute("bookPriceEbook", wh.getPrice());
                         model.addAttribute("warehouseEbook", wh.getIdBookWarehouse());
                     }
-                    if (wh.getBookFormatW().getBookFormat().equals("audiobook")) {
+                    if (wh.getBookFormatW().getBookFormat().equals("audiobook") && wh.getQuantity() > 0) {
                         model.addAttribute("audiobookFormat", "True");
                         model.addAttribute("bookPriceAudiobook", wh.getPrice());
                         model.addAttribute("warehouseAudiobook", wh.getIdBookWarehouse());
