@@ -15,6 +15,7 @@ import pl.polsl.bookstore.profit.ProfitPerBook;
 import pl.polsl.bookstore.profit.ProfitPerMonth;
 import pl.polsl.bookstore.repository.*;
 
+import javax.swing.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
