@@ -116,7 +116,9 @@
                         <table>
                             <tr>
                                 <td>
-                                    <img src=${book.image} alt="cover" height="180" width="100">
+                                    <img src=${book.image} alt="cover"
+                                         onerror="this.onerror=null;this.src='https://about.canva.com/wp-content/uploads/sites/3/2015/01/art_bookcover.png';"
+                                         height="180" width="100">
                                 </td>
                                 <td>
                                     <table>
