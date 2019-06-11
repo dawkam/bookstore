@@ -133,5 +133,11 @@
         %>
     </div>
 </div>
+ <c:if test="${error != null}">
+
+    <script>
+        alert("${error}");
+    </script>
+</c:if>
 </body>
 </html>

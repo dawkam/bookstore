@@ -126,19 +126,19 @@ public class HomePageController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@RequestParam String login, String password) {
+    public String postLogin(@RequestParam String login, String password, Model model) {
         for (Users user : usersRepo.findAll()) {
             if (login.equals(user.getLogin())) {
                 if (password.equals(user.getPassword())) {
                     currentUser = user;
                     return "redirect:home";
                 } else {
-                    //Trzeba dodac pop-up
+                    model.addAttribute("error", "Błedny login lub hasło"); // do pliku jsp jest przesyłana treść błędu
                     return "login";
                 }
             }
         }
-        //Trzeba dodac pop-up
+        model.addAttribute("error", "Błedny login lub hasło"); // do pliku jsp jest przesyłana treść błędu
 
         return "login";
     }
@@ -158,7 +158,7 @@ public class HomePageController {
             if (login.equals(user.getLogin())) {
                 model.addAttribute("user", tmpUser);
                 model.addAttribute("passwordConfirm", passwordConfirm);
-                //Trzeba dodac pop-up
+                model.addAttribute("error", "Login jest już zajęty"); // do pliku jsp jest przesyłana treść błędu
                 return "register";
             }
         }
@@ -175,13 +175,13 @@ public class HomePageController {
                     return "redirect:login";
 
                 } catch (Exception e) {
-                    //Trzeba dodac pop-up
+                    model.addAttribute("error", "Błedne dane");// do pliku jsp jest przesyłana treść błędu
                     model.addAttribute("user", tmpUser);
                     model.addAttribute("passwordConfirm", passwordConfirm);
                     return "register";
                 }
             } else {
-                //Trzeba dodac pop-up
+                model.addAttribute("error", "Błędny email");// do pliku jsp jest przesyłana treść błędu
                 model.addAttribute("user", tmpUser);
                 model.addAttribute("passwordConfirm", passwordConfirm);
                 return "register";
@@ -189,7 +189,7 @@ public class HomePageController {
         } else {
             model.addAttribute("user", tmpUser);
             model.addAttribute("passwordConfirm", passwordConfirm);
-            //Trzeba dodac pop-up
+            model.addAttribute("error", "Hasła się nie zgadzają");// do pliku jsp jest przesyłana treść błędu
             return "register";
         }
     }
@@ -290,9 +290,10 @@ public class HomePageController {
         while (iterator.hasNext()) {
             shoppingcart = (ShoppingCart) iterator.next();
             try {
+                if(shoppingcart.getWarehouseSh().getBookFormatW().getBookFormat().equals("książka"))
                 shoppingCartRepo.reduceQuantityWarehouse(shoppingcart.getWarehouseSh().getIdBookWarehouse(), shoppingcart.getWarehouseSh().getQuantity() - shoppingcart.getQuantity());
             } catch (Exception e) {
-                //pop-up
+                model.addAttribute("error", "Brak książki "+ shoppingcart.getWarehouseSh().getBooksW().getFullName());// do pliku jsp jest przesyłana treść błędu
                 model.addAttribute("user", currentUser);
                 return "shoppingCart";
             }

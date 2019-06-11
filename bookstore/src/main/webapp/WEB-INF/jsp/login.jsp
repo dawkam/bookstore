@@ -18,15 +18,20 @@
         <br>
         <form method="POST" action="/login">
             <label>Login: </label>
-            <input type="text" placeholder="Login" name="login"/><br>
+            <input type="text" placeholder="Login" required minlength="3" maxlength="30" name="login"/><br>
             <label>Hasło: </label>
-            <input type="password" placeholder="Hasło" name="password"/><br>
+            <input type="password" placeholder="Hasło" required maxlength="30" name="password"/><br>
             <button id="login_button" type="submit">Zaloguj</button>
         </form>
         Nie masz konta? <br>
         <a href="register">Zarejestruj się!</a>
     </div>
 </div>
+< <c:if test="${error != null}">
 
+    <script>
+        alert("${error}");
+    </script>
+</c:if>
 </body>
 </html>
