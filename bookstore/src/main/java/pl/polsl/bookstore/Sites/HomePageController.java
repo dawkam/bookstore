@@ -467,8 +467,8 @@ public class HomePageController {
 
     @GetMapping("/profit")
     public String getProfit(Model model) {
-//        if (currentUser == null)
-//            return "redirect:login";
+        if (currentUser == null || !currentUser.getRoleU().getRole().equals("worker"))
+            return "redirect:home";
         List<ProfitPerMonth> profitPerMonth = orderHistoryRepo.getProfitPerMonth();
         List<ProfitPerBook> profitPerBook = orderHistoryRepo.getProfitPerBook();
         List<ProfitPerAuthor> profitPerAuthor = orderHistoryRepo.getProfitPerAuthor();
