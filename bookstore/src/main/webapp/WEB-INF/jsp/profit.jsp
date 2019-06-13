@@ -3,6 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@page import="java.util.Date" %>
+<%@page import="java.util.Calendar" %>
+<% pageContext.setAttribute("currentYear", java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +47,27 @@
     <div class="main_panel_contents">
         <table>
             <tr>
-                <td  class="profitable">
+                <td class="profitable">
+                    <form method="post">
+                        <br/>
+                        od:
+                        <br/>
+                        Rok: <input type="number" name="yearF" class="quantity" min="2000"
+                                    max="<c:out value="${currentYear}" />" value="${yearF}" required>
+                        Miesiąc: <input type="number" name="monthF" class="quantity" min="1" max="12" value="${monthF}"
+                                        required>
+                        <br/>
+                        do:
+                        <br/>
+                        Rok: <input type="number" name="yearT" class="quantity" min="2000"
+                                    max="<c:out value="${currentYear}" />" value="${yearT}" required>
+                        Miesiąc: <input type="number" name="monthT" class="quantity" min="1" max="12" value="${monthT}"
+                                        required>
+                        <br/>
+                        <input type="submit" class="standard_button" value="Pokaż">
+                    </form>
+
+                    Zysk za miesiąc
                     <table class="shopping-table">
                         <tr>
                             <td>
@@ -78,6 +101,7 @@
                     </table>
                 </td>
                 <td class="profitable">
+                    Zysk za dany tytuł
                     <table class="shopping-table">
                         <tr>
                             <td>
@@ -104,6 +128,7 @@
 
                     </table>
                 <td class="profitable">
+                    Zysk za danego autora
                     <table class="shopping-table">
                         <tr>
                             <td>

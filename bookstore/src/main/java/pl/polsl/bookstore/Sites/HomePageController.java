@@ -479,7 +479,17 @@ public class HomePageController {
     }
 
     @PostMapping("/profit")
-    public String postProfit() {
+    public String postProfit(@RequestParam long yearF,long monthF,long yearT,long monthT,Model model) {
+        List<ProfitPerMonth> profitPerMonth = orderHistoryRepo.getProfitPerMonth(yearF, monthF, yearT, monthT);
+        List<ProfitPerBook> profitPerBook = orderHistoryRepo.getProfitPerBook();
+        List<ProfitPerAuthor> profitPerAuthor = orderHistoryRepo.getProfitPerAuthor();
+        model.addAttribute("yearF", yearF );
+        model.addAttribute("yearT", yearT );
+        model.addAttribute("monthF", monthF );
+        model.addAttribute("monthT", monthT );
+        model.addAttribute("profitPerMonth", profitPerMonth);
+        model.addAttribute("profitPerBook", profitPerBook);
+        model.addAttribute("profitPerAuthor", profitPerAuthor);
         return "profit";
     }
 

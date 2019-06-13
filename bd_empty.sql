@@ -158,7 +158,7 @@ CREATE TABLE `order_history` (
   `id_user` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `purchase_price` int(11) DEFAULT NULL,
+  `purchase_price` decimal(6,2) DEFAULT NULL,
   PRIMARY KEY (`id_order_history`),
   KEY `id_user_idx` (`id_user`),
   KEY `id_book_warehouse_idx` (`id_book_warehouse`),
@@ -296,6 +296,14 @@ LOCK TABLES `warehouse` WRITE;
 /*!40000 ALTER TABLE `warehouse` DISABLE KEYS */;
 /*!40000 ALTER TABLE `warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'bookstore'
+--
+
+--
+-- Dumping routines for database 'bookstore'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -306,4 +314,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-11 18:47:36
+-- Dump completed on 2019-06-13 19:15:37

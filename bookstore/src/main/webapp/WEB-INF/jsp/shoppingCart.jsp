@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -46,86 +46,88 @@
             <%
                 int i = 0;
             %>
-                <c:set var="sum" value="${0}"/>
-                <c:forEach items="${user.shoppingCart}" var="item">
-                    <%
-                        i++;
-                        if (i  == 1) {
+            <c:set var="sum" value="${0}"/>
+            <c:forEach items="${user.shoppingCart}" var="item">
+                <%
+                    i++;
+                    if (i == 1) {
 
-                    %>
-                    <tr>
-                        <td>
+                %>
+                <tr>
+                    <td>
 
-                        </td>
-                        <td>
-                            Tytuł
-                        </td>
-                        <td>
-                            Autorzy
-                        </td>
-                        <td>
-                            Ilość
-                        </td>
-                        <td>
-                            Format
-                        </td>
-                        <td>
-                            Cena(zł)
-                        </td>
-                        <td>
+                    </td>
+                    <td>
+                        Tytuł
+                    </td>
+                    <td>
+                        Autorzy
+                    </td>
+                    <td>
+                        Ilość
+                    </td>
+                    <td>
+                        Format
+                    </td>
+                    <td>
+                        Cena(zł)
+                    </td>
+                    <td>
 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
 
-                    <tr>
+                <tr>
                     <%
                         }
                     %>
-                            <td>
-                                <img src=${item.warehouseSh.booksW.image} alt="cover" height="180" width="100">
-                            </td>
-                            <td>
-                                    ${item.warehouseSh.booksW.title}
-                            </td>
-                            <td>
-                                    ${item.warehouseSh.booksW.getFullName()}
-                            </td>
-                            <td>
-                                <form method="POST" action="/shoppingCart/changeQuantity">
-                                    <input type="number" name="quantity" class="quantity" value="${item.quantity}" min="1" max="${item.warehouseSh.quantity}">
-                                    <br>
-                                    <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
-                                    <button class="standard_button" type="submit">Zmień</button>
-                                </form>
-                            </td>
-                            <td>
-                                    ${item.warehouseSh.bookFormatW.bookFormat}
-                            </td>
-                            <td>
-                                <c:set var="price" value="${0}"/>
-                                <c:set var="price" value="${(item.warehouseSh.price - ((item.warehouseSh.price * item.warehouseSh.discount)/100)) * item.quantity }" />
-                                <c:set var="sum" value=" ${sum + price}" />
-                                <fmt:formatNumber value="${price}" currencySymbol="zł" type="currency" />
-                            </td>
-                             <td>
-                             <form method="POST" action="/shoppingCart/deleteBook">
-                                 <button class="standard_button" type="submit">Usuń</button>
-                                 <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
-                             </form>
-                            </td>
-                        </tr>
+                    <td>
+                        <img src=${item.warehouseSh.booksW.image} alt="cover" height="180" width="100">
+                    </td>
+                    <td>
+                            ${item.warehouseSh.booksW.title}
+                    </td>
+                    <td>
+                            ${item.warehouseSh.booksW.getFullName()}
+                    </td>
+                    <td>
+                        <form method="POST" action="/shoppingCart/changeQuantity">
+                            <input type="number" name="quantity" class="quantity" value="${item.quantity}" min="1"
+                                   max="${item.warehouseSh.quantity}">
+                            <br>
+                            <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
+                            <button class="standard_button" type="submit">Zmień</button>
+                        </form>
+                    </td>
+                    <td>
+                            ${item.warehouseSh.bookFormatW.bookFormat}
+                    </td>
+                    <td>
+                        <c:set var="price" value="${0}"/>
+                        <c:set var="price"
+                               value="${(item.warehouseSh.price - ((item.warehouseSh.price * item.warehouseSh.discount)/100)) * item.quantity }"/>
+                        <c:set var="sum" value=" ${sum + price}"/>
+                        <fmt:formatNumber value="${price}" currencySymbol="zł" type="currency"/>
+                    </td>
+                    <td>
+                        <form method="POST" action="/shoppingCart/deleteBook">
+                            <button class="standard_button" type="submit">Usuń</button>
+                            <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
+                        </form>
+                    </td>
+                </tr>
             </c:forEach>
         </table>
         <%
-            if (i  != 0) {
+            if (i != 0) {
 
         %>
         <form method="POST" action="/shoppingCart/pay">
-            <fmt:formatNumber value="${sum}" currencySymbol="zł" type="currency" /><br>
+            <fmt:formatNumber value="${sum}" currencySymbol="zł" type="currency"/><br>
             <button class="standard_button" type="submit">Zapłać</button>
         </form>
         <%
-            }else {
+        } else {
         %>
         Koszyk jest pusty.
         <%
@@ -133,7 +135,7 @@
         %>
     </div>
 </div>
- <c:if test="${error != null}">
+<c:if test="${error != null}">
 
     <script>
         alert("${error}");

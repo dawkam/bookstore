@@ -77,6 +77,33 @@ public class OrderHistoryRepository {
             return result;
     }
 
+    @Transactional
+    public List<ProfitPerMonth> getProfitPerMonth (long yearF,long monthF,long yearT,long monthT)
+    {
+
+        Query query = (Query) entityManager.createNativeQuery(
+                "Select r.y , r.m ,sum(r.p) " +
+                        "                From " +
+                        "                (Select  year(oh.date) as y ,month(oh.date) as m, wh.id_book_warehouse as id_book_wh ,sum(oh.purchase_price)- (wh.purchase_price * sum(oh.quantity)) as p" +
+                        "               From  order_history oh, warehouse wh" +
+                        "       where  oh.id_book_warehouse=wh.id_book_warehouse " +
+                        "               group by y, m , oh.id_book_warehouse" +
+                        "               order by y desc, m desc) as r" +
+                        " Where r.y Between " + yearF +" and " + yearT + " and "+
+                        "r.m Between  "+ monthF + " and " + monthT +
+                        "        Group by r.y, r.m" );
+
+
+        List<Object[]> tmp=query.getResultList();
+        List<ProfitPerMonth> result = new ArrayList<ProfitPerMonth>();
+        for(Object[] tmpp : tmp){
+            result.add(new ProfitPerMonth((int)tmpp[0],(int)tmpp[1],((BigDecimal)tmpp[2]).floatValue()));
+        }
+
+        return result;
+    }
+
+    @Transactional
     public List<ProfitPerBook> getProfitPerBook ()
     {
 
@@ -100,7 +127,7 @@ public class OrderHistoryRepository {
 
         return result;
     }
-
+    @Transactional
     public List<ProfitPerAuthor> getProfitPerAuthor ()
     {
 

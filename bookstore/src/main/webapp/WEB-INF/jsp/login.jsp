@@ -27,7 +27,7 @@
         <a href="register">Zarejestruj się!</a>
     </div>
 </div>
-< <c:if test="${error != null}">
+ <c:if test="${error != null}">
 
     <script>
         alert("${error}");
