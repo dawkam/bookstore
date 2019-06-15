@@ -43,6 +43,10 @@ public class OrderHistory implements Serializable {
     this.purchasePrice = purchasePrice;
   }
 
+  public OrderHistory(){
+
+  }
+
   public long getIdOrderHistory() {
     return idOrderHistory;
   }

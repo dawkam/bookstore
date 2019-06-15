@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -54,7 +55,7 @@ public class OrderHistoryRepository {
 
         // create a query
         Query<OrderHistory> theQuery =
-                currentSession.createQuery("select o from OrderHistory o where  o.usersOr LIKE concat('%', :id, '%')", OrderHistory.class).setParameter("id", UserId);      //from odnosi sie do klasy nie do tabeli
+                currentSession.createQuery("select o from OrderHistory o where  o.usersOr LIKE concat('%', :id, '%') order by  o.idOrderHistory DESC", OrderHistory.class).setParameter("id", UserId);      //from odnosi sie do klasy nie do tabeli
 
         // execute query and get result list
         List<OrderHistory> orderHistory = theQuery.getResultList();
