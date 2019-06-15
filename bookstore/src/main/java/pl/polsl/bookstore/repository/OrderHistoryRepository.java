@@ -47,6 +47,23 @@ public class OrderHistoryRepository {
     }
 
     @Transactional
+    public List<OrderHistory> findByUserId(String UserId) {
+
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        // create a query
+        Query<OrderHistory> theQuery =
+                currentSession.createQuery("select o from OrderHistory o where  o.usersOr LIKE concat('%', :id, '%')", OrderHistory.class).setParameter("id", UserId);      //from odnosi sie do klasy nie do tabeli
+
+        // execute query and get result list
+        List<OrderHistory> orderHistory = theQuery.getResultList();
+
+        // return the results
+        return orderHistory;
+    }
+
+    @Transactional
     public void addOrderHistory(Warehouse warehouse,Users user, long quantity, double purchasePrice){
         java.sql.Date date =new java.sql.Date(System.currentTimeMillis());
         OrderHistory orderHistory= new OrderHistory(warehouse, user,date, quantity, purchasePrice);

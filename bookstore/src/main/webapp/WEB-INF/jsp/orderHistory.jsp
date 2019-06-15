@@ -26,11 +26,6 @@
     <div class="cart_button">
         <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
-    <c:if test="${user != null}">
-        <div class="profile_button">
-            <button onclick="location.href='/orderHistory'" type="submit">Historia</button>
-        </div>
-    </c:if>
     <c:if test="${user == null}">
         <div class="profile_button">
             <button onclick="location.href='/login'" type="submit">Zaloguj</button>
@@ -52,7 +47,7 @@
                 int i = 0;
             %>
             <c:set var="sum" value="${0}"/>
-            <c:forEach items="${user.shoppingCart}" var="item">
+            <c:forEach items="${history}" var="item">
                 <%
                     i++;
                     if (i == 1) {
@@ -78,7 +73,7 @@
                         Cena(zł)
                     </td>
                     <td>
-
+                        Data(RRRR/MM/DD)
                     </td>
                 </tr>
 
@@ -87,59 +82,35 @@
                         }
                     %>
                     <td>
-                        <img src=${item.warehouseSh.booksW.image} alt="cover"
+                        <img src=${item.warehouseOr.booksW.image} alt="cover"
                              onerror="this.onerror=null;this.src='https://about.canva.com/wp-content/uploads/sites/3/2015/01/art_bookcover.png';"
                              height="180" width="100">
                     </td>
                     <td>
-                            ${item.warehouseSh.booksW.title}
+                            ${item.warehouseOr.booksW.title}
                     </td>
                     <td>
-                            ${item.warehouseSh.booksW.getFullName()}
+                            ${item.warehouseOr.booksW.getFullName()}
                     </td>
                     <td>
-                        <form method="POST" action="/shoppingCart/changeQuantity">
-                            <input type="number" name="quantity" class="quantity" value="${item.quantity}" min="1"
-                                   max="${item.warehouseSh.quantity}">
-                            <br>
-                            <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
-                            <button class="standard_button" type="submit">Zmień</button>
-                        </form>
+                            ${item.quantity}
                     </td>
                     <td>
-                            ${item.warehouseSh.bookFormatW.bookFormat}
+                            ${item.warehouseOr.bookFormatW.bookFormat}
                     </td>
                     <td>
                         <c:set var="price" value="${0}"/>
                         <c:set var="price"
-                               value="${(item.warehouseSh.price - ((item.warehouseSh.price * item.warehouseSh.discount)/100)) * item.quantity }"/>
+                               value="${(item.warehouseOr.price - ((item.warehouseOr.price * item.warehouseOr.discount)/100)) * item.quantity }"/>
                         <c:set var="sum" value=" ${sum + price}"/>
                         <fmt:formatNumber value="${price}" currencySymbol="zł" type="currency"/>
                     </td>
                     <td>
-                        <form method="POST" action="/shoppingCart/deleteBook">
-                            <button class="standard_button" type="submit">Usuń</button>
-                            <input type="hidden" name="idWarehouse" value="${item.warehouseSh.idBookWarehouse}">
-                        </form>
+                            ${item.date}
                     </td>
                 </tr>
             </c:forEach>
         </table>
-        <%
-            if (i != 0) {
-
-        %>
-        <form method="POST" action="/shoppingCart/pay">
-            <fmt:formatNumber value="${sum}" currencySymbol="zł" type="currency"/><br>
-            <button class="standard_button" type="submit">Zapłać</button>
-        </form>
-        <%
-        } else {
-        %>
-        Koszyk jest pusty.
-        <%
-            }
-        %>
     </div>
 </div>
 <c:if test="${error != null}">

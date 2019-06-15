@@ -31,6 +31,11 @@
     <div class="cart_button">
         <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
+    <c:if test="${user != null}">
+        <div class="profile_button">
+            <button onclick="location.href='/orderHistory'" type="submit">Historia</button>
+        </div>
+    </c:if>
     <c:if test="${user == null}">
         <div class="profile_button">
             <button onclick="location.href='/login'" type="submit">Zaloguj</button>

@@ -35,17 +35,21 @@
     <div class="profile_button">
         <button onclick="location.href='/shoppingCart'" type="submit">Koszyk</button>
     </div>
-        <div class="cart_button">
-            <form method="POST" action="/logout">
-                <button type="submit">Wyloguj</button>
-            </form>
-        </div>
+    <div class="profile_button">
+        <button onclick="location.href='/orderHistory'" type="submit">Historia</button>
+    </div>
+    <div class="cart_button">
+        <form method="POST" action="/logout">
+            <button type="submit">Wyloguj</button>
+        </form>
+    </div>
 </div>
 <div id="contents">
     <div id="reported_button">
         <c:if test="${user.getRoleU().getIdRole() == 2}">
             <div>
-                <button id="reported" onclick="location.href='/reported'" type="submit">Do zareportowanych komentarzy!</button>
+                <button id="reported" onclick="location.href='/reported'" type="submit">Do zareportowanych komentarzy!
+                </button>
             </div>
         </c:if>
     </div>
@@ -53,21 +57,21 @@
         <br>
         <form method="POST" action="/profile">
             <label>Hasło: </label>
-            <input type="password" value = ${user.password} name="password"/><br>
+            <input type="password" value=${user.password} name="password"/><br>
             <label>Potwierdź hasło: </label>
             <input type="password" placeholder="Potwierdź hasło" name="passwordConfirm"/><br>
             <label>Imie: </label>
-            <input type="text" value = ${user.firstName} name="name"/><br>
+            <input type="text" value=${user.firstName} name="name"/><br>
             <label>Nazwisko: </label>
-            <input type="text" value = ${user.surname} name="surname"/><br>
+            <input type="text" value=${user.surname} name="surname"/><br>
             <label>Narodowość: </label>
-            <input type="text" value = ${user.nation} name="nation"/><br>
+            <input type="text" value=${user.nation} name="nation"/><br>
             <label>Miejscowość: </label>
-            <input type="text" value = ${user.city} name="city"/><br>
+            <input type="text" value=${user.city} name="city"/><br>
             <label>Ulica: </label>
-            <input type="text" value = ${user.street} name="street"/><br>
+            <input type="text" value=${user.street} name="street"/><br>
             <label>E-mail: </label>
-            <input type="text" value = ${user.email} name="email"/><br>
+            <input type="text" value=${user.email} name="email"/><br>
             <button id="save_button" type="submit">Zapisz zmiany</button>
         </form>
     </div>

@@ -252,6 +252,19 @@ public class HomePageController {
         return "shoppingCart";
     }
 
+    @GetMapping("/orderHistory")
+    public String getOrderHistory(@RequestParam(defaultValue = "") String formatKsiazki, @RequestParam(defaultValue = "") String warehouseidPaper, @RequestParam(defaultValue = "") String warehouseidEbook, @RequestParam(defaultValue = "") String warehouseidAudiobook, Model model) {
+        if (currentUser == null)
+            return "redirect:login";
+        else {
+            model.addAttribute("history",orderHistoryRepo.findByUserId(Long.toString(currentUser.getIdUser())));
+        }
+
+        model.addAttribute("user", currentUser);
+
+        return "orderHistory";
+    }
+
     @PostMapping("/shoppingCart/changeQuantity")
     public String postShoppingCartChangeQuantity(@RequestParam long idWarehouse, String quantity, Model model) {
         if (!quantity.equals("")) {
@@ -291,10 +304,10 @@ public class HomePageController {
         while (iterator.hasNext()) {
             shoppingcart = (ShoppingCart) iterator.next();
             try {
-                if(shoppingcart.getWarehouseSh().getBookFormatW().getBookFormat().equals("książka"))
-                shoppingCartRepo.reduceQuantityWarehouse(shoppingcart.getWarehouseSh().getIdBookWarehouse(), shoppingcart.getWarehouseSh().getQuantity() - shoppingcart.getQuantity());
+                if (shoppingcart.getWarehouseSh().getBookFormatW().getBookFormat().equals("książka"))
+                    shoppingCartRepo.reduceQuantityWarehouse(shoppingcart.getWarehouseSh().getIdBookWarehouse(), shoppingcart.getWarehouseSh().getQuantity() - shoppingcart.getQuantity());
             } catch (Exception e) {
-                model.addAttribute("error", "Brak książki "+ shoppingcart.getWarehouseSh().getBooksW().getTitle());// do pliku jsp jest przesyłana treść błędu
+                model.addAttribute("error", "Brak książki " + shoppingcart.getWarehouseSh().getBooksW().getTitle());// do pliku jsp jest przesyłana treść błędu
                 model.addAttribute("user", currentUser);
                 return "shoppingCart";
             }
@@ -479,14 +492,14 @@ public class HomePageController {
     }
 
     @PostMapping("/profit")
-    public String postProfit(@RequestParam long yearF,long monthF,long yearT,long monthT,Model model) {
+    public String postProfit(@RequestParam long yearF, long monthF, long yearT, long monthT, Model model) {
         List<ProfitPerMonth> profitPerMonth = orderHistoryRepo.getProfitPerMonth(yearF, monthF, yearT, monthT);
         List<ProfitPerBook> profitPerBook = orderHistoryRepo.getProfitPerBook();
         List<ProfitPerAuthor> profitPerAuthor = orderHistoryRepo.getProfitPerAuthor();
-        model.addAttribute("yearF", yearF );
-        model.addAttribute("yearT", yearT );
-        model.addAttribute("monthF", monthF );
-        model.addAttribute("monthT", monthT );
+        model.addAttribute("yearF", yearF);
+        model.addAttribute("yearT", yearT);
+        model.addAttribute("monthF", monthF);
+        model.addAttribute("monthT", monthT);
         model.addAttribute("profitPerMonth", profitPerMonth);
         model.addAttribute("profitPerBook", profitPerBook);
         model.addAttribute("profitPerAuthor", profitPerAuthor);
